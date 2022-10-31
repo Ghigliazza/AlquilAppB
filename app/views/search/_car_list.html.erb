@@ -3,20 +3,15 @@
 <div class="accordion accordion-flush" id="accordionLista" >
 
 <!-- De momento ordena por combustible -->
-<% if @cars.where(:state => 1).any? %> 
+<% if @carsDisponibles.any? %> 
 
-  <% @cars.order(fuel: :desc).each do |car| %>
-      <!-- Si el auto esta liberado -->
-      <% if car.state == 1 %> 
-          <%= render partial: 'search/car_card', locals:{car: car} %>  
-      <% end %> 
-  <% end %>
+  <% @carsDisponibles.each do |car| %>
+      <%= render partial: 'search/car_card', locals:{car: car} %>  
+  <% end %>   
 
 <% else %>
-
         <h2>[NO HAY AUTOS DISPONIBLES] </h2>    
         <img src="/assets/autos/notfound.jpg" alt="" class="col-md-4">
-
 <% end %>  
 
 
