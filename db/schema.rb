@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_30_233828) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_31_210859) do
   create_table "cards", force: :cascade do |t|
     t.integer "cardNumber"
     t.date "expires"
@@ -76,6 +76,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_30_233828) do
     t.datetime "updated_at", null: false
     t.integer "licenseNumber"
     t.date "licenseExpiration"
+    t.float "balance"
     t.index ["document"], name: "index_users_on_document", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
   end

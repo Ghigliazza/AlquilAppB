@@ -243,3 +243,108 @@ Car.create!([{
 ])
 
 p "Seed created #{Car.count} cars"
+
+
+# -------------------------------
+
+User.destroy_all
+
+User.create!([
+	{
+	email: "test@gmail.com",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: 1,                                                       
+	name: "Juan",                                                 
+	lastName: "Garcia",                                                
+	document: 42345678,                                           
+	state: true,                                                  
+	license_url: "",                                              
+	position_id: nil,
+	licenseNumber: nil,
+	licenseExpiration: nil,
+	balance: 150000
+	},
+
+
+	{
+	email: "b@gmail.com",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: 1,                                                       
+	name: "Jose",                                                 
+	lastName: "Gutierrez",                                                
+	document: 38830194,                                           
+	state: true,                                                  
+	license_url: "",                                              
+	position_id: nil,
+	licenseNumber: nil,
+	licenseExpiration: nil,
+	balance: 1000
+	},
+	{
+	email: "c@gmail.com",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                                       
+	rol: 1,                                                       
+	name: "Aurelia",                                                 
+	lastName: "Alamo",                                                
+	document: 06705167,                                           
+	state: true,                                                  
+	license_url: "",                                              
+	position_id: nil,
+	licenseNumber: nil,
+	licenseExpiration: nil,
+	balance: 130000
+	},
+	{
+	email: "d@gmail.com",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: 1,                                                       
+	name: "Esperanza",                                                 
+	lastName: "Gómez",                                                
+	document: 63543583,                                           
+	state: true,                                                  
+	license_url: "",                                              
+	position_id: nil,
+	licenseNumber: nil,
+	licenseExpiration: nil,
+	balance: 3000
+	},
+	{
+	email: "e@gmail.com",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: 1,                                                       
+	name: "Alex",                                                 
+	lastName: "Narvaez",                                                
+	document: 37513057,                                           
+	state: true,                                                  
+	license_url: "",                                              
+	position_id: nil,
+	licenseNumber: nil,
+	licenseExpiration: nil,
+	balance: 6000
+	},
+	{
+	email: "f@gmail.com",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: 1,                                                       
+	name: "Maria",                                                 
+	lastName: "Garcia",                                                
+	document: 14867143,                                           
+	state: true,                                                  
+	license_url: "",                                              
+	position_id: nil,
+	licenseNumber: nil,
+	licenseExpiration: nil,
+	balance: -1000
+	} 
+
+
+])
+
+p "Seed created #{User.count} users"
+
