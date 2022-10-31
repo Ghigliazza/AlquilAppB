@@ -266,6 +266,22 @@ User.create!([
 	balance: 150000
 	},
 
+	{
+	email: "a",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: 1,                                                       
+	name: "Juan",                                                 
+	lastName: "Garcia",                                                
+	document: 42345679,                                           
+	state: true,                                                  
+	license_url: "",                                              
+	position_id: nil,
+	licenseNumber: nil,
+	licenseExpiration: nil,
+	balance: 150000
+	},
+
 
 	{
 	email: "b@gmail.com",                                                   
