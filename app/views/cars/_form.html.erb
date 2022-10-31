@@ -1,0 +1,72 @@
+<%= form_with(model: car) do |form| %>
+  <% if car.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(car.errors.count, "error") %> prohibited this car from being saved:</h2>
+
+      <ul>
+        <% car.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :model, style: "display: block" %>
+    <%= form.text_field :model %>
+  </div>
+
+  <div>
+    <%= form.label :brand, style: "display: block" %>
+    <%= form.text_field :brand %>
+  </div>
+
+  <div>
+    <%= form.label :license, style: "display: block" %>
+    <%= form.text_field :license %>
+  </div>
+
+  <div>
+    <%= form.label :color, style: "display: block" %>
+    <%= form.text_field :color %>
+  </div>
+
+  <div>
+    <%= form.label :img_url, style: "display: block" %>
+    <%= form.text_field :img_url %>
+  </div>
+
+  <div>
+    <%= form.label :doors, style: "display: block" %>
+    <%= form.number_field :doors %>
+  </div>
+
+  <div>
+    <%= form.label :seats, style: "display: block" %>
+    <%= form.number_field :seats %>
+  </div>
+
+  <div>
+    <%= form.label :state, style: "display: block" %>
+    <%= form.number_field :state %>
+  </div>
+
+  <div>
+    <%= form.label :engine, style: "display: block" %>
+    <%= form.check_box :engine %>
+  </div>
+
+  <div>
+    <%= form.label :fuel, style: "display: block" %>
+    <%= form.number_field :fuel %>
+  </div>
+
+  <div>
+    <%= form.label :position_id, style: "display: block" %>
+    <%= form.number_field :position_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
