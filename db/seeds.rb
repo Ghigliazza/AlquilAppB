@@ -259,8 +259,7 @@ User.create!([
 	lastName: "Garcia",                                                
 	document: 42345678,                                           
 	state: true,                                                  
-	license_url: "",                                              
-	position_id: nil,
+	license_url: "",    
 	licenseNumber: nil,
 	licenseExpiration: nil,
 	balance: 150000
@@ -275,8 +274,7 @@ User.create!([
 	lastName: "Garcia",                                                
 	document: 42345679,                                           
 	state: true,                                                  
-	license_url: "",                                              
-	position_id: nil,
+	license_url: "",  
 	licenseNumber: nil,
 	licenseExpiration: nil,
 	balance: 150000
@@ -292,8 +290,7 @@ User.create!([
 	lastName: "Gutierrez",                                                
 	document: 38830194,                                           
 	state: true,                                                  
-	license_url: "",                                              
-	position_id: nil,
+	license_url: "",   
 	licenseNumber: nil,
 	licenseExpiration: nil,
 	balance: 1000
@@ -307,8 +304,7 @@ User.create!([
 	lastName: "Alamo",                                                
 	document: 06705167,                                           
 	state: true,                                                  
-	license_url: "",                                              
-	position_id: nil,
+	license_url: "",  
 	licenseNumber: nil,
 	licenseExpiration: nil,
 	balance: 130000
@@ -322,8 +318,7 @@ User.create!([
 	lastName: "Gómez",                                                
 	document: 63543583,                                           
 	state: true,                                                  
-	license_url: "",                                              
-	position_id: nil,
+	license_url: "",    
 	licenseNumber: nil,
 	licenseExpiration: nil,
 	balance: 3000
@@ -337,8 +332,7 @@ User.create!([
 	lastName: "Narvaez",                                                
 	document: 37513057,                                           
 	state: true,                                                  
-	license_url: "",                                              
-	position_id: nil,
+	license_url: "",   
 	licenseNumber: nil,
 	licenseExpiration: nil,
 	balance: 6000
@@ -352,8 +346,7 @@ User.create!([
 	lastName: "Garcia",                                                
 	document: 14867143,                                           
 	state: true,                                                  
-	license_url: "",                                              
-	position_id: nil,
+	license_url: "",   
 	licenseNumber: nil,
 	licenseExpiration: nil,
 	balance: -1000
