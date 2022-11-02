@@ -12,9 +12,9 @@ class Car < ApplicationRecord
 	scope :renteds, 	-> 			 { where(:state => :rented)}
 	scope :bloked, 		-> 			 { where(:state => :blok)}
 	scope :low_fuel, 	-> 			 { where("fuel < 1")}
-	scope :model, 		->(model){ where(model: model) }
-	scope :brand, 		->(brand){ where(brand: brand) }
-	scope :color, 		->(color){ where(color: color) }
+	scope :models, 		->(model){ where(model: model) }
+	scope :brands, 		->(brand){ where(brand: brand) }
+	scope :colors, 		->(color){ where(color: color) }
 	scope :doors, 		->(doors){ where(doors: doors) }
 	scope :seats, 		->(seats){ where(seats: seats) }
 end
