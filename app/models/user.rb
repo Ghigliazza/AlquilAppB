@@ -29,6 +29,6 @@ class User < ApplicationRecord
   scope :dimissed,         -> { where(:state => :dimiss)}
   scope :bloked,           -> { where(:state => :blok)}
   scope :debtors,          -> { where("balance < 0")}
-  scope :defaulter,        -> self.debtors.bloked
+  scope :defaulter,        -> { self.debtors.bloked }
   scope :licenses_expired, -> { where("licenseExpiration < ?", Time.now)}
 end
