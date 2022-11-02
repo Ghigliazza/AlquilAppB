@@ -15,4 +15,20 @@ class User < ApplicationRecord
 
   validates :email, uniqueness: true
   validates :document, uniqueness: true
+
+  #ENUMERATIVES
+  enum rol: [:administrator, :supervisor, :driver]
+  enum state: [:for_admit, :addmiss, :dismiss, :blok]
+
+  #SCOPES
+  scope :administrators,   -> { where(:rol => :administrator)}
+  scope :supervisors,      -> { where(:rol => :supervisor)}
+  scope :divers,           -> { where(:rol => :diver)}
+  scope :for_admits,       -> { where(:state => :for_admit)}
+  scope :admissed,         -> { where(:state => :admiss)}
+  scope :dimissed,         -> { where(:state => :dimiss)}
+  scope :bloked,           -> { where(:state => :blok)}
+  scope :debtors,          -> { where("balance < 0")}
+  scope :defaulter,        -> self.debtors.bloked
+  scope :licenses_expired, -> { where("licenseExpiration < ?", Time.now)}
 end
