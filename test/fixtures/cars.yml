@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  model: MyString
+  brand: MyString
+  license: MyString
+  color: MyString
+  img_url: MyString
+  doors: 1
+  seats: 1
+  state: 1
+  engine: false
+  fuel: 1
+  position_id: 1
+
+two:
+  model: MyString
+  brand: MyString
+  license: MyString
+  color: MyString
+  img_url: MyString
+  doors: 1
+  seats: 1
+  state: 1
+  engine: false
+  fuel: 1
+  position_id: 1

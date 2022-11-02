@@ -1,0 +1,20 @@
+
+<%#> https://getbootstrap.com/docs/5.0/components/accordion/ <%>
+<div class="accordion accordion-flush" id="accordionLista" >
+
+<!-- De momento ordena por combustible -->
+<% if @carsDisponibles.any? %> 
+
+  <% @carsDisponibles.each do |car| %>
+      <%= render partial: 'search/car_card', locals:{car: car} %>  
+  <% end %>   
+
+<% else %>
+        <h2>[NO HAY AUTOS DISPONIBLES] </h2>    
+        <img src="/assets/autos/notfound.jpg" alt="" class="col-md-4">
+<% end %>  
+
+</div>
+
+
+  

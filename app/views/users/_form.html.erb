@@ -1,0 +1,63 @@
+<%= form_with(model: user) do |form| %>
+  <% if user.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %><br />
+    <%= form.password_field :password %>
+  </div>
+ 
+  <div class="field">
+    <%= form.label :password_confirmation %><br />
+    <%= form.password_field :password_confirmation %>
+  </div>
+
+  <div>
+    <% form.label :rol, style: "display: block" %>
+    <% form.number_field :rol %>
+  </div>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :lastName, style: "display: block" %>
+    <%= form.text_field :lastName %>
+  </div>
+
+  <div>
+    <%= form.label :document, style: "display: block" %>
+    <%= form.number_field :document %>
+  </div>
+
+  <div>
+    <% form.label :state, style: "display: block" %>
+    <% form.number_field :state %>
+  </div>
+
+  <div>
+    <% form.label :license_url, style: "display: block" %>
+    <% form.text_field :license_url %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

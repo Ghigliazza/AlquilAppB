@@ -1,0 +1,99 @@
+
+  <div class="accordion-item">
+
+    <h2 class="accordion-header" id="flush-ID1<%=car.id%>">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-ID2<%=car.id%>" aria-expanded="false" aria-controls="flush-ID2<%=car.id%>">
+
+       <span style="font-weight:bolder"> <%= car.brand + " " + car.model%> </span>
+
+      </button>
+    </h2>
+
+
+    <div id="flush-ID2<%=car.id%>" class="accordion-collapse collapse" aria-labelledby="flush-ID1<%=car.id%>" data-bs-parent="#accordionLista">
+      <div class="accordion-body">
+
+          <% if File.exists?("#{Rails.root}/app/assets/images#{car.img_url}") %>
+              <div class="clearfix">
+              <img src="/assets<%= car.img_url %>" alt="" class="col-md-4 float-md-end mb-3 ms-md-3" >
+          <% else %>             
+              <div class="clearfix">
+              <img src="/assets/autos/notfound.jpg" alt="" class="col-md-4 float-md-end mb-3 ms-md-3" >
+          <% end %>
+
+          <table class="table table-striped" style="max-width:600px;">
+                <thead>
+                    <tr>
+                        <%# th colspan="2">Detalles</th> <%>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b> <%= "Color" %></b> </td>
+                        <td><%= "#{car.color}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Transmision" %></b> </td>
+                        <td><%= "#{car.transmission}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Puertas" %></b> </td>
+                        <td><%= "#{car.doors}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Asientos" %></b> </td>
+                        <td><%= "#{car.seats}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Combustible" %></b> </td>
+                        <td><%= "#{car.fuel} litros" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Patente" %></b> </td>
+                        <td><%= "#{car.license}" %></td> 
+                    </tr>
+                </tbody>
+          </table>       
+          <p>
+            <% if car.description != "" %>
+              <%= "#{car.description}" %>
+            <% end %>
+          </p>
+
+
+          <p>
+            <label for="horasRange" class="form-label">Indique la cantidad de horas: </label> 
+            <input type="range" value="1" min="1" max="24" step="1" id="horasRange" oninput="this.nextElementSibling.value = this.value"> <output> 1 </output>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleID1<%=car.id%>">
+              Alquilar Auto
+            </button>  
+          </p>  
+
+                    
+        </div>   
+
+      </div>
+    </div>
+  </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleID1<%=car.id%>" tabindex="-1" aria-labelledby="exampleModalLabelID2<%=car.id%>" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabelID2<%=car.id%>"><%= car.brand + " " + car.model%></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        [Costo inicial del alquiler]
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Confirmar Alquiler</button>
+      </div>
+    </div>
+  </div>
+</div>     
