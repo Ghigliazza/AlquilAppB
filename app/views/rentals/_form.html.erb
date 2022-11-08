@@ -17,24 +17,54 @@
   <% end %>
 
   <div>
+    <label for="hsRange" class="form-label">Indique la cantidad de horas: </label> 
+    <input type="range" id="hsRange" value="1" min=1 max=24 step="1" oninput="this.nextElementSibling.value = this.value" onchange="kerenta()">
+    <output> 1 </output>
+  </div>
+
+  <div>
     <%= form.label :price, style: "display: block" %>
-    <%= form.text_field :price %>
+    <%= form.hidden_field :price, :id => "rental_price", :value => @rental_price %>
+    <output id="final_price"><%= @rental_price %></output>
   </div>
 
   <div>
     <%= form.label :expires, style: "display: block" %>
-    <%= form.datetime_field :expires %>
+    <%= form.hidden_field :expires, :id => "rental_expired", :value => @rental_expired %>
+    <output id="final_expired"><%= Date.new(@rental_expired.to_i + 1) %></output>
   </div>
 
   <div>
-    <%= form.hidden_field params[:user_id] %>
+    <%= form.hidden_field :user_id, :value => current_user.id %>
   </div>
 
   <div>
-    <%= form.hidden_field params[:car_id]%>
+    <%= form.hidden_field :car_id, :value => params[:car_id]%>
   </div>
 
   <div>
     <%= form.submit %>
   </div>
 <% end %>
+
+<script>
+
+  function kerenta() {
+    const hs = $('#hsRange').val()
+    const rental_price = $('#rental_price')
+    const final_price = $('#final_price')
+    const rental_expired = $('#rental_expired')
+    const final_expired = $('#final_expired')
+    now=null
+    now = new Date(Date.now())
+  
+    rental_price.val(hs * 1000)
+    final_price.val(rental_price.val())
+
+    rental_expired.val(new Date(now.getHours() + hs))
+    final_expired.val(rental_expired.val())
+    
+    console.log(hs, rental_price.val(), final_price.val(), rental_expired.val(), final_expired.val())
+  }
+
+</script>

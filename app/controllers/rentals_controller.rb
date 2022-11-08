@@ -12,7 +12,9 @@ class RentalsController < ApplicationController
 
   # GET /rentals/new
   def new
-    @rental = Rental.new
+    @rental = Rental.new()
+    @rental_price = :started
+    @rental_expired = Time.now
   end
 
   # GET /rentals/1/edit
