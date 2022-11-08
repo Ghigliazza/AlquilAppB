@@ -62,9 +62,6 @@
 
 
           <p>
-            <label for="horasRange" class="form-label">Indique la cantidad de horas: </label> 
-            <input type="range" value="1" min="1" max="24" step="1" id="horasRange" oninput="this.nextElementSibling.value = this.value"> <output> 1 </output>
-
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleID1<%=car.id%>">
               Alquilar Auto
@@ -92,7 +89,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <%= link_to "Confirm Rental", new_user_car_rental_path(current_user, car), class:"btn btn-primary" %> 
+        <%= link_to "Confirm Rental", new_car_rental_path(car), class:"btn btn-primary" %> 
       </div>
     </div>
   </div>
