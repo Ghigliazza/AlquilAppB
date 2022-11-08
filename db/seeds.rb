@@ -304,8 +304,8 @@ User.create!([
 	licenseNumber: nil,
 	licenseExpiration: nil,
 	balance: 150000,
-	coords_x: -57.94487,
-	coords_y: -34.9278369
+	coords_x: -57.957160476901834,
+	coords_y: -34.919451958400096 
 
 	},
 
