@@ -31,7 +31,7 @@
   <div>
     <%= form.label :expires, style: "display: block" %>
     <%= form.hidden_field :expires, :id => "rental_expired", :value => @rental_expired %>
-    <output id="final_expired"><%= Date.new(@rental_expired.to_i + 1) %></output>
+    <output id="final_expired"><%= @rental_expired %></output>
   </div>
 
   <div>

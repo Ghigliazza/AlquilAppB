@@ -14,7 +14,7 @@ class RentalsController < ApplicationController
   def new
     @rental = Rental.new()
     @rental_price = :started
-    @rental_expired = Time.now
+    @rental_expired = @rental.calcule_date(DateTime.now, new DateTime(0, 0, 0, 1, 0, 0))
   end
 
   # GET /rentals/1/edit
