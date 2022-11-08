@@ -11,6 +11,35 @@
     </div>
   <% end %>
 
+  <%# Para guardar la localizacion %>
+  <script>
+  navigator.geolocation.getCurrentPosition((pos) => {
+    document.querySelector("#user_coords_x").value =
+      `${pos.coords.longitude}`;
+  });
+
+  navigator.geolocation.getCurrentPosition((pos) => {
+    document.querySelector("#user_coords_y").value =
+      `${pos.coords.latitude}`;
+  });
+  </script>
+
+  <%# Hidden fields %>
+  <%#= form.hidden_field :coords_y %>
+  <%#= form.hidden_field :coords_x %>
+
+  <%# Visible fields - Debugging %>
+  <div>
+    <%= form.label :coords_y, style: "display: block" %>
+    <%= form.text_field :coords_y %>
+  </div>
+  <div>
+    <%= form.label :coords_x, style: "display: block" %>
+    <%= form.text_field :coords_x %>
+  </div>
+  <%# /localizacion %>
+
+
 
   <div>
     <%= form.label :email, style: "display: block" %>

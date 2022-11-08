@@ -1,1 +1,24 @@
+<head>
+
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+
+</head>	
+
 <h1>[MAPA]</h1>
+
+<div id='map' style='width: 800px; height: 500px;'></div>
+<script>
+  mapboxgl.accessToken = "<%= Rails.application.credentials.mapbox %>";
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [<%= current_user.coords_x %>, <%= current_user.coords_y %>],
+    zoom: 13
+  });
+</script>
+
+
+
+x = <%= current_user.coords_x %>
+y = <%= current_user.coords_y %>

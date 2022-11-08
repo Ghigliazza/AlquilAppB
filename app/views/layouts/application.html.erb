@@ -3,10 +3,17 @@
   <head>
     <title>AlquilApp</title>
 
-    <%#> TIMER <%>
-
-    <%#> /TIMER <%>
-
+    
+    <%#> MAPBOX <%>
+      <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+      <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js"></script>
+    <script>
+      mapboxgl.accessToken = "<%= Rails.application.credentials.mapbox %>";
+    </script>
+    <script src="https://unpkg.com/mapkick@0.1.1/dist/mapkick.js"></script>
+    <%#> /MAPBOX <%>
 
     <%#> BOOTSTRAP <%>
     <meta name="viewport" content="width=device-width,initial-scale=1">
