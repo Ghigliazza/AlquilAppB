@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_08_210820) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_08_224006) do
   create_table "cards", force: :cascade do |t|
     t.integer "cardNumber"
     t.date "expires"
@@ -34,6 +34,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_08_210820) do
     t.float "fuel"
     t.string "transmission"
     t.string "description"
+    t.float "coords_x"
+    t.float "coords_y"
   end
 
   create_table "positions", force: :cascade do |t|

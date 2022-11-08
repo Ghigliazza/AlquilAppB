@@ -22,7 +22,9 @@ Car.create!([{
 	#position_id: ,
 	fuel: 30,
 	transmission: "Manual",
-	description: "Esta es una descripcion del vehiculo. Aca se especifican detalles que no entran en la tabla, como por ejemplo, si tiene una abolladura."
+	description: "Esta es una descripcion del vehiculo. Aca se especifican detalles que no entran en la tabla, como por ejemplo, si tiene una abolladura.",
+	coords_x: -57.942948097923505,
+	coords_y: -34.90961858045628
 	},
 	{
 	model: "Fiesta",
@@ -37,7 +39,9 @@ Car.create!([{
 	#position_id: ,
 	fuel: 15,
 	transmission: "Manual",
-	description: ""
+	description: "",
+	coords_x: -57.94775461640229,
+	coords_y: -34.911096672180804
 	},
 	{
 	model: "500",
@@ -52,7 +56,9 @@ Car.create!([{
 	#position_id: ,
 	fuel: 30,
 	transmission: "Manual",
-	description: ""
+	description: "",
+	coords_x: -57.95706724595495,
+	coords_y: -34.90940742232333
 	},
 	{
 	model: "Aveo",
@@ -67,7 +73,9 @@ Car.create!([{
 	#position_id: ,
 	fuel: 23,
 	transmission: "Manual",
-	description: ""
+	description: "",
+	coords_x: -57.96440576970384,
+	coords_y: -34.913947202499656
 	},
 	{
 	model: "Ariya",
@@ -82,7 +90,9 @@ Car.create!([{
 	#position_id: ,
 	fuel: 20,
 	transmission: "Manual",
-	description: ""
+	description: "",
+	coords_x: -57.95835470642984,
+	coords_y: -34.92598168391016 
 	},
 	{
 	model: "Evalia",
@@ -97,7 +107,9 @@ Car.create!([{
 	#position_id: ,
 	fuel: 23,
 	transmission: "Manual",
-	description: ""
+	description: "",
+	coords_x: -57.96492075410844,
+	coords_y: -34.93312412341212
 	},
 	{
 	model: "208",
@@ -112,7 +124,9 @@ Car.create!([{
 	#position_id: ,
 	fuel: 5,
 	transmission: "Manual",
-	description: ""
+	description: "",
+	coords_x: -57.943218828135564,
+	coords_y: -34.9340761736041 
 	},
 	{
 	model: "308",
@@ -127,7 +141,9 @@ Car.create!([{
 	#position_id: ,
 	fuel: 3,
 	transmission: "Manual",
-	description: ""
+	description: "",
+	coords_x: -57.94944155306433,
+	coords_y: -34.94550968612329 
 	},
 	{
 	model: "Forester",
@@ -142,12 +158,10 @@ Car.create!([{
 	#position_id: ,
 	fuel: 29.8,
 	transmission: "Manual",
-	description: ""
+	description: "",
+	coords_x: -57.96302557666058,
+	coords_y: -34.897135267221365 
 	},
-
-
-
-
 	{
 	model: "Auris",
 	brand: "Toyota",
@@ -161,7 +175,9 @@ Car.create!([{
 	#position_id: ,
 	fuel: 19.5,
 	transmission: "Manual",
-	description: ""
+	description: "",
+	coords_x: -57.94714689914605,
+	coords_y: -34.935809119158755 
 	},
 	{
 	model: "Yaris",
@@ -176,7 +192,9 @@ Car.create!([{
 	#position_id: ,
 	fuel: 29.8,
 	transmission: "Manual",
-	description: ""
+	description: "",
+	coords_x: -57.97392607395346,
+	coords_y: -34.92032768971162 
 	},
 
 	{
@@ -192,7 +210,9 @@ Car.create!([{
 	#position_id: ,
 	fuel: 39.8,
 	transmission: "Manual",
-	description: ""
+	description: "",
+	coords_x: -57.97332525928319,
+	coords_y: -34.910896660170415 
 	},
 	{
 	model: "RS 5",
@@ -207,7 +227,9 @@ Car.create!([{
 	#position_id: ,
 	fuel: 29.8,
 	transmission: "Manual",
-	description: ""
+	description: "",
+	coords_x: -57.96221897487571,
+	coords_y: -34.92161398981082 
 	},
 	{
 	model: "Civic",
@@ -222,7 +244,9 @@ Car.create!([{
 	#position_id: ,
 	fuel: 21.8,
 	transmission: "Manual",
-	description: ""
+	description: "",
+	coords_x: -57.9604648102025,
+	coords_y: -34.923821996733736 
 	},
 	{
 	model: "Civic",
@@ -237,7 +261,9 @@ Car.create!([{
 	#position_id: ,
 	fuel: 9.1,
 	transmission: "Manual",
-	description: ""
+	description: "",
+	coords_x: -57.972638885076265,
+	coords_y: -34.916433776031056 
 	}
 
 ])
