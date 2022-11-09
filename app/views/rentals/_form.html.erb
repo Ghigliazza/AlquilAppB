@@ -18,20 +18,20 @@
 
   <div>
     <label for="hsRange" class="form-label">Indique la cantidad de horas: </label> 
-    <input type="range" id="hsRange" value="1" min=1 max=24 step="1" oninput="this.nextElementSibling.value = this.value" onchange="kerenta()">
+    <input type="range" id="hsRange" value="1" min=1 max=24 step="1" oninput="this.nextElementSibling.value = this.value" onchange="calcule_rent()">
     <output> 1 </output>
   </div>
 
   <div>
     <%= form.label :price, style: "display: block" %>
-    <%= form.hidden_field :price, :id => "rental_price", :value => @rental_price %>
-    <output id="final_price"><%= @rental_price %></output>
+    <%= form.hidden_field :price, :id => "in_price", :value => Rental.states["#{@rental.state}"] %>
+    <output id="out_price"><%= Rental.states["#{@rental.state}"] %> </output>
   </div>
 
   <div>
     <%= form.label :expires, style: "display: block" %>
-    <%= form.hidden_field :expires, :id => "rental_expired", :value => @rental_expired %>
-    <output id="final_expired"><%= @rental_expired %></output>
+    <%= form.hidden_field :expires, :id => "in_expire", :value => Time.now + 1.hour %>
+    <output id="out_expired"><%= (Time.now + 1.hour).strftime('%Y-%m-%e %k:%M:%S') %></output>
   </div>
 
   <div>
@@ -47,24 +47,28 @@
   </div>
 <% end %>
 
+<%= params[:id] %>
+
 <script>
+  function calcule_rent() {
+    const in_price = $('#in_price')
+    const out_price = $('#out_price')
+    const in_expire = $('#in_expire')
+    const out_expired = $('#out_expired')
+    const hs = $('#hsRange').val()  
 
-  function kerenta() {
-    const hs = $('#hsRange').val()
-    const rental_price = $('#rental_price')
-    const final_price = $('#final_price')
-    const rental_expired = $('#rental_expired')
-    const final_expired = $('#final_expired')
-    now=null
-    now = new Date(Date.now())
-  
-    rental_price.val(hs * 1000)
-    final_price.val(rental_price.val())
+    in_price.val(hs * <%= Rental.states["#{@rental.state}"] %>)
+    out_price.val(in_price.val())
 
-    rental_expired.val(new Date(now.getHours() + hs))
-    final_expired.val(rental_expired.val())
-    
-    console.log(hs, rental_price.val(), final_price.val(), rental_expired.val(), final_expired.val())
+    date = new Date().getTime() + hs*60*60*1000 //1hs->60m, 1m->60s, 1s->1000ms
+    date = new Date(date)
+
+    in_expire.val(date_format(date))
+    out_expired.val(in_expire.val())
+  }
+
+  function date_format(date) {
+    return `${date.getFullYear()}-${date.getMonth()+1}-${[date.getDate()]} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
   }
 
 </script>

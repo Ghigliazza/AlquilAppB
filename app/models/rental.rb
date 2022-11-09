@@ -15,19 +15,5 @@ class Rental < ApplicationRecord
   enum state: { started: STARTED_PRICE, extended: EXTENDED_PRICE, expired: EXPIRED_PRICE }
 
   #SCOPES
-  scope :licenses_expired, -> { where("licenseExpiration < ?", Time.now) }
-
-  #METHODS
-  def calcule_date(date1, date2)
-    return new DateTime(date1.year + date2.year, date1.month + date2.month, date1.day + date2.day, date1.hour + date2.hour + date1.second + date2.second, )
-  end
-
-
-  def requirements()
-    if @rental.price > current_user.balance && Date.now
-      
-    else
- 
-    end
-  end
+  scope :licenses_expired, -> { where("expires < ?", Time.now) }
 end

@@ -23,7 +23,7 @@ class User < ApplicationRecord
   #SCOPES
   scope :administrators,   -> { where(:rol => :administrator)}
   scope :supervisors,      -> { where(:rol => :supervisor)}
-  scope :divers,           -> { where(:rol => :diver)}
+  scope :drivers,          -> { where(:rol => :driver)}
   scope :for_admits,       -> { where(:state => :for_admit)}
   scope :admissed,         -> { where(:state => :admiss)}
   scope :dimissed,         -> { where(:state => :dimiss)}
@@ -31,4 +31,5 @@ class User < ApplicationRecord
   scope :debtors,          -> { where("balance < 0")}
   scope :defaulter,        -> { self.debtors.bloked }
   scope :licenses_expired, -> { where("licenseExpiration < ?", Time.now)}
+  scope :recent_rental?,   -> { self.rental.order('expires').first['expires'] < Time.now }
 end
