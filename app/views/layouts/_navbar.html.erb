@@ -20,11 +20,11 @@
 
 
      <% if current_user %>   
-        <%= link_to "Edit Profile", edit_user_path(current_user.id) , class:"nav-link"%>
-        <%= link_to "Logout", :logout, data: { turbo_method: :post } , class:"nav-link"%>    
+        <%= link_to "Editar Perfil", edit_user_path(current_user.id) , class:"nav-link"%>
+        <%= link_to "Cerrar Sesión", :logout, data: { turbo_method: :post } , class:"nav-link"%>    
      <% else %>   
-        <%= link_to "Sign Up", new_user_path, class:"nav-link" %> 
-        <%= link_to "Login", :login , class:"nav-link"%>
+        <%= link_to "Registrar Usuario", new_user_path, class:"nav-link" %> 
+        <%= link_to "Iniciar Sesión", :login , class:"nav-link"%>
      <% end %> 
    
 
