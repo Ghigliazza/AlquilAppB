@@ -15,5 +15,5 @@ class Rental < ApplicationRecord
   enum state: { started: STARTED_PRICE, extended: EXTENDED_PRICE, expired: EXPIRED_PRICE }
 
   #SCOPES
-  scope :licenses_expired, -> { where("expires < ?", Time.now) }
+  scope :expired, -> { where("expires < ?", Time.now) }
 end
