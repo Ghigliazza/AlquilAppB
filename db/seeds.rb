@@ -132,7 +132,7 @@ Car.create!([{
 	model: "308",
 	brand: "Peugeot",
 	license:"AB888CD",
-	color:"Verde",
+	color:"Blanco",
 	img_url:"/autos/AB888CD.jpg",
 	doors: 4,
 	seats: 4,
