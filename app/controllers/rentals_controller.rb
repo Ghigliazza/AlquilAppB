@@ -14,10 +14,7 @@ class RentalsController < ApplicationController
   # GET /rentals/new
   def new
     @rental = Rental.new()
-<<<<<<< HEAD
-=======
     @rental_expired = Time.now + 1.hour
->>>>>>> 948b11e (resolviendo validaciones de la generacion de alquileres)
   end
 
   # GET /rentals/1/edit
@@ -30,13 +27,9 @@ class RentalsController < ApplicationController
 
     respond_to do |format|
       if @rental.save
-<<<<<<< HEAD
-        format.html { redirect_to rental_url(@rental), notice: "Auto alquilado correctamente" }
-=======
         Car.find(@rental.car_id).rented! #actializa el estado del auto
 
-        format.html { redirect_to rental_url(@rental), notice: "Rental was successfully created." }
->>>>>>> 1354def (comprobando escenarios de new rents)
+        format.html { redirect_to rental_url(@rental), notice: "Auto alquilado correctamente" }
         format.json { render :show, status: :created, location: @rental }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -86,29 +79,9 @@ class RentalsController < ApplicationController
 
     def requirements
       notice = ''
-<<<<<<< HEAD
-      if rental_params[:price].to_i > current_user.balance
-<<<<<<< HEAD
-        alert = "No tiene suficiente saldo"
-      end
 
-      # if current_user.recent_rental?
-      #   alert = "No puede alquialr este auto antes de 3 hs de su ultimo alquiler"
-      # end
-
-      #if !current_user.addmiss?
-      #  alert = "Debe estar habilitado para alquialr este auto"
-      #end
-
-     # if alert != ''
-        #redirect_back fallback_location: root_path, alert: alert
-        #redirect_to rentals_path, alert: alert
-    #  end
-=======
-=======
       if params[:rental][:price].to_i > current_user.balance
->>>>>>> 1354def (comprobando escenarios de new rents)
-        alert = "no tiene suficiente saldo"
+        alert = "No tiene suficiente saldo"
       end
 
       last_rent = current_user.rental.first
@@ -116,13 +89,12 @@ class RentalsController < ApplicationController
         alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
       end
 
-      if !current_user.addmiss?
-        alert = "debe estar habilitado para alquialr este auto"
-      end
+      #if !current_user.addmiss?
+        #alert = "debe estar habilitado para alquialr este auto"
+      #end
 
       if alert != ''
         redirect_to rentals_path, alert: alert
       end
->>>>>>> 948b11e (resolviendo validaciones de la generacion de alquileres)
     end
 end

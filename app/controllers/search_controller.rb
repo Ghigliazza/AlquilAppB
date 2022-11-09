@@ -4,11 +4,7 @@ class SearchController < ApplicationController
   def index
   
      # Guarda todos los autos en estado 1(disponible) y los ordena por combustible (luego sera por distancia)
-<<<<<<< HEAD
      #@carsDisponibles = Car.where(:state => 1).order(fuel: :desc)
-=======
-     @carsDisponibles = Car.where(:state => 0).order(fuel: :desc)
->>>>>>> 1354def (comprobando escenarios de new rents)
 
      #Actualiza la distancia respecto al usuario actual
      #No es eficiente (arreglar)
