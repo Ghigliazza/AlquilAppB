@@ -9,4 +9,23 @@ class SearchController < ApplicationController
   end
 
 
+
+  def distance (car_x,car_y,user_x,user_y)
+
+    @distx = (car_x - user_x).magnitude * 111000
+    @disty = (car_y - user_y).magnitude * 111000
+
+    @total = (@distx * @distx) + (@disty * @disty)
+    @total = Math.sqrt(@total)
+
+    # Pasar a metros?
+    @total = @total
+
+    return @total
+
+  end
+  helper_method :distance
+
+
+
 end
