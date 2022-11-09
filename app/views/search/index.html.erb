@@ -1,12 +1,14 @@
-<%# ======================================================================================================== %>
-<%# ===================================== MAPA ============================================================= %>
-
 <head>
 
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
 <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
 
 </head>	
+
+<body>	
+
+<%# ======================================================================================================== %>
+<%# ===================================== MAPA ============================================================= %>
 
 <div id='map' style='width: 800px; height: 300px;'></div>
 <script>
@@ -22,15 +24,11 @@
 	.setLngLat([<%= current_user.coords_x %>, <%= current_user.coords_y %>])
 	.setPopup(new mapboxgl.Popup().setHTML("<b><%= current_user.name %></b>"))
 	.addTo(map);
-
 </script>
 
 
-<% @carsDisponibles.each do |car| %>
-
-      <%#= render partial: 'search/car_card', locals:{car: car} %>  
+<% @carsDisponibles.each do |car| %> 
  	<script>
-
   	const marker<%= car.license %> = new mapboxgl.Marker({ color: 'red', rotation: 0, scale: 0.5 })
 		.setLngLat([<%= car.coords_x %>, <%= car.coords_y %>])
 		.setPopup(new mapboxgl.Popup().setHTML("<b> <%= car.brand %> <%= car.model %> </b>"))
@@ -91,3 +89,4 @@
     <%# /Coordenadas %>
 
 
+</body>	

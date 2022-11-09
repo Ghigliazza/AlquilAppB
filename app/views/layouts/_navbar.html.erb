@@ -15,8 +15,9 @@
      </a> -->
 
       <li class="nav-item active">
-        <a class="nav-link" href="/search">Encontrar Autos</a>
+        <a class="nav-link" href="/search" data-turbolinks="false">Encontrar Autos</a>
       </li>
+
 
      <% if current_user %>   
         <%= link_to "Edit Profile", edit_user_path(current_user.id) , class:"nav-link"%>
