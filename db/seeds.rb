@@ -288,7 +288,7 @@ User.create!([
 	license_url: "",    
 	licenseNumber: nil,
 	licenseExpiration: nil,
-	balance: 150000
+	balance: 5000
 	},
 
 	{
@@ -311,7 +311,7 @@ User.create!([
 
 
 	{
-	email: "b@gmail.com",                                                   
+	email: "test2@gmail.com",                                                   
 	password: 1234,
 	password_confirmation: 1234,                                 
 	rol: 1,                                                       
