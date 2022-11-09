@@ -5,7 +5,7 @@ class UserSessionsController < ApplicationController
     @user = login(params[:email], params[:password])
 
     if @user
-      redirect_back_or_to(:users, notice: 'Sesion iniciada correctamente')
+      redirect_back_or_to("/search", notice: 'Sesion iniciada correctamente')
     else
       flash.now[:alert] = 'Los datos son incorrectos'
       render action: 'new', status: :unprocessable_entity
@@ -14,6 +14,6 @@ class UserSessionsController < ApplicationController
 
   def destroy
     logout
-    redirect_to(:users, notice: 'Sesion cerrada!')
+    redirect_to("/search", notice: 'Sesion cerrada!')
   end
 end

@@ -79,8 +79,8 @@
           </script>  
 
           <% if session[:lat] && session[:lng] %>
-           <p>Tu ubicación:</p>
-           <p><%= session[:lng] %>, <%= session[:lat] %></p>
+           <p><%#= session[:lng] %> <%#= session[:lat] %></p>
+
            <%# Actualiza las coordenadas del usuario actual%>
            <% User.where(document: current_user.document).update(coords_x: session[:lng]) %>
            <% User.where(document: current_user.document).update(coords_y: session[:lat]) %>
