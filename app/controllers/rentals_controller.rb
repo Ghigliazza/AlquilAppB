@@ -14,7 +14,6 @@ class RentalsController < ApplicationController
   # GET /rentals/new
   def new
     @rental = Rental.new()
-    @rental_expired = Time.now + 1.hour
   end
 
   # GET /rentals/1/edit
