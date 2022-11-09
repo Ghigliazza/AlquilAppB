@@ -30,7 +30,13 @@ class RentalsController < ApplicationController
 
     respond_to do |format|
       if @rental.save
+<<<<<<< HEAD
         format.html { redirect_to rental_url(@rental), notice: "Auto alquilado correctamente" }
+=======
+        Car.find(@rental.car_id).rented! #actializa el estado del auto
+
+        format.html { redirect_to rental_url(@rental), notice: "Rental was successfully created." }
+>>>>>>> 1354def (comprobando escenarios de new rents)
         format.json { render :show, status: :created, location: @rental }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -80,6 +86,7 @@ class RentalsController < ApplicationController
 
     def requirements
       notice = ''
+<<<<<<< HEAD
       if rental_params[:price].to_i > current_user.balance
 <<<<<<< HEAD
         alert = "No tiene suficiente saldo"
@@ -98,12 +105,16 @@ class RentalsController < ApplicationController
         #redirect_to rentals_path, alert: alert
     #  end
 =======
+=======
+      if params[:rental][:price].to_i > current_user.balance
+>>>>>>> 1354def (comprobando escenarios de new rents)
         alert = "no tiene suficiente saldo"
       end
 
-      # if current_user.recent_rental?
-      #   alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
-      # end
+      last_rent = current_user.rental.first
+      if last_rent && last_rent[:expires] < Time.now
+        alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
+      end
 
       if !current_user.addmiss?
         alert = "debe estar habilitado para alquialr este auto"
