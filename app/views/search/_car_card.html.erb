@@ -28,8 +28,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><b> <%= "Distancia (Aprox.)" %></b> </td>
-                        <td><%= distancia(car.coords_x,car.coords_y,current_user.coords_x,current_user.coords_y).round %> <%= " Metros" %></td> 
+                        <td><b> <%= "Distancia (Aprox.)" %></b></td>
+
+                        <td>
+
+                        <%# Solo calcula la distancia si se tiene la posicion del usuario <%>
+                        <% if session[:lat] && session[:lng] %>
+
+                            <%= distancia(car.coords_x,car.coords_y,current_user.coords_x,current_user.coords_y).round %> <%= " Metros" %>
+
+                        <% end %> 
+                       </td> 
+
+                        
                     </tr>
                     <tr>
                         <td><b> <%= "Color" %></b> </td>

@@ -9,7 +9,7 @@ class SearchController < ApplicationController
      #Actualiza la distancia respecto al usuario actual
      #No es eficiente (arreglar)
      actualizarDistancias
-
+     
      @carsDisponibles = Car.where(:state => 1).order(:distance)
      
   end
@@ -27,14 +27,23 @@ class SearchController < ApplicationController
 
 
   def distancia (car_x,car_y,user_x,user_y)
-    @distx = (car_x - user_x).magnitude * 111000
-    @disty = (car_y - user_y).magnitude * 111000
 
-    @total = (@distx * @distx) + (@disty * @disty)
-    @total = Math.sqrt(@total)
+    @total = 0
 
-    # Pasar a metros?
-    @total = @total
+    # Si no se tiene la posicion del user actual, la distancia es 0
+    if (session[:lat] && session[:lng])
+
+      @distx = (car_x - user_x).magnitude * 111000
+      @disty = (car_y - user_y).magnitude * 111000
+
+      @total = (@distx * @distx) + (@disty * @disty)
+      @total = Math.sqrt(@total)
+
+      # Pasar a metros?
+      @total = @total
+        
+    end
+    
 
     return @total
   end
