@@ -1,5 +1,6 @@
 class RentalsController < ApplicationController
   before_action :set_rental, only: %i[ show edit update destroy ]
+  before_action :requirements, only: [:create]
 
   # GET /rentals or /rentals.json
   def index
@@ -13,8 +14,7 @@ class RentalsController < ApplicationController
   # GET /rentals/new
   def new
     @rental = Rental.new()
-    @rental_price = :started
-    @rental_expired = @rental.calcule_date(DateTime.now, new DateTime(0, 0, 0, 1, 0, 0))
+    @rental_expired = Time.now + 1.hour
   end
 
   # GET /rentals/1/edit
@@ -67,6 +67,30 @@ class RentalsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def rental_params
-      params.require(:rental).permit(:price, :expires, :user_id, :car_id)
+      if params["_method"] == "post"
+        params.require(:rental).permit(:price, :expires, :user_id, :car_id)
+      else
+        params.require(:rental).permit(:price, :expires)
+      end
+    end
+
+
+    def requirements
+      notice = ''
+      if rental_params[:price].to_i > current_user.balance
+        alert = "no tiene suficiente saldo"
+      end
+
+      # if current_user.recent_rental?
+      #   alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
+      # end
+
+      if !current_user.addmiss?
+        alert = "debe estar habilitado para alquialr este auto"
+      end
+
+      if alert != ''
+        redirect_to rentals_path, alert: alert
+      end
     end
 end

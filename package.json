@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "bootstrap": "^5.2.2"
+    "bootstrap": "^5.2.2",
+    "strftime": "^0.10.1"
   }
 }
