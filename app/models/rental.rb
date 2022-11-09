@@ -1,5 +1,5 @@
 class Rental < ApplicationRecord
-  #RELATIONS
+  #ASSOCIATIONS
   belongs_to :user
   belongs_to :car
 
@@ -15,5 +15,5 @@ class Rental < ApplicationRecord
   enum state: { started: STARTED_PRICE, extended: EXTENDED_PRICE, expired: EXPIRED_PRICE }
 
   #SCOPES
-  scope :licenses_expired, -> { where("licenseExpiration < ?", Time.now) }
+  scope :licenses_expired, -> { where("expires < ?", Time.now) }
 end

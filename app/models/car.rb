@@ -1,4 +1,5 @@
 class Car < ApplicationRecord
+	#ASSOCIATIONS
 	has_one :position
 	has_many :rental
 	has_many :report
