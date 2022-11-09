@@ -14,6 +14,10 @@ class RentalsController < ApplicationController
   # GET /rentals/new
   def new
     @rental = Rental.new()
+<<<<<<< HEAD
+=======
+    @rental_expired = Time.now + 1.hour
+>>>>>>> 948b11e (resolviendo validaciones de la generacion de alquileres)
   end
 
   # GET /rentals/1/edit
@@ -77,6 +81,7 @@ class RentalsController < ApplicationController
     def requirements
       notice = ''
       if rental_params[:price].to_i > current_user.balance
+<<<<<<< HEAD
         alert = "No tiene suficiente saldo"
       end
 
@@ -92,5 +97,21 @@ class RentalsController < ApplicationController
         #redirect_back fallback_location: root_path, alert: alert
         #redirect_to rentals_path, alert: alert
     #  end
+=======
+        alert = "no tiene suficiente saldo"
+      end
+
+      # if current_user.recent_rental?
+      #   alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
+      # end
+
+      if !current_user.addmiss?
+        alert = "debe estar habilitado para alquialr este auto"
+      end
+
+      if alert != ''
+        redirect_to rentals_path, alert: alert
+      end
+>>>>>>> 948b11e (resolviendo validaciones de la generacion de alquileres)
     end
 end
