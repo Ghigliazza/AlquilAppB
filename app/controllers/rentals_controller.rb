@@ -26,7 +26,7 @@ class RentalsController < ApplicationController
 
     respond_to do |format|
       if @rental.save
-        format.html { redirect_to rental_url(@rental), notice: "Rental was successfully created." }
+        format.html { redirect_to rental_url(@rental), notice: "Auto alquilado correctamente" }
         format.json { render :show, status: :created, location: @rental }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -77,19 +77,20 @@ class RentalsController < ApplicationController
     def requirements
       notice = ''
       if rental_params[:price].to_i > current_user.balance
-        alert = "no tiene suficiente saldo"
+        alert = "No tiene suficiente saldo"
       end
 
       # if current_user.recent_rental?
-      #   alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
+      #   alert = "No puede alquialr este auto antes de 3 hs de su ultimo alquiler"
       # end
 
-      if !current_user.addmiss?
-        alert = "debe estar habilitado para alquialr este auto"
-      end
+      #if !current_user.addmiss?
+      #  alert = "Debe estar habilitado para alquialr este auto"
+      #end
 
-      if alert != ''
-        redirect_to rentals_path, alert: alert
-      end
+     # if alert != ''
+        #redirect_back fallback_location: root_path, alert: alert
+        #redirect_to rentals_path, alert: alert
+    #  end
     end
 end

@@ -3,24 +3,24 @@
 <% if rental && rental.user_id == current_user.id %>
 <div id="<%= dom_id rental %>">
   <p>
-    <strong>Price:</strong>
+    <strong>Precio:</strong>
     <%= rental.price %>
   </p>
 
   <p>
-    <strong>Expires:</strong>
+    <strong>Expira:</strong>
     <%= rental.expires %>
   </p>
-
+  
   <p>
     <strong>User:</strong>
     <%= rental.user_id %>
-  </p>
+  </p> 
 
   <p>
     <strong>Car:</strong>
     <%= rental.car_id %>
-  </p>
+  </p> 
 
 </div>
 <% end %>

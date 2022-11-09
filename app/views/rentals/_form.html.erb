@@ -29,6 +29,15 @@
   </div>
 
   <div>
+    Saldo: <%= current_user.balance %>
+
+    <%#BORRAR%>
+    Usuario: <%= current_user.name%>
+    ID: <%= current_user.id%>
+    <%#= car_id %>
+  </div>
+
+  <div>
     <%= form.label :expires, style: "display: block" %>
     <%= form.hidden_field :expires, :id => "in_expire", :value => Time.now + 1.hour %>
     <output id="out_expired"><%= (Time.now + 1.hour).strftime('%Y-%m-%e %k:%M:%S') %></output>

@@ -303,7 +303,7 @@ User.create!([
 	license_url: "",  
 	licenseNumber: nil,
 	licenseExpiration: nil,
-	balance: 150000,
+	balance: 5000,
 	coords_x: -57.957160476901834,
 	coords_y: -34.919451958400096 
 
@@ -385,4 +385,7 @@ User.create!([
 ])
 
 p "Seed created #{User.count} users"
+
+p "Seed destroyed #{Rental.count} rentals"
+Rental.destroy_all
 
