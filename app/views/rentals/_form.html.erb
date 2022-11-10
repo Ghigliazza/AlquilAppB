@@ -1,7 +1,4 @@
-<%
-@driver = params[:driver]
-
-%>
+<% @driver = params[:driver] %>
 
 <%= form_with(model: rental) do |form| %>
   <% if rental.errors.any? %>
@@ -83,3 +80,6 @@
   }
 
 </script>
+
+
+<%= alert %>

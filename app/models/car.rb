@@ -1,8 +1,8 @@
 class Car < ApplicationRecord
 	#ASSOCIATIONS
 	has_one :position
-	has_many :rental
-	has_many :report
+	has_many :rentals
+	has_many :reports
 	has_many :users, :through => :rental
 
 	#ENUMERATIVES

@@ -80,7 +80,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_09_134125) do
     t.datetime "updated_at", null: false
     t.integer "licenseNumber"
     t.date "licenseExpiration"
-    t.float "balance"
+    t.decimal "balance", default: "0.0"
     t.float "coords_x"
     t.float "coords_y"
     t.index ["document"], name: "index_users_on_document", unique: true

@@ -3,9 +3,9 @@ class User < ApplicationRecord
   
   #ASSOCIATIONS
   has_one :position
-  has_many :card
-  has_many :rental
-  has_many :report
+  has_many :cards
+  has_many :rentals
+  has_many :reports
   has_many :cars, :through => :rental
 
   #VALIDATIONS
@@ -18,7 +18,7 @@ class User < ApplicationRecord
 
   #ENUMERATIVES
   enum rol: [:administrator, :supervisor, :driver]
-  enum state: [:for_admit, :addmiss, :dismiss, :blok]
+  enum state: [:new, :for_admit, :addmiss, :dismiss, :blok]
 
   #SCOPES
   scope :administrators,   -> { where(:rol => :administrator)}

@@ -85,7 +85,7 @@ Car.create!([{
 	img_url:"/autos/AB555CD.jpg",
 	doors: 4,
 	seats: 5,
-	state: 1,
+	state: 0,
 	engine: 0,
 	#position_id: ,
 	fuel: 20,
@@ -102,7 +102,7 @@ Car.create!([{
 	img_url:"/autos/AB666CD.jpg",
 	doors: 4,
 	seats: 7,
-	state: 1,
+	state: 0,
 	engine: 0,
 	#position_id: ,
 	fuel: 23,
@@ -136,7 +136,7 @@ Car.create!([{
 	img_url:"/autos/AB888CD.jpg",
 	doors: 4,
 	seats: 4,
-	state: 1,
+	state: 0,
 	engine: 0,
 	#position_id: ,
 	fuel: 3,
@@ -153,7 +153,7 @@ Car.create!([{
 	img_url:"/autos/AB999CD.jpg",
 	doors: 4,
 	seats: 5,
-	state: 1,
+	state: 0,
 	engine: 0,
 	#position_id: ,
 	fuel: 29.8,
@@ -170,7 +170,7 @@ Car.create!([{
 	img_url:"/autos/AB000CD.jpg",
 	doors: 4,
 	seats: 5,
-	state: 1,
+	state: 0,
 	engine: 0,
 	#position_id: ,
 	fuel: 19.5,
@@ -187,7 +187,7 @@ Car.create!([{
 	img_url:"/autos/BB111CD.jpg",
 	doors: 4,
 	seats: 5,
-	state: 1,
+	state: 0,
 	engine: 0,
 	#position_id: ,
 	fuel: 29.8,
@@ -205,7 +205,7 @@ Car.create!([{
 	img_url:"/autos/BB444CC.jpg",
 	doors: 2,
 	seats: 2,
-	state: 1,
+	state: 0,
 	engine: 0,
 	#position_id: ,
 	fuel: 39.8,
@@ -222,7 +222,7 @@ Car.create!([{
 	img_url:"/autos/BB111CC.jpg",
 	doors: 2,
 	seats: 2,
-	state: 1,
+	state: 0,
 	engine: 0,
 	#position_id: ,
 	fuel: 29.8,
@@ -239,7 +239,7 @@ Car.create!([{
 	img_url:"/autos/BB222CD.jpg",
 	doors: 2,
 	seats: 2,
-	state: 1,
+	state: 0,
 	engine: 0,
 	#position_id: ,
 	fuel: 21.8,
@@ -256,7 +256,7 @@ Car.create!([{
 	img_url:"/autos/BB333CD.jpg",
 	doors: 2,
 	seats: 2,
-	state: 1,
+	state: 0,
 	engine: 0,
 	#position_id: ,
 	fuel: 9.1,
@@ -280,11 +280,11 @@ User.create!([
 	email: "test@gmail.com",                                                   
 	password: 1234,
 	password_confirmation: 1234,                                 
-	rol: 1,                                                       
+	rol: 2,                                                       
 	name: "Juan",                                                 
 	lastName: "Garcia",                                                
 	document: 42345678,                                           
-	#state: true,                                                  
+	state: 0,                                                  
 	license_url: "",    
 	licenseNumber: nil,
 	licenseExpiration: nil,
@@ -295,11 +295,11 @@ User.create!([
 	email: "a",                                                   
 	password: 1234,
 	password_confirmation: 1234,                                 
-	rol: 1,                                                       
+	rol: 2,                                                       
 	name: "Juan",                                                 
 	lastName: "Garcia",                                                
 	document: 42345679,                                           
-	#state: true,                                                  
+	state: 1,                                                  
 	license_url: "",  
 	licenseNumber: nil,
 	licenseExpiration: nil,
@@ -318,7 +318,7 @@ User.create!([
 	name: "Jose",                                                 
 	lastName: "Gutierrez",                                                
 	document: 38830194,                                           
-	#state: true,                                                  
+	state: 0,                                                  
 	license_url: "",   
 	licenseNumber: nil,
 	licenseExpiration: nil,
@@ -332,7 +332,7 @@ User.create!([
 	name: "Aurelia",                                                 
 	lastName: "Alamo",                                                
 	document: 06705167,                                           
-	#state: true,                                                  
+	state: 0,                                                  
 	license_url: "",  
 	licenseNumber: nil,
 	licenseExpiration: nil,
@@ -346,7 +346,7 @@ User.create!([
 	name: "Esperanza",                                                 
 	lastName: "Gómez",                                                
 	document: 63543583,                                           
-	#state: true,                                                  
+	state: 0,                                                  
 	license_url: "",    
 	licenseNumber: nil,
 	licenseExpiration: nil,
@@ -360,32 +360,46 @@ User.create!([
 	name: "Alex",                                                 
 	lastName: "Narvaez",                                                
 	document: 37513057,                                           
-	#state: true,                                                  
+	state: 0,                                                  
 	license_url: "",   
 	licenseNumber: nil,
 	licenseExpiration: nil,
-	balance: 6000
+	balance: -6000
 	},
 	{
-	email: "f@gmail.com",                                                   
+	email: "admin@gmail.com",                                                   
 	password: 1234,
 	password_confirmation: 1234,                                 
-	rol: 1,                                                       
-	name: "Maria",                                                 
-	lastName: "Garcia",                                                
-	document: 14867143,                                           
-	#state: true,                                                  
+	rol: 0,                                                       
+	name: "Admin",                                                 
+	lastName: "Sito",                                                
+	document: 'nan',                                           
+	state: 0,                                                  
 	license_url: "",   
 	licenseNumber: nil,
 	licenseExpiration: nil,
-	balance: -1000
+	balance: 999999999999999999999999999999999
 	} 
 
 
 ])
 
+
+Rental.destroy_all
+
+# (1..10).each do
+# 	n = rand(24).to_i,
+# 	Rental.create(
+# 		price: n*1000,
+# 		expire: Time.now + n,
+# 		user_id: rand(User.count).to_i,
+# 		car_id: rand(Car.count).to_i
+# 	)
+	
+# end
+
+
 p "Seed created #{User.count} users"
 
 p "Seed destroyed #{Rental.count} rentals"
-Rental.destroy_all
 

@@ -1,6 +1,6 @@
 class RentalsController < ApplicationController
   before_action :set_rental, only: %i[ show edit update destroy ]
-  before_action :requirements, only: [:create]
+  # before_action :requirements, only: %i[ create ]
 
   # GET /rentals or /rentals.json
   def index
@@ -22,16 +22,23 @@ class RentalsController < ApplicationController
 
   # POST /rentals or /rentals.json
   def create
+
+    @car = Car.find(params[:car_id])
+    
+
     @rental = Rental.new(rental_params)
+    
+    print @rental
 
     respond_to do |format|
       if @rental.save
+
         Car.find(@rental.car_id).rented! #actializa el estado del auto
 
         format.html { redirect_to rental_url(@rental), notice: "Auto alquilado correctamente" }
         format.json { render :show, status: :created, location: @rental }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity, notice: :alert }
         format.json { render json: @rental.errors, status: :unprocessable_entity }
       end
     end
@@ -77,20 +84,18 @@ class RentalsController < ApplicationController
 
 
     def requirements
-      notice = ''
-
       if params[:rental][:price].to_i > current_user.balance
         alert = "No tiene suficiente saldo"
       end
 
-      last_rent = current_user.rental.first
-      if last_rent && last_rent[:expires] < Time.now
+      last_rent = current_user.rentals.first
+      if last_rent && last_rent[:expires] > Time.now - 3
         alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
       end
 
-      #if !current_user.addmiss?
-        #alert = "debe estar habilitado para alquialr este auto"
-      #end
+      if !current_user.addmiss?
+        alert = "debe estar habilitado para alquialr este auto"
+      end
 
       if alert != ''
         redirect_to rentals_path, alert: alert
