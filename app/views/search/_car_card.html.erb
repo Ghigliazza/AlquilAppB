@@ -93,10 +93,25 @@
 
 
           <p>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleID1<%=car.id%>">
-              Alquilar Auto
-            </button>  
+            <% if current_user.driver? %>
+                <!-- Button trigger modal Alquiler-->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleID1<%=car.id%>">
+                  Alquilar Auto
+                </button>  
+            <% end %>
+
+            <% if current_user.supervisor? || current_user.admin? %>
+              <% if car.ready? %>
+                  <button type="button" class="btn btn-primary">
+                    Bloquear Auto
+                  </button>  
+              <% end %>
+              <% if car.blocked? %>
+                  <button type="button" class="btn btn-primary">
+                    Desbloquear Auto
+                  </button>  
+              <% end %>
+            <% end %>
           </p>  
 
                     
