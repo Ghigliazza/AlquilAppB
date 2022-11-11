@@ -42,11 +42,29 @@
     <%#> /BOOTSTRAP <%>
 
 
-    
-    <div>
-      <p id="notice"><%= flash[:notice] %></p>
-      <p id="alert"><%= flash[:alert] %></p>
+    <!-- BACKUP ALERTAS
+    <div >
+      <p id="notice"><%#= flash[:notice] %></p>
+      <p id="alert"><%#= flash[:alert] %></p>
     </div>
+    -->
+
+    <% if flash[:notice] != nil %>
+      <div >
+        <p id="notice" class="alert alert-primary alert-dismissible fade show"><%= flash[:notice] %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </p>
+      </div>
+    <% end %>
+
+    <% if flash[:alert] != nil %>
+      <div >
+        <p id="notice" class="alert alert-danger alert-dismissible fade show"><%= flash[:alert] %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </p>
+      </div>
+    <% end %>
+
     <%= yield %>
 
     <%# ======================================================================================================== %>
