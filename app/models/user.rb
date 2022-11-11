@@ -17,19 +17,25 @@ class User < ApplicationRecord
   validates :document, uniqueness: true
 
   #ENUMERATIVES
-  enum rol: [:administrator, :supervisor, :driver]
-  enum state: [:new, :for_admit, :addmiss, :dismiss, :blok]
+  enum rol: [:admin, :supervisor, :driver]
+  enum state: [:empty, :submitted, :admitted, :rejected, :blocked]
+  
+  # empty: cuenta recien creada/ no hay datos subidos
+  # submitted: subio o actualizo los datos para manejar
+  # admitted: datos verificados y aceptados. Puede manejar.
+  # rejected: datos verificados y rechazados
+  # blocked: usuario bloqueado por supervisor/admin
 
   #SCOPES
-  scope :administrators,   -> { where(:rol => :administrator)}
+  scope :administrators,   -> { where(:rol => :admin)}
   scope :supervisors,      -> { where(:rol => :supervisor)}
   scope :drivers,          -> { where(:rol => :driver)}
-  scope :for_admits,       -> { where(:state => :for_admit)}
-  scope :admissed,         -> { where(:state => :admiss)}
-  scope :dimissed,         -> { where(:state => :dimiss)}
-  scope :bloked,           -> { where(:state => :blok)}
+  scope :submitted,        -> { where(:state => :submitted)}
+  scope :admitted,         -> { where(:state => :admitted)}
+  scope :rejected,         -> { where(:state => :rejected)}
+  scope :blocked,          -> { where(:state => :blocked)}
   scope :debtors,          -> { where("balance < 0")}
-  scope :defaulter,        -> { self.debtors.bloked }
+  scope :defaulter,        -> { self.debtors.blocked }
   scope :licenses_expired, -> { where("licenseExpiration < ?", Time.now)}
   scope :recent_rental?,   -> { self.rental.order('expires').first['expires'] < Time.now }
 end

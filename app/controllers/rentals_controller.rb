@@ -93,7 +93,7 @@ class RentalsController < ApplicationController
         alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
       end
 
-      if !current_user.addmiss?
+      if !current_user.addmitted?
         alert = "debe estar habilitado para alquialr este auto"
       end
 

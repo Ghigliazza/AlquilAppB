@@ -6,12 +6,12 @@ class Car < ApplicationRecord
 	has_many :users, :through => :rental
 
 	#ENUMERATIVES
-	enum state: [:ready, :rented, :blok]
+	enum state: [:ready, :rented, :blocked]
 
 	#scopes
 	scope :readys, 		-> 			 { where(:state => :ready)}
 	scope :renteds, 	-> 			 { where(:state => :rented)}
-	scope :bloked, 		-> 			 { where(:state => :blok)}
+	scope :blocked, 	-> 		     { where(:state => :blocked)}
 	scope :low_fuel, 	-> 			 { where("fuel < 1")}
 	scope :models, 		->(model){ where(model: model) }
 	scope :brands, 		->(brand){ where(brand: brand) }
