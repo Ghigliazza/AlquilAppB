@@ -351,9 +351,25 @@ User.create!([
 	licenseExpiration: nil,
 	balance: -1000
 	} 
-
-
 ])
 
+
 p "Seed created #{User.count} users"
+
+(1..10).each do |i|
+	hs = rand(0..23);
+	expire = Time.new(2022, rand(1..12), rand(1..31), hs, rand(0..60), rand(0..60));
+	created = expire + hs.hours;
+	deciduous = expire < created ? true : false; #si expiro la renta
+	Rental.create!(
+		price: (hs + 1) * 1000,
+		expires: expire,
+		user_id: rand(User.count),
+		car_id: rand(Car.cout),
+		state: rand(0..2)
+	);
+end
+
+p "Seed created #{Rental.count} rentals"
+
 

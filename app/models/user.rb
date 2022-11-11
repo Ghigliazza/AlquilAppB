@@ -18,7 +18,7 @@ class User < ApplicationRecord
 
   #ENUMERATIVES
   enum rol: [:administrator, :supervisor, :driver]
-  enum state: [:for_admit, :addmiss, :dismiss, :blok]
+  enum state: [:added, :for_admit, :addmiss, :dismiss, :blok]
 
   #SCOPES
   scope :administrators,   -> { where(:rol => :administrator)}
