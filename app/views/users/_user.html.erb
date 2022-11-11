@@ -1,49 +1,62 @@
 <div id="<%= dom_id user %>">
-  <p>
-    <strong>Email:</strong>
-    <%= user.email %>
-  </p>
 
-  <!-- 
-  <p>
-    <strong>Crypted password:</strong>
-    <%= user.crypted_password %>
-  </p> 
 
-  <p>
-    <strong>Salt:</strong>
-    <%= user.salt %>
-  </p>
+  <% if @user.id == current_user.id || current_user.admin? || current_user.supervisor? %>
+  
+        <p>
+        <strong>Email:</strong>
+        <%= user.email %>
+        </p>
 
-  <p>
-    <strong>Rol:</strong>
-    <%= user.rol %>
-  </p> -->
+        <!-- 
+        <p>
+          <strong>Crypted password:</strong>
+          <%= user.crypted_password %>
+        </p> 
 
-  <p>
-    <strong>Nombre:</strong>
-    <%= user.name %>
-  </p>
+        <p>
+          <strong>Salt:</strong>
+          <%= user.salt %>
+        </p>
 
-  <p>
-    <strong>Apellido:</strong>
-    <%= user.lastName %>
-  </p>
+        <p>
+          <strong>Rol:</strong>
+          <%= user.rol %>
+        </p> -->
 
-  <p>
-    <strong>Documento:</strong>
-    <%= user.document %>
-  </p>
+        <p>
+          <strong>Nombre:</strong>
+          <%= user.name %>
+        </p>
 
- <!-- 
-  <p>
-    <strong>State:</strong>
-    <%= user.state %>
-  </p>
+        <p>
+          <strong>Apellido:</strong>
+          <%= user.lastName %>
+        </p>
 
-  <p>
-    <strong>License:</strong>
-    <%= user.license_url %>
-  </p>-->
+        <p>
+          <strong>Documento:</strong>
+          <%= user.document %>
+        </p>
+
+       <!-- 
+        <p>
+          <strong>State:</strong>
+          <%= user.state %>
+        </p>
+
+        <p>
+          <strong>License:</strong>
+          <%= user.license_url %>
+        </p>-->
+
+
+
+  <% else %>
+    <div >
+        <p id="notice" class="alert alert-danger alert-dismissible fade show"> No tienes permiso para visualizar este usuario!</p>
+     </div>
+  <% end %>
+  
 
 </div>
