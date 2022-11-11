@@ -66,6 +66,23 @@
                         <td><b> <%= "Patente" %></b> </td>
                         <td><%= "#{car.license}" %></td> 
                     </tr>
+
+                    <% if current_user.supervisor? %>
+                      <tr>
+                        <td><b> <%= "Estado" %></b> </td>
+                        <% case car.state %>
+                            <% when 'ready' %> 
+                              <td><%= "Disponible" %></td> 
+                            <% when 'rented' %>                         
+                              <td><%= "En uso" %></td> 
+                            <% when 'blocked' %>                           
+                              <td><%= "Bloqueado" %></td> 
+                            <% else %>
+                              <td><%= car.state %></td> 
+                            <% end %>                     
+                      </tr>
+                    <% end %>
+
                 </tbody>
           </table>       
           <p>

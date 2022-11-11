@@ -1,0 +1,27 @@
+
+
+<div id='map' style='width: 800px; height: 300px;'></div>
+<script>
+  mapboxgl.accessToken = "<%= Rails.application.credentials.mapbox %>";
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox:///nico-map/cla8t5s8s004m15t3so6gnqt5',
+    center: [<%= current_user.coords_x %>, <%= current_user.coords_y %>],
+    zoom: 13
+  });
+
+  const marker1 = new mapboxgl.Marker({ color: 'green', rotation: 0, scale: 0.7 })
+	.setLngLat([<%= current_user.coords_x %>, <%= current_user.coords_y %>])
+	.setPopup(new mapboxgl.Popup().setHTML("<b><%= current_user.name %></b>"))
+	.addTo(map);
+</script>
+
+
+<% @carsList.each do |car| %> 
+ 	<script>
+  	const marker<%= car.license %> = new mapboxgl.Marker({ color: 'red', rotation: 0, scale: 0.5 })
+		.setLngLat([<%= car.coords_x %>, <%= car.coords_y %>])
+		.setPopup(new mapboxgl.Popup().setHTML("<b> <%= car.brand %> <%= car.model %> </b>"))
+		.addTo(map);
+	</script>
+<% end %>  

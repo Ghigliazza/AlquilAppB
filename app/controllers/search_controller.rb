@@ -10,9 +10,9 @@ class SearchController < ApplicationController
      actualizarDistancias
      
      if current_user.driver?
-      @carsDisponibles = Car.where(:state => :ready).order(:distance).order(fuel: :desc)
+      @carsList = Car.where(:state => :ready).order(:distance)
      else
-      @carsDisponibles = Car.all.order(:distance).order(fuel: :asc)
+      @carsList = Car.all.order(:distance).order(fuel: :asc)
      end
 
      
@@ -21,7 +21,7 @@ class SearchController < ApplicationController
 
   def actualizarDistancias
     @dist = 0
-    Car.where(:state => 0).each do |c| 
+    Car.all.each do |c| 
       if (session[:lng] && session[:lat])
         @dist = distancia(c.coords_x,c.coords_y,session[:lng],session[:lat])
         c.update(distance: @dist)   
