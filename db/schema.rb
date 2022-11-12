@@ -34,6 +34,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_09_134125) do
     t.float "fuel"
     t.string "transmission"
     t.string "description"
+    t.float "coords_x"
+    t.float "coords_y"
+    t.float "distance"
   end
 
   create_table "positions", force: :cascade do |t|
@@ -78,6 +81,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_09_134125) do
     t.integer "licenseNumber"
     t.date "licenseExpiration"
     t.decimal "balance", default: "0.0"
+    t.float "coords_x"
+    t.float "coords_y"
     t.index ["document"], name: "index_users_on_document", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
   end
