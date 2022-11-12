@@ -1,6 +1,10 @@
 class RentalsController < ApplicationController
   before_action :set_rental, only: %i[ show edit update destroy ]
+<<<<<<< HEAD
   # before_action :requirements, only: %i[ create ]
+=======
+  before_action :requirements, only: [:create]
+>>>>>>> dev
 
   # GET /rentals or /rentals.json
   def index
