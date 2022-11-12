@@ -380,26 +380,25 @@ User.create!([
 	licenseExpiration: nil,
 	balance: 999999999999999999999999999999999
 	} 
-
-
 ])
-
-
-Rental.destroy_all
-
-# (1..10).each do
-# 	n = rand(24).to_i,
-# 	Rental.create(
-# 		price: n*1000,
-# 		expire: Time.now + n,
-# 		user_id: rand(User.count).to_i,
-# 		car_id: rand(Car.count).to_i
-# 	)
-	
-# end
 
 
 p "Seed created #{User.count} users"
 
-p "Seed destroyed #{Rental.count} rentals"
+(1..10).each do |i|
+	hs = rand(0..23);
+	expire = Time.new(2022, rand(1..12), rand(1..31), hs, rand(0..60), rand(0..60));
+	created = expire + hs.hours;
+	deciduous = expire < created ? true : false; #si expiro la renta
+	Rental.create!(
+		price: (hs + 1) * 1000,
+		expires: expire,
+		user_id: rand(User.count),
+		car_id: rand(Car.cout),
+		state: rand(0..2)
+	);
+end
+
+p "Seed created #{Rental.count} rentals"
+
 
