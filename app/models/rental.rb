@@ -1,5 +1,5 @@
 class Rental < ApplicationRecord
-  #ASSOCIATIONS
+  #RELATIONS
   belongs_to :user
   belongs_to :car
 
