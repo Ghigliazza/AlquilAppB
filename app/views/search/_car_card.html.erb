@@ -33,7 +33,7 @@
                         <td>
 
                         <%# Solo calcula la distancia si se tiene la posicion del usuario <%>
-                        <% if session[:lat] && session[:lng] %>
+                        <% if (current_user.coords_x && current_user.coords_y) %>
 
                             <%= distancia(car.coords_x,car.coords_y,current_user.coords_x,current_user.coords_y).round %> <%= " Metros" %>
 

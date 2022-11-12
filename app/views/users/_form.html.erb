@@ -1,4 +1,8 @@
+
+<div style="margin-left:50px;">
+
 <%= form_with(model: user) do |form| %>
+
   <% if user.errors.any? %>
     <div style="color: red">
       <ul>
@@ -28,19 +32,6 @@
   <%# Hidden fields %>
   <%= form.hidden_field :coords_y %>
   <%= form.hidden_field :coords_x %>
-
-  <%# Visible fields - Debugging %>
-  <div>
-    <%#= form.label :coords_y, style: "display: block" %>
-    <%#= form.text_field :coords_y %>
-  </div>
-  <div>
-    <%#= form.label :coords_x, style: "display: block" %>
-    <%#= form.text_field :coords_x %>
-  </div>
-  <%# /localizacion %>
-
-
 
   <div>
     <%= form.label :email, style: "display: block" %>
@@ -88,6 +79,18 @@
   </div>
 
   <div>
-    <%= form.submit %>
+
+
+    <p></p>
+    <% if logged_in? %>
+      <%= form.button "Actualizar Datos" , type: "submit", :class=> "btn btn-primary"%>
+    <% else %>
+      <%= form.button "Crear Cuenta" , type: "submit", :class=> "btn btn-primary"%>
+    <% end %>
+
+    <%#= form.submit %>
+
   </div>
 <% end %>
+
+</div>  

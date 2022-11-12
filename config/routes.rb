@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   post 'login' => "user_sessions#create"
   get 'logout' => 'user_sessions#destroy', :as => :logout
 
-
   
   resources :cars do
     resources :rentals, only: [:new, :create]
@@ -15,6 +14,8 @@ Rails.application.routes.draw do
   resources :locations, only: :create
 
   resources :search
+
+  get '/documents/index' 
  
   
   resources :rentals

@@ -281,7 +281,7 @@ User.create!([
 	password: 1234,
 	password_confirmation: 1234,                                 
 	rol: :supervisor,                                                       
-	name: "Juan",                                                 
+	name: "Adriel",                                                 
 	lastName: "Garcia",                                                
 	document: 42345678,                                           
 	state: :empty,                                                  
