@@ -75,8 +75,8 @@ color = {
 		engine: rand(0..1).round(),
 		fuel: rand(0..40).round(2),
 		transmission: rand(1).round() ? "Automatica" : "Manual",
-		coords_x: rand(-57.97..-57.93).round(5),
-		coords_y: rand(-34.95..-34.91).round(5)
+		coords_x: rand(-57.97..-57.93).round(9),
+		coords_y: rand(-34.95..-34.91).round(9)
 	);
 end
 
