@@ -7,398 +7,144 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 
-Car.destroy_all
+#==================================================##==================================================#
+#																									CAR
+#==================================================##==================================================#
 
-Car.create!([{
-	model: "Fiesta",
-	brand: "Ford",
-	license:"AB111CD",
-	color:"Blanco",
-	img_url:"/autos/AB111CD.jpg",
-	doors: 4,
-	seats: 4,
-	state: :blocked,
-	engine: 0,
-	#position_id: ,
-	fuel: 30,
-	transmission: "Manual",
-	description: "Esta es una descripcion del vehiculo. Aca se especifican detalles que no entran en la tabla, como por ejemplo, si tiene una abolladura.",
-	coords_x: -57.942948097923505,
-	coords_y: -34.90961858045628
-	},
-	{
-	model: "Fiesta",
-	brand: "Ford",
-	license:"AB222CD",
-	color:"Azul",
-	img_url:"/autos/AB222CD.jpg",
-	doors: 4,
-	seats: 4,
-	state: 1,
-	engine: 0,
-	#position_id: ,
-	fuel: 15,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.94775461640229,
-	coords_y: -34.911096672180804
-	},
-	{
-	model: "500",
-	brand: "Fiat",
-	license:"AB333CD",
-	color:"Azul",
-	img_url:"/autos/AB333CD.jpg",
-	doors: 2,
-	seats: 4,
-	state: :blocked,
-	engine: 0,
-	#position_id: ,
-	fuel: 30,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.95706724595495,
-	coords_y: -34.90940742232333
-	},
-	{
-	model: "Aveo",
-	brand: "Chevrolet",
-	license:"AB444CD",
-	color:"Blanco",
-	img_url:"/autos/AB444CD.jpg",
-	doors: 4,
-	seats: 4,
-	state: :rented,
-	engine: 0,
-	#position_id: ,
-	fuel: 23,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.96440576970384,
-	coords_y: -34.913947202499656
-	},
-	{
-	model: "Ariya",
-	brand: "Nissan",
-	license:"AB555CD",
-	color:"Plateado",
-	img_url:"/autos/AB555CD.jpg",
-	doors: 4,
-	seats: 5,
-	state: :ready,
-	engine: 0,
-	#position_id: ,
-	fuel: 20,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.95835470642984,
-	coords_y: -34.92598168391016 
-	},
-	{
-	model: "Evalia",
-	brand: "Nissan",
-	license:"AB666CD",
-	color:"Negro",
-	img_url:"/autos/AB666CD.jpg",
-	doors: 4,
-	seats: 7,
-	state: :ready,
-	engine: 0,
-	#position_id: ,
-	fuel: 23,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.96492075410844,
-	coords_y: -34.93312412341212
-	},
-	{
-	model: "208",
-	brand: "Peugeot",
-	license:"AB777CD",
-	color:"Celeste",
-	img_url:"/autos/AB777CD.jpg",
-	doors: 4,
-	seats: 5,
-	state: :ready,
-	engine: 0,
-	#position_id: ,
-	fuel: 5,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.943218828135564,
-	coords_y: -34.9340761736041 
-	},
-	{
-	model: "308",
-	brand: "Peugeot",
-	license:"AB888CD",
-	color:"Blanco",
-	img_url:"/autos/AB888CD.jpg",
-	doors: 4,
-	seats: 4,
-	state: :ready,
-	engine: 0,
-	#position_id: ,
-	fuel: 3,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.94944155306433,
-	coords_y: -34.94550968612329 
-	},
-	{
-	model: "Forester",
-	brand: "Subaru",
-	license:"AB999CD",
-	color:"Azul",
-	img_url:"/autos/AB999CD.jpg",
-	doors: 4,
-	seats: 5,
-	state: :ready,
-	engine: 0,
-	#position_id: ,
-	fuel: 29.8,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.96302557666058,
-	coords_y: -34.897135267221365 
-	},
-	{
-	model: "Auris",
-	brand: "Toyota",
-	license:"AB000CD",
-	color:"Azul",
-	img_url:"/autos/AB000CD.jpg",
-	doors: 4,
-	seats: 5,
-	state: :ready,
-	engine: 0,
-	#position_id: ,
-	fuel: 19.5,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.94714689914605,
-	coords_y: -34.935809119158755 
-	},
-	{
-	model: "Yaris",
-	brand: "Toyota",
-	license:"BB111CD",
-	color:"Rojo",
-	img_url:"/autos/BB111CD.jpg",
-	doors: 4,
-	seats: 5,
-	state: :ready,
-	engine: 0,
-	#position_id: ,
-	fuel: 29.8,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.97392607395346,
-	coords_y: -34.92032768971162 
-	},
+Car.destroy_all;
 
-	{
-	model: "Mustang",
-	brand: "Ford",
-	license:"BB444CC",
-	color:"Naranja",
-	img_url:"/autos/BB444CC.jpg",
-	doors: 2,
-	seats: 2,
-	state: :ready,
-	engine: 0,
-	#position_id: ,
-	fuel: 39.8,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.97332525928319,
-	coords_y: -34.910896660170415 
-	},
-	{
-	model: "RS 5",
-	brand: "Audi",
-	license:"BB111CC",
-	color:"Verde",
-	img_url:"/autos/BB111CC.jpg",
-	doors: 2,
-	seats: 2,
-	state: :ready,
-	engine: 0,
-	#position_id: ,
-	fuel: 29.8,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.96221897487571,
-	coords_y: -34.92161398981082 
-	},
-	{
-	model: "Civic",
-	brand: "Honda",
-	license:"BB222CD",
-	color:"Rojo",
-	img_url:"/autos/BB222CD.jpg",
-	doors: 2,
-	seats: 2,
-	state: :ready,
-	engine: 0,
-	#position_id: ,
-	fuel: 21.8,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.9604648102025,
-	coords_y: -34.923821996733736 
-	},
-	{
-	model: "Civic",
-	brand: "Honda",
-	license:"BB333CD",
-	color:"Azul",
-	img_url:"/autos/BB333CD.jpg",
-	doors: 2,
-	seats: 2,
-	state: :ready,
-	engine: 0,
-	#position_id: ,
-	fuel: 9.1,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.972638885076265,
-	coords_y: -34.916433776031056 
-	}
+brand = [ "Ford", "Fiat", "Chevrolet", "Nissan", "Peugeot", "Subaru", "Toyota", "Audi", "Honda" ];
+model = {
+	"Ford" 			=> [ "Fiesta", "Mustang" ],
+ 	"Fiat" 			=> [ "500" ],
+	"Chevrolet" => [ "Aveo" ],
+	"Nissan" 		=> [ "Ariya", "Evalia" ],
+	"Peugeot" 	=> [ "208", "308" ],
+	"Subaru" 		=> [ "Forester" ],
+	"Toyota" 		=> [ "Auris", "Yaris" ],
+	"Audi" 			=> [ "RS 5" ],
+	"Honda" 		=> [ "Civic" ]
+};
+license = {
+	"Fiesta" 		=> [ "AB111CD", "AB222CD" ],
+	"Mustang"		=> [ "BB444CC" ],
+	"500" 			=> [ "AB333CD" ],
+	"Aveo"			=> [ "AB444CD" ],
+	"Ariya" 		=> [ "AB333CD" ],
+	"Evalia"		=> [ "AB666CD" ],
+	"208" 			=> [ "AB777CD" ],
+	"308"				=> [ "AB888CD" ],
+	"Forester"	=> [ "AB999CD" ],
+	"Auris" 		=> [ "AB000CD" ],
+	"Yaris"     => [ "BB111CD" ],
+	"RS 5" 			=> [ "BB111CC" ],
+	"Civic" 		=> [ "BB222CD", "BB333CD"]
+};
+color = {
+	"AB111CD" 	=> [ "Blanco" ],
+	"AB222CD"		=> [ "Azul" ],
+	"BB444CC" 	=> [ "Naranja" ],
+	"AB333CD" 	=> [ "Azul ", "Plateado" ],
+	"AB444CD" 	=> [ "Blanco" ],
+	"AB666CD" 	=> [ "Negro" ],
+	"AB777CD" 	=> [ "Celeste" ],
+	"AB888CD" 	=> [ "Vede" ],
+	"AB999CD" 	=> [ "Azul" ],
+	"AB000CD" 	=> [ "Azul" ],
+	"BB111CD" 	=> [ "Rojo" ],
+	"BB111CC" 	=> [ "Verde" ],
+	"BB222CD" 	=> [ "Rojo" ],
+	"BB333CD" 	=> [ "Azul" ]
+};
 
-])
+(1..10).each do |i|
+	br = brand[rand(brand.count)];
+	md = model[br][rand(model[br].count)];
+	lic = license[md][rand(license[md].count)];
+	col = color[lic][rand(color[lic].count)];
 
-p "Seed created #{Car.count} cars"
+	Car.create(
+		model: md,
+		brand: br,
+		license: lic,
+		color: col,
+		img_url:"/autos/#{lic}.jpg",
+		doors: rand(2..5),
+		seats: rand(4..7),
+		state: Car.states[Car.states.count],
+		engine: rand(0..1),
+		fuel: rand(0..40),
+		transmission: rand(1) ? "Automatica" : "Manual",
+		coords_x: rand(0..1000),
+		coords_y: rand(0..1000)
+	);
+end
 
 
-# -------------------------------
 
-User.destroy_all
-
-User.create!([
-	{
-	email: "super",                                                   
-	password: 1234,
-	password_confirmation: 1234,                                 
-	rol: :supervisor,                                                       
-	name: "Juan",                                                 
-	lastName: "Garcia",                                                
-	document: 42345678,                                           
-	state: :empty,                                                  
-	license_url: "",    
-	licenseNumber: nil,
-	licenseExpiration: nil,
-	balance: 5000
-	},
-
-	{
-	email: "a",                                                   
-	password: 1234,
-	password_confirmation: 1234,                                 
-	rol: :driver,                                                       
-	name: "Juan",                                                 
-	lastName: "Garcia",                                                
-	document: 42345679,                                           
-	state: :admitted,                                                  
-	license_url: "",  
-	licenseNumber: nil,
-	licenseExpiration: nil,
-	balance: 5000,
-	coords_x: -57.957160476901834,
-	coords_y: -34.919451958400096 
-
-	},
+p "Seed created #{Car.count} cars";
 
 
-	{
-	email: "test@gmail.com",                                                   
-	password: 1234,
-	password_confirmation: 1234,                                 
-	rol: :driver,                                                       
-	name: "Jose",                                                 
-	lastName: "Gutierrez",                                                
-	document: 38830194,                                           
-	state: :empty,                                                  
-	license_url: "",   
-	licenseNumber: nil,
-	licenseExpiration: nil,
-	balance: 1000
-	},
-	{
-	email: "c@gmail.com",                                                   
-	password: 1234,
-	password_confirmation: 1234,                                                       
-	rol: :driver,                                                       
-	name: "Aurelia",                                                 
-	lastName: "Alamo",                                                
-	document: 06705167,                                           
-	state: 0,                                                  
-	license_url: "",  
-	licenseNumber: nil,
-	licenseExpiration: nil,
-	balance: 130000
-	},
-	{
-	email: "d@gmail.com",                                                   
-	password: 1234,
-	password_confirmation: 1234,                                 
-	rol: :driver,                                                       
-	name: "Esperanza",                                                 
-	lastName: "Gómez",                                                
-	document: 63543583,                                           
-	state: 0,                                                  
-	license_url: "",    
-	licenseNumber: nil,
-	licenseExpiration: nil,
-	balance: 3000
-	},
-	{
-	email: "e@gmail.com",                                                   
-	password: 1234,
-	password_confirmation: 1234,                                 
-	rol: :driver,                                                       
-	name: "Alex",                                                 
-	lastName: "Narvaez",                                                
-	document: 37513057,                                           
-	state: 0,                                                  
-	license_url: "",   
-	licenseNumber: nil,
-	licenseExpiration: nil,
-	balance: -6000
-	},
-	{
-	email: "admin@gmail.com",                                                   
-	password: 1234,
-	password_confirmation: 1234,                                 
-	rol: :admin,                                                       
-	name: "Admin",                                                 
-	lastName: "Sito",                                                
-	document: 'nan',                                           
-	state: 0,                                                  
-	license_url: "",   
-	licenseNumber: nil,
-	licenseExpiration: nil,
-	balance: 999999999999999999999999999999999
-	} 
-])
+#==================================================##==================================================#
+#																									USER
+#==================================================##==================================================#
 
+User.destroy_all;
+
+(1..10).each do |i|
+	r = ["administrator", "supervisor", "driver"];
+	rol = i == 1 ? r[0] : r[rand(1..User.rols.count - 1)];
+	doc = rand(1..5)*10000000;
+	lic = "";
+	(0..11).each do |j|
+		n = rand(0..9);
+		if j < 7
+			doc += n*10**j;
+		end
+
+		lic += n.to_s;
+		if (j+1) % 4 == 0 && j < 11
+			lic += "-";
+		end
+	end
+	exp = Time.new(2022, rand(1..12), rand(1..31), rand(0..23), rand(0..60), rand(0..60));
+
+	User.create(
+		email: "#{rol}#{i != 1 ? i : ''}@gmail.com",
+		password: 1234,
+		password_confirmation: 1234,
+		rol: rol,
+		name: "#{rol}#{i != 1 ? i : ''}",
+		lastName: "",
+		document: doc,
+		state: Time.now > exp ? User.states[:dismiss] : User.states[rand(User.states.count)],
+		license_url: "",
+		licenseNumber: lic,
+		licenseExpiration: exp,
+		balance: rand(0..100000),
+		coords_x: rand(0..1000),
+		coords_y: rand(0..1000)
+	);
+end
 
 p "Seed created #{User.count} users"
+
+#==================================================##==================================================#
+#																						 		 RENTAL
+#==================================================##==================================================#
+
+Rental.destroy_all
 
 (1..10).each do |i|
 	hs = rand(0..23);
 	expire = Time.new(2022, rand(1..12), rand(1..31), hs, rand(0..60), rand(0..60));
-	created = expire + hs.hours;
-	deciduous = expire < created ? true : false; #si expiro la renta
-	Rental.create!(
+	Rental.create(
 		price: (hs + 1) * 1000,
 		expires: expire,
 		user_id: rand(User.count),
-		car_id: rand(Car.cout),
-		state: rand(0..2)
+		car_id: rand(Car.count),
+		state: Rental.states[rand(0..2)]
 	);
 end
 
-p "Seed created #{Rental.count} rentals"
-
-
+p "Seed created #{Rental.count} rentals";
