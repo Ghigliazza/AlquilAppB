@@ -101,13 +101,14 @@ class RentalsController < ApplicationController
       if !current_user.addmitted?
 =======
       notice = ''
-      if rental_params[:price].to_i > current_user.balance
+      if params[:rental][:price].to_i > current_user.balance
         alert = "no tiene suficiente saldo"
       end
 
-      # if current_user.recent_rental?
-      #   alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
-      # end
+      last_rent = current_user.rental.first
+      if last_rent && last_rent[:expires] < Time.now
+        alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
+      end
 
       if !current_user.addmiss?
 >>>>>>> 948b11e (resolviendo validaciones de la generacion de alquileres)
