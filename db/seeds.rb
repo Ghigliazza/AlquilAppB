@@ -75,8 +75,8 @@ color = {
 		engine: rand(0..1),
 		fuel: rand(0..40),
 		transmission: rand(1) ? "Automatica" : "Manual",
-		coords_x: rand(0..1000),
-		coords_y: rand(0..1000)
+		coords_x: rand(0..100),
+		coords_y: rand(0..100)
 	);
 end
 
@@ -92,8 +92,7 @@ p "Seed created #{Car.count} cars";
 User.destroy_all;
 
 (1..10).each do |i|
-	r = ["administrator", "supervisor", "driver"];
-	rol = i == 1 ? r[0] : r[rand(1..User.rols.count - 1)];
+	rol = i == 1 ? :admin : (i < 7 ? :driver : :supervisor);
 	doc = rand(1..5)*10000000;
 	lic = "";
 	(0..11).each do |j|
@@ -109,21 +108,30 @@ User.destroy_all;
 	end
 	exp = Time.new(2022, rand(1..12), rand(1..31), rand(0..23), rand(0..60), rand(0..60));
 
+	if rol == :driver
+		ste = Time.now > exp ? :rejected : User.states.keys[rand(0..User.states.count)];
+		
+	else
+		ste = :admitted;
+	end
+
+	name = "#{rol}#{User.where(rol: rol).count}";
+	
 	User.create(
-		email: "#{rol}#{i != 1 ? i : ''}@gmail.com",
+		email: "#{name}@gmail.com",
 		password: 1234,
 		password_confirmation: 1234,
 		rol: rol,
-		name: "#{rol}#{i != 1 ? i : ''}",
+		name: name,
 		lastName: "",
 		document: doc,
-		state: Time.now > exp ? User.states[:dismiss] : User.states[rand(User.states.count)],
+		state: ste,
 		license_url: "",
 		licenseNumber: lic,
 		licenseExpiration: exp,
 		balance: rand(0..100000),
-		coords_x: rand(0..1000),
-		coords_y: rand(0..1000)
+		coords_x: rand(0..100),
+		coords_y: rand(0..100)
 	);
 end
 
