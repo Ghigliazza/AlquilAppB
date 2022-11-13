@@ -126,44 +126,47 @@ User.destroy_all;
 	);
 end
 
-#Creo un par de usuarios manualmente para facilitar el testeo
-User.create!([
-	{
-	email: "super",                                                   
-	password: 1234,
-	password_confirmation: 1234,                                 
-	rol: :supervisor,                                                       
-	name: "Adriel",                                                 
-	lastName: "Garcia",                                                
-	document: 42345678,                                           
-	state: :empty,                                                  
-	license_url: "",    
-	licenseNumber: nil,
-	licenseExpiration: nil,
-	balance: 5000,
-	coords_x: -57.957160476901834,
-	coords_y: -34.919451958400096 
-	},
+#==================================================##==================================================#
+#																									USER
+#==================================================##==================================================#
 
-	{
-	email: "a",                                                   
-	password: 1234,
-	password_confirmation: 1234,                                 
-	rol: :driver,                                                       
-	name: "Juan",                                                 
-	lastName: "Garcia",                                                
-	document: 42345679,                                           
-	state: :admitted,                                                  
-	license_url: "",  
-	licenseNumber: nil,
-	licenseExpiration: nil,
-	balance: 5000,
-	coords_x: -57.957160476901834,
-	coords_y: -34.919451958400096 
+User.destroy_all;
 
-	},
-])
+(1..10).each do |i|
+	r = ["administrator", "supervisor", "driver"];
+	rol = i == 1 ? r[0] : r[rand(1..User.rols.count - 1)];
+	doc = rand(1..5)*10000000;
+	lic = "";
+	(0..11).each do |j|
+		n = rand(0..9);
+		if j < 7
+			doc += n*10**j;
+		end
 
+		lic += n.to_s;
+		if (j+1) % 4 == 0 && j < 11
+			lic += "-";
+		end
+	end
+	exp = Time.new(2022, rand(1..12), rand(1..31), rand(0..23), rand(0..60), rand(0..60));
+
+	User.create(
+		email: "#{rol}#{i != 1 ? i : ''}@gmail.com",
+		password: 1234,
+		password_confirmation: 1234,
+		rol: rol,
+		name: "#{rol}#{i != 1 ? i : ''}",
+		lastName: "",
+		document: doc,
+		state: Time.now > exp ? User.states[:dismiss] : User.states[rand(User.states.count)],
+		license_url: "",
+		licenseNumber: lic,
+		licenseExpiration: exp,
+		balance: rand(0..100000),
+		coords_x: rand(0..1000),
+		coords_y: rand(0..1000)
+	);
+end
 
 p "Seed created #{User.count} users"
 
@@ -185,4 +188,8 @@ Rental.destroy_all
 	);
 end
 
+<<<<<<< HEAD
 p "Seed created #{Rental.count} rentals";
+=======
+p "Seed created #{Rental.count} rentals";
+>>>>>>> 7069163 (actualizando seed)
