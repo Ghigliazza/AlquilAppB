@@ -1,0 +1,69 @@
+<h1> [DOCUMENTOS NECESARIOS PARA MANEJAR] </h1>
+
+<div style="margin-left:50px;">
+  <div>
+  <p> Nombre: <%= @usuario.name %> </p>
+  <p> Tipo de usuario: <%= @usuario.rol %> </p>
+  <p> Estado: <%= @usuario.state %> </p>
+
+  </div>
+
+  <%= form_with(model: @usuario) do |form| %>
+
+    <% if @usuario.errors.any? %>
+      <div style="color: red">
+        <ul>
+          <% @usuario.errors.each do |error| %>
+            <%# flash[:alert] = error.full_message %>
+            <div >
+             <p id="notice" class="alert alert-danger alert-dismissible fade show"><%= error.full_message %></p>
+            </div>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div>
+      <%= form.label :email, style: "display: block" %>
+      <%= form.text_field :email, :required => true%>
+    </div>
+
+
+    <div>
+      <% form.label :rol, style: "display: block" %>
+      <% form.number_field :rol %>
+    </div>
+
+    <div>
+      <%= form.label :name, style: "display: block" %>
+      <%= form.text_field :name %>
+    </div>
+
+    <div>
+      <%= form.label :lastName, style: "display: block" %>
+      <%= form.text_field :lastName %>
+    </div>
+
+    <div>
+      <%= form.label :document, style: "display: block" %>
+      <%= form.number_field :document, :required => true %>
+    </div>
+
+    <div>
+      <% form.label :state, style: "display: block" %>
+      <% form.number_field :state %>
+    </div>
+
+    <div>
+      <% form.label :license_url, style: "display: block" %>
+      <% form.text_field :license_url %>
+    </div>
+
+    <p></p>
+
+    <div>
+      <%= form.button "Enviar Documentos", type: "submit", :class=> "btn btn-primary" %>
+    </div>
+  <% end %>
+
+</div>

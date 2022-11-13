@@ -23,8 +23,8 @@ class SearchController < ApplicationController
   def actualizarDistancias
     @dist = 0
     Car.all.each do |c| 
-      if (session[:lng] && session[:lat])
-        @dist = distancia(c.coords_x,c.coords_y,session[:lng],session[:lat])
+      if (current_user.coords_x && current_user.coords_y)
+        @dist = distancia(c.coords_x,c.coords_y,current_user.coords_x,current_user.coords_y)
         c.update(distance: @dist)   
       else
         c.update(distance: 999999999) 

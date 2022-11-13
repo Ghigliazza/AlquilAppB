@@ -69,17 +69,16 @@ color = {
 		license: lic,
 		color: col,
 		img_url:"/autos/#{lic}.jpg",
-		doors: rand(2..5),
-		seats: rand(4..7),
-		state: Car.states[Car.states.count],
-		engine: rand(0..1),
-		fuel: rand(0..40),
-		transmission: rand(1) ? "Automatica" : "Manual",
-		coords_x: rand(0..100),
-		coords_y: rand(0..100)
+		doors: rand(2..5).round(),
+		seats: rand(4..7).round(),
+		state: rand(0..2).round(),
+		engine: rand(0..1).round(),
+		fuel: rand(0..40).round(2),
+		transmission: rand(1).round() ? "Automatica" : "Manual",
+		coords_x: rand(-57.97..-57.93).round(9),
+		coords_y: rand(-34.95..-34.91).round(9)
 	);
 end
-
 
 
 p "Seed created #{Car.count} cars";
@@ -92,7 +91,50 @@ p "Seed created #{Car.count} cars";
 User.destroy_all;
 
 (1..10).each do |i|
-	rol = i == 1 ? :admin : (i < 7 ? :driver : :supervisor);
+	r = ["admin", "supervisor", "driver"];
+	rol = i == 1 ? r[0] : r[rand(1..User.rols.count - 1)];
+	doc = rand(35000000..45000000).round();
+	lic = "";
+	(0..11).each do |j|
+		n = rand(0..9);
+		if j < 7
+			doc += n*10**j;
+		end
+
+		lic += n.to_s;
+		if (j+1) % 4 == 0 && j < 11
+			lic += "-";
+		end
+	end
+	exp = Time.new(2022, rand(1..10), rand(1..31), rand(0..23), rand(0..60), rand(0..60));
+
+	User.create(
+		email: "#{rol}#{i != 1 ? i : ''}@gmail.com",
+		password: 1234,
+		password_confirmation: 1234,
+		rol: rol,
+		name: "#{rol}#{i != 1 ? i : ''}",
+		lastName: "",
+		document: doc,
+		state: Time.now > exp ? User.states[:rejected] : User.states[rand(User.states.count)],
+		license_url: "",
+		licenseNumber: lic,
+		licenseExpiration: exp,
+		balance: rand(0..10000).round(2),
+		coords_x: rand(-57.97..-57.93).round(4),
+		coords_y: rand(-34.95..-34.91).round(4)
+	);
+end
+
+#==================================================##==================================================#
+#																									USER
+#==================================================##==================================================#
+
+User.destroy_all;
+
+(1..10).each do |i|
+	r = ["administrator", "supervisor", "driver"];
+	rol = i == 1 ? r[0] : r[rand(1..User.rols.count - 1)];
 	doc = rand(1..5)*10000000;
 	lic = "";
 	(0..11).each do |j|
