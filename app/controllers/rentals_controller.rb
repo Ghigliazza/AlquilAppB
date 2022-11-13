@@ -1,6 +1,10 @@
 class RentalsController < ApplicationController
   before_action :set_rental, only: %i[ show edit update destroy ]
+<<<<<<< HEAD
   # before_action :requirements, only: %i[ create ]
+=======
+  before_action :requirements, only: [:create]
+>>>>>>> 948b11e (resolviendo validaciones de la generacion de alquileres)
 
   # GET /rentals or /rentals.json
   def index
@@ -84,6 +88,7 @@ class RentalsController < ApplicationController
 
 
     def requirements
+<<<<<<< HEAD
       if params[:rental][:price].to_i > current_user.balance
         alert = "No tiene suficiente saldo"
       end
@@ -94,6 +99,18 @@ class RentalsController < ApplicationController
       end
 
       if !current_user.addmitted?
+=======
+      notice = ''
+      if rental_params[:price].to_i > current_user.balance
+        alert = "no tiene suficiente saldo"
+      end
+
+      # if current_user.recent_rental?
+      #   alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
+      # end
+
+      if !current_user.addmiss?
+>>>>>>> 948b11e (resolviendo validaciones de la generacion de alquileres)
         alert = "debe estar habilitado para alquialr este auto"
       end
 
