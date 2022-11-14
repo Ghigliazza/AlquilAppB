@@ -5,7 +5,24 @@
 <div style="margin-left:50px;">
 
 
+	<% if current_user.driver? %>
 
-	<%= render partial: "formulario"%>
+		<%= render partial: "formulario" , locals:{user: @usuario}%>
+	
+	<% end %>
+
+	<% if current_user.supervisor? %>
+
+		[Imprimimos la solicitud de cada usuario]
+	    <% @listaUsuarios.each do |usr| %>
+	       	
+	       	<div>
+	       		Nombre: <%= usr.name %>
+	       	</div>
+
+	 	<% end %> 
+
+	<% end %> 
+	
 
 </div>

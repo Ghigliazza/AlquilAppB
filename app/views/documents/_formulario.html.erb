@@ -1,7 +1,6 @@
 
-	<%= @usuario %>
 
-	<%= form_with model: @usuario do |form| %>
+	<%= form_with model: user do |form| %>
 
 		<div>
    			 <%= form.label "Numero de licencia", style: "display: block"%>
@@ -13,13 +12,16 @@
    			 <%= form.date_field :licenseExpiration, :required => true %>
   		</div>
 
+  			
   		<div>
   			 <%= form.label "Foto de la licencia", style: "display: block"%>
+   			 <%#= form.file_field :license_photo, :required => true %>
    			 <%= form.file_field :license_photo %>
+
   		</div>
 
   		<div>
-   			
+   			<%= image_tag @usuario.license_photo, width: 400 if user.license_photo.attached? %> 
   		</div>
 
 
