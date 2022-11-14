@@ -1,5 +1,5 @@
 	
-
+<% if current_user.driver? %>   
 
 	<% if current_user.empty? %>	  
 	  <div >
@@ -41,3 +41,5 @@
         </p>
       </div>
     <% end %>
+
+<% end %>

@@ -1,0 +1,43 @@
+  
+ <%# RECIBE EL USUARIO usr %>
+
+  <div class="accordion-item">
+
+    <h2 class="accordion-header" id="flush-ID1<%=usr.id%>">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-ID2<%=usr.id%>" aria-expanded="false" aria-controls="flush-ID2<%=usr.id%>">
+        <span style="font-weight:bolder"> 
+          <%= usr.name + '  ' + usr.lastName + " " %> 
+        </span> 
+      </button>
+    </h2>
+
+
+    <div id="flush-ID2<%=usr.id%>" class="accordion-collapse collapse" aria-labelledby="flush-ID1<%=usr.id%>" data-bs-parent="#accordionListaDocs">
+      <div class="accordion-body">
+
+          <table class="table table-striped" style="max-width:600px;">
+                <thead>
+                    <tr>
+                        <%# th colspan="2">Detalles</th> <%>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b> <%= "Nombre" %></b> </td>
+                        <td><%= "#{usr.name}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Apellido" %></b> </td>
+                        <td><%= "#{usr.lastName}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Documento:" %></b> </td>
+                        <td><%= "#{usr.document}" %></td> 
+                    </tr>
+                </tbody>
+          </table>                         
+        </div>   
+
+      </div>
+    </div>
+

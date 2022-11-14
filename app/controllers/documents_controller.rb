@@ -7,8 +7,6 @@ class DocumentsController < ApplicationController
 
 		@listaUsuarios = User.where(rol: "driver", state: 'submitted')
 
-
-
 	end
 
 end

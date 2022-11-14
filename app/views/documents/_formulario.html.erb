@@ -3,6 +3,17 @@
 	<%= form_with model: user do |form| %>
 
 		<div>
+   			 <%= form.label "Nombre", style: "display: block"%>
+   			 <%= form.text_field :name, :required => true, placeholder: "Nombre" %>
+  		</div>
+
+  		<div>
+   			 <%= form.label "Apellido", style: "display: block"%>
+   			 <%= form.text_field :lastName, :required => true, placeholder: "Apellido" %>
+  		</div>
+
+
+		<div>
    			 <%= form.label "Numero de licencia", style: "display: block"%>
    			 <%= form.number_field :licenseNumber, :required => true, placeholder: "99999999" %>
   		</div>
@@ -17,11 +28,10 @@
   			 <%= form.label "Foto de la licencia", style: "display: block"%>
    			 <%#= form.file_field :license_photo, :required => true %>
    			 <%= form.file_field :license_photo %>
-
   		</div>
 
   		<div>
-   			<%= image_tag @usuario.license_photo, width: 400 if user.license_photo.attached? %> 
+   			<%= image_tag @usuario.license_photo, width: 295 if user.license_photo.attached? %> 
   		</div>
 
 

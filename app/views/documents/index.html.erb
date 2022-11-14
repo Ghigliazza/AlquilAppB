@@ -1,32 +1,38 @@
 
-<% if current_user.driver? %>
 		
-	<%= render partial: "avisos" %>
-	
-<% end %>
-
-<h1> [DOCUMENTOS] </h1>
-<div style="margin-left:50px;">
+<%= render partial: "avisos" %>
 
 
 	<% if current_user.driver? %>
-
-		<%= render partial: "formulario" , locals:{user: @usuario}%>
-	
+		<div style="margin-left:25px; margin-top:15px;">
+			<%= render partial: "formulario" , locals:{user: @usuario}%>
+		</div>
 	<% end %>
 
+
 	<% if current_user.supervisor? %>
+		<p>
+		<div class="accordion accordion-flush" id="accordionListaDocs" >
 
-		[Imprimimos la solicitud de cada usuario]
-	    <% @listaUsuarios.each do |usr| %>
-	       	
-	       	<div>
-	       		Nombre: <%= usr.name %>
-	       	</div>
+			<% if @listaUsuarios.any? %> 
+			 
+				  <% @listaUsuarios.each do |usr| %>
+				      <%= render partial: 'documents/document_card', locals:{usr: usr} %>  
+				  <% end %> 			  
 
-	 	<% end %> 
+			<% else %> 
+			        <div >
+				        <p id="notice" class="alert alert-info alert-dismissible fade show"> 
+				        	No hay verificaciones pendientes... 	
+				        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+				        </p>
+				    </div>
+			<% end %>
+
+		</div>  
+		</p>
 
 	<% end %> 
 	
 
-</div>
+
