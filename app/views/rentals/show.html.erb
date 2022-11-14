@@ -2,6 +2,9 @@
 
 <%= render @rental %>
 
+<%# Renderiza el partial del timer - enviando el tiempo en minutos %>
+<%= render partial: 'rentals/timer', locals:{tiempo: 4} %>
+
 <div>
   <%= link_to "Extender Alquiler", edit_rental_path(@rental), class: "btn btn-primary" %>
 
