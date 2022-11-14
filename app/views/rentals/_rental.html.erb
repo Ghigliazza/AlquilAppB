@@ -1,22 +1,111 @@
 <div id="<%= dom_id rental %>">
   <p>
-    <strong>Precio:</strong>
+    <strong>Precio de Alquiler:</strong>
     <%= rental.price %>
   </p>
 
   <p>
-    <strong>Expira:</strong>
-    <%= rental.expires %>
-  </p>
-  
+    <strong>Expira en :</strong>
+    <%= rental.expires.strftime('%Y-%m-%e, a las %k:%M:%S') %>
   <p>
-    <strong>User:</strong>
-    <%= rental.user_id %>
+    <strong> Tiempo Restante </strong><br>
+    /////////TIMER////////////////////
   </p> 
 
+  </p>
+  
+  
   <p>
-    <strong>Car:</strong>
-    <%= rental.car_id %>
+    <% user = rental.user %>
+    <strong>User:</strong>
+    <%= user.name %>
+    <%= user.lastName %>
+  </p> 
+    
+  
+
+  <p>
+    <% car = rental.car %>
+    <% if File.exists?("#{Rails.root}/app/assets/images#{car.img_url}") %>
+              <div class="clearfix">
+              <img src="/assets<%= car.img_url %>" alt="" class="col-md-4 float-md-end mb-3 ms-md-3" >
+          <% else %>             
+              <div class="clearfix">
+              <img src="/assets/autos/notfound.jpg" alt="" class="col-md-4 float-md-end mb-3 ms-md-3" >
+          <% end %>
+
+          <table class="table table-striped" style="max-width:600px;">
+                <thead>
+                    <tr>
+                        <%# th colspan="2">Detalles</th> <%>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b> <%= "Distancia (Aprox.)" %></b></td>
+
+                        <td>
+
+                        <%# Solo calcula la distancia si se tiene la posicion del usuario <%>
+                        <% if (current_user.coords_x && current_user.coords_y) %>
+
+                            <%= distancia(car.coords_x,car.coords_y,current_user.coords_x,current_user.coords_y).round %> <%= " Metros" %>
+
+                        <% end %> 
+                       </td> 
+
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Color" %></b> </td>
+                        <td><%= "#{car.color}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Transmision" %></b> </td>
+                        <td><%= "#{car.transmission}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Puertas" %></b> </td>
+                        <td><%= "#{car.doors}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Asientos" %></b> </td>
+                        <td><%= "#{car.seats}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Combustible" %></b> </td>
+                        <td><%= "#{car.fuel} litros" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Patente" %></b> </td>
+                        <td><%= "#{car.license}" %></td> 
+                    </tr>
+
+                    <% if current_user.supervisor? %>
+                      <tr>
+                        <td><b> <%= "Estado" %></b> </td>
+                        <% case car.state %>
+                            <% when 'ready' %> 
+                              <td><%= "Disponible" %></td> 
+                            <% when 'rented' %>                         
+                              <td><%= "En uso" %></td> 
+                            <% when 'blocked' %>                           
+                              <td><%= "Bloqueado" %></td> 
+                            <% else %>
+                              <td><%= car.state %></td> 
+                            <% end %>                     
+                      </tr>
+                    <% end %>
+
+                </tbody>
+          </table>       
+          <p>
+            <% if car.description != "" %>
+              <%= "#{car.description}" %>
+            <% end %>
+          </p>
+
+    
+    </div>
   </p> 
 
 </div>

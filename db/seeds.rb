@@ -91,64 +91,17 @@ p "Seed created #{Car.count} cars";
 User.destroy_all;
 
 (1..10).each do |i|
-	r = ["admin", "supervisor", "driver"];
-	rol = i == 1 ? r[0] : r[rand(1..User.rols.count - 1)];
+	rol = i == 1 ? :admin : (i < 5 ? :supervisor : :driver);
 	doc = rand(35000000..45000000).round();
 	lic = "";
 	(0..11).each do |j|
 		n = rand(0..9);
-		if j < 7
-			doc += n*10**j;
-		end
-
 		lic += n.to_s;
 		if (j+1) % 4 == 0 && j < 11
 			lic += "-";
 		end
 	end
-	exp = Time.new(2022, rand(1..10), rand(1..31), rand(0..23), rand(0..60), rand(0..60));
-
-	User.create(
-		email: "#{rol}#{i != 1 ? i : ''}@gmail.com",
-		password: 1234,
-		password_confirmation: 1234,
-		rol: rol,
-		name: "#{rol}#{i != 1 ? i : ''}",
-		lastName: "",
-		document: doc,
-		state: Time.now > exp ? User.states[:rejected] : User.states[rand(User.states.count)],
-		license_url: "",
-		licenseNumber: lic,
-		licenseExpiration: exp,
-		balance: rand(0..10000).round(2),
-		coords_x: rand(-57.97..-57.93).round(4),
-		coords_y: rand(-34.95..-34.91).round(4)
-	);
-end
-
-#==================================================##==================================================#
-#																									USER
-#==================================================##==================================================#
-
-User.destroy_all;
-
-(1..10).each do |i|
-	r = ["administrator", "supervisor", "driver"];
-	rol = i == 1 ? r[0] : r[rand(1..User.rols.count - 1)];
-	doc = rand(1..5)*10000000;
-	lic = "";
-	(0..11).each do |j|
-		n = rand(0..9);
-		if j < 7
-			doc += n*10**j;
-		end
-
-		lic += n.to_s;
-		if (j+1) % 4 == 0 && j < 11
-			lic += "-";
-		end
-	end
-	exp = Time.new(2022, rand(1..12), rand(1..31), rand(0..23), rand(0..60), rand(0..60));
+	exp = Time.new(2022 + rand(0..1), rand(1..12), rand(1..31), rand(0..23), rand(0..60), rand(0..60));
 
 	if rol == :driver
 		ste = Time.now > exp ? :rejected : User.states.keys[rand(0..User.states.count)];
@@ -156,24 +109,24 @@ User.destroy_all;
 	else
 		ste = :admitted;
 	end
-
-	name = "#{rol}#{User.where(rol: rol).count}";
 	
+	ln = rol == :admin ? "" : User.where(rol: rol).count;
+
 	User.create(
-		email: "#{name}@gmail.com",
+		email: "#{rol}#{ln}@gmail.com",
 		password: 1234,
 		password_confirmation: 1234,
 		rol: rol,
-		name: name,
-		lastName: "",
+		name: rol,
+		lastName: ln,
 		document: doc,
 		state: ste,
 		license_url: "",
 		licenseNumber: lic,
 		licenseExpiration: exp,
-		balance: rand(0..100000),
-		coords_x: rand(0..100),
-		coords_y: rand(0..100)
+		balance: rand(0..10000).round(2),
+		coords_x: rand(-57.97..-57.93).round(4),
+		coords_y: rand(-34.95..-34.91).round(4)
 	);
 end
 
@@ -187,13 +140,14 @@ Rental.destroy_all
 
 (1..10).each do |i|
 	hs = rand(0..23);
-	expire = Time.new(2022, rand(1..12), rand(1..31), hs, rand(0..60), rand(0..60));
+	exp = Time.new(2022 + rand(0..1), rand(1..12), rand(1..31), hs, rand(0..60), rand(0..60));
+	ste = Time.now > exp ? :expired : Rental.states.keys[rand(0..Rental.states.count - 2)];
 	Rental.create(
 		price: (hs + 1) * 1000,
-		expires: expire,
+		expires: exp,
 		user_id: rand(User.count),
 		car_id: rand(Car.count),
-		state: Rental.states[rand(0..2)]
+		state: ste
 	);
 end
 

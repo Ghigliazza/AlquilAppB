@@ -68,37 +68,64 @@ class RentalsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_rental
-      @rental = Rental.find(params[:id])
+  # Use callbacks to share common setup or constraints between actions.
+  def set_rental
+    @rental = Rental.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def rental_params
+    if params["_method"] == "post"
+      params.require(:rental).permit(:price, :expires, :user_id, :car_id)
+    else
+      params.require(:rental).permit(:price, :expires)
+    end
+  end
+
+
+  def requirements
+    if params[:rental][:price].to_i > current_user.balance
+      alert = "No tiene suficiente saldo"
     end
 
-    # Only allow a list of trusted parameters through.
-    def rental_params
-      if params["_method"] == "post"
-        params.require(:rental).permit(:price, :expires, :user_id, :car_id)
-      else
-        params.require(:rental).permit(:price, :expires)
-      end
+    last_rent = current_user.rentals.first
+    if last_rent && last_rent[:expires] > Time.now - 3
+      alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
     end
 
-
-    def requirements
-      if params[:rental][:price].to_i > current_user.balance
-        alert = "No tiene suficiente saldo"
-      end
-
-      last_rent = current_user.rentals.first
-      if last_rent && last_rent[:expires] > Time.now - 3
-        alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
-      end
-
-      if !current_user.addmitted?
-        alert = "debe estar habilitado para alquialr este auto"
-      end
-
-      if alert != ''
-        redirect_to rentals_path, alert: alert
-      end
+    if !current_user.admitted?
+      alert = "debe estar habilitado para alquialr este auto"
     end
+
+    if alert != ''
+      redirect_to rentals_path, alert: alert
+    end
+  end
+
+
+
+
+  def distancia(car_x,car_y,user_x,user_y)
+
+    @total = 999
+
+    # Si no se tiene la posicion del user actual, la distancia es 0
+    #if (session[:lat] && session[:lng])
+
+    if (user_x != nil && user_y != nil)
+
+      @distx = (car_x - user_x).magnitude * 111000
+      @disty = (car_y - user_y).magnitude * 111000
+
+      @total = (@distx * @distx) + (@disty * @disty)
+      @total = Math.sqrt(@total)
+
+      @total = @total
+        
+    end
+    
+
+    return @total
+  end
+  helper_method :distancia
 end
