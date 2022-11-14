@@ -1,0 +1,40 @@
+<div style="margin-left:50px; margin-top:15px;">
+
+	<%= form_with model: user do |form| %>
+
+
+	  <% if user.errors.any? %>
+	    <div style="color: red">
+	      <ul>
+	        <% user.errors.each do |error| %>
+	          <%# flash[:alert] = error.full_message %>
+	          <div >
+	           <p id="notice" class="alert alert-danger alert-dismissible fade show"><%= error.full_message %></p>
+	          </div>
+	        <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+
+		<div>
+   			 <%= form.label "E-mail", style: "display: block"%>
+   			 <%= form.text_field :email, :required => true, placeholder: "ejemplo@gmail.com" %>
+  		</div>
+
+		  <div class="field">
+		    <%= form.label "Contraseña" %><br />
+		    <%= form.password_field :password, :required => true%>
+		  </div>
+		 
+		  <div class="field">
+		    <%= form.label "Confirmar contraseña" %><br />
+		    <%= form.password_field :password_confirmation, :required => true%>
+		  </div>
+
+  		<p><p>
+  			<%= form.button "Actualizar Datos" , type: "submit", :class=> "btn btn-primary" %>
+	<% end %>
+
+</div>
+
+

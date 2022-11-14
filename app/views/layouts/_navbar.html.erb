@@ -29,7 +29,7 @@
             <a class="nav-link" href="/documents/index" >Evaluar Documentos</a>
         <% end %>
 
-        <%= link_to "Editar Perfil", edit_user_path(current_user.id) , class:"nav-link"%>
+        <%= link_to "Editar Perfil", edit_user_path(current_user.id) , class:"nav-link"%>  
         <%= link_to "Cerrar Sesión", :logout, data: { turbo_method: :post } , class:"nav-link"%>    
      <% else %>   
         <%= link_to "Iniciar Sesión", :login , class:"nav-link"%>

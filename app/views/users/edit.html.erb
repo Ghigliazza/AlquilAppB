@@ -1,7 +1,7 @@
 <h1>Editar detalles de la cuenta</h1>
 
 <% if @user.id == current_user.id || current_user.admin? || current_user.supervisor? %>
-	<%= render "form", user: @user %>
+	<%= render "editar_perfil", user: @user %>
 <% else %>
 	<div >
       <p id="notice" class="alert alert-danger alert-dismissible fade show"> No tienes permiso para visualizar este usuario!</p>

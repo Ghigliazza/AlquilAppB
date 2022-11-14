@@ -12,9 +12,13 @@
    			 <%= form.text_field :lastName, :required => true, placeholder: "Apellido" %>
   		</div>
 
+  		<div>
+   			 <%= form.label "Nº Documento", style: "display: block"%>
+   			 <%= form.number_field :document, :required => true, placeholder: "12345678" %>
+  		</div>
 
 		<div>
-   			 <%= form.label "Numero de licencia", style: "display: block"%>
+   			 <%= form.label "Nº Licencia", style: "display: block"%>
    			 <%= form.number_field :licenseNumber, :required => true, placeholder: "99999999" %>
   		</div>
 

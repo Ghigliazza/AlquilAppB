@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   resources :search
 
   get '/documents/index' 
+
+  get '/users/editar_perfil'
  
   
   resources :rentals
