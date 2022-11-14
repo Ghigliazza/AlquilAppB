@@ -14,18 +14,26 @@
         <img src="assets/logo/A2.png" width="30" height="30" alt="">
      </a> -->
 
-      <li class="nav-item active">
-        <a class="nav-link" href="/search" data-turbolinks="false">Encontrar Autos</a>
-      </li>
-
 
      <% if current_user %>   
-        <a class="nav-link" href="/documents/index" >Documentos</a>
+
+        <li class="nav-item active">
+          <a class="nav-link" href="/search" data-turbolinks="false">Encontrar Autos</a>
+        </li>
+
+        <% if current_user.driver? %>
+            <a class="nav-link" href="/documents/index" >Documentos</a>
+        <% end %>
+
+        <% if current_user.supervisor? %>
+            <a class="nav-link" href="/documents/index" >Evaluar Documentos</a>
+        <% end %>
+
         <%= link_to "Editar Perfil", edit_user_path(current_user.id) , class:"nav-link"%>
         <%= link_to "Cerrar Sesión", :logout, data: { turbo_method: :post } , class:"nav-link"%>    
      <% else %>   
-        <%= link_to "Crear Cuenta", new_user_path, class:"nav-link" %> 
         <%= link_to "Iniciar Sesión", :login , class:"nav-link"%>
+        <%= link_to "Crear Cuenta", new_user_path, class:"nav-link" %> 
      <% end %> 
    
 
