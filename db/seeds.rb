@@ -152,3 +152,43 @@ Rental.destroy_all
 end
 
 p "Seed created #{Rental.count} rentals";
+
+
+
+#Creo un par de usuarios manualmente para facilitar el testeo
+User.create!([
+	{
+	email: "super",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: :supervisor,                                                       
+	name: "Adriel",                                                 
+	lastName: "Garcia",                                                
+	document: 42345678,                                           
+	state: :empty,                                                  
+	license_url: "",    
+	licenseNumber: nil,
+	licenseExpiration: nil,
+	balance: 5000,
+	coords_x: -57.957160476901834,
+	coords_y: -34.919451958400096 
+	},
+
+	{
+	email: "a",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: :driver,                                                       
+	name: "Juan",                                                 
+	lastName: "Garcia",                                                
+	document: 42345679,                                           
+	state: :admitted,                                                  
+	license_url: "",  
+	licenseNumber: nil,
+	licenseExpiration: nil,
+	balance: 5000,
+	coords_x: -57.957160476901834,
+	coords_y: -34.919451958400096 
+
+	},
+])

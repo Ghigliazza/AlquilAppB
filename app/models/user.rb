@@ -18,8 +18,6 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
   validates :document, uniqueness: true
 
-  validates :licenseNumber, uniqueness: true
-
   #ENUMERATIVES
   enum rol: [:admin, :supervisor, :driver]
   enum state: [:empty, :submitted, :admitted, :rejected, :blocked]
