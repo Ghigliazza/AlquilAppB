@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :reports
   has_many :cars, :through => :rental
 
+  has_one_attached :license_photo
+
   #VALIDATIONS
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes[:crypted_password] }
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
@@ -15,6 +17,8 @@ class User < ApplicationRecord
 
   validates :email, uniqueness: true
   validates :document, uniqueness: true
+
+  validates :licenseNumber, uniqueness: true
 
   #ENUMERATIVES
   enum rol: [:admin, :supervisor, :driver]

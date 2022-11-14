@@ -1,7 +1,10 @@
 class DocumentsController < ApplicationController
 
 	def index
-		@tiempo = 2
+
+		# Guarda el usuario actual para actualizar sus datos
+		@usuario = current_user
+
 	end
 
 end

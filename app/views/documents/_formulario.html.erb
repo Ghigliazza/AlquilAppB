@@ -1,0 +1,40 @@
+
+	<%= @usuario %>
+
+	<%= form_with model: @usuario do |form| %>
+
+		<div>
+   			 <%= form.label "Numero de licencia", style: "display: block"%>
+   			 <%= form.number_field :licenseNumber, :required => true, placeholder: "99999999" %>
+  		</div>
+
+  		<div>
+   			 <%= form.label "Fecha de vencimiento", style: "display: block"%>
+   			 <%= form.date_field :licenseExpiration, :required => true %>
+  		</div>
+
+  		<div>
+  			 <%= form.label "Foto de la licencia", style: "display: block"%>
+   			 <%= form.file_field :license_photo %>
+  		</div>
+
+  		<div>
+   			
+  		</div>
+
+
+		<%# Enviar el formulario setea el estado del usuario a "submitted" %>
+		<% if current_user.blocked? %>
+			<%# Un usuario bloqueado seguira estando bloqueado al subir el formulario %>
+   	    	<%= form.hidden_field :state, :value => :blocked %>
+   	    <% else %>
+   	    	<%= form.hidden_field :state, :value => :submitted %>
+   	    <% end %>
+
+		<p><p>
+			<%= form.button "Enviar Datos" , type: "submit", :class=> "btn btn-primary" %>
+		</p>
+	<% end %>
+
+
+

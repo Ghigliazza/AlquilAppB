@@ -40,7 +40,8 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         #format.html { redirect_to user_url(@user), notice: "Datos actualizados correctamente." }
-        format.html { redirect_to "#{user_url(@user)}/edit", notice: "Datos actualizados correctamente." }
+        #format.html { redirect_to "#{user_url(@user)}/edit", notice: "Datos actualizados correctamente." }
+        format.html { redirect_to request.referrer, notice: "Datos actualizados correctamente." }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -68,6 +69,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :rol, :name, :lastName, :document, :state, :license_url, :position_id, :coords_y, :coords_x)
+      params.require(:user).permit(:email, :password, :password_confirmation, :rol, :name, :lastName, :document, :state, :license_url, :position_id, :coords_y, :coords_x, :licenseNumber, :licenseExpiration)
     end
 end
