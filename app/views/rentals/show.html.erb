@@ -6,11 +6,19 @@
 <%= render partial: 'rentals/timer', locals:{tiempo: 4} %>
 
 <div>
-  <%= link_to "Edit this rental", edit_rental_path(@rental) %> |
-  <%= link_to "Back to rentals", rentals_path %>
+  <%= link_to "Extender Alquiler", edit_rental_path(@rental), class: "btn btn-primary" %>
 
-<% if current_user.administrator? %>
+  
+  <%= link_to "cancelar alquiler", rentals_path, class: "btn btn-danger", onclick: "cancel_rent()" %>
+
+
+<% if current_user.admin? %>
   <%= button_to "Destroy this rental", @rental, method: :delete %>
 <% end %>
 
 </div>
+<script>
+  function cancel_rent() {
+      <% @rental.update_attribute :state, :expired %>
+  }
+</script>
