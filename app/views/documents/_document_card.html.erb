@@ -15,6 +15,7 @@
     <div id="flush-ID2<%=usr.id%>" class="accordion-collapse collapse" aria-labelledby="flush-ID1<%=usr.id%>" data-bs-parent="#accordionListaDocs">
       <div class="accordion-body">
 
+
           <table class="table table-striped" style="max-width:600px;">
                 <thead>
                     <tr>
@@ -34,8 +35,24 @@
                         <td><b> <%= "Documento:" %></b> </td>
                         <td><%= "#{usr.document}" %></td> 
                     </tr>
+                    <tr>
+                        <td><b> <%= "Nº Licencia:" %></b> </td>
+                        <td><%= "#{usr.licenseNumber}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Vencimiento de licencia:" %></b> </td>
+                        <td><%= "#{usr.licenseExpiration}" %></td> 
+                    </tr>
+
                 </tbody>
-          </table>                         
+          </table>   
+
+          <div>
+             <%= image_tag usr.license_photo, width: 295 if usr.license_photo.attached? %> 
+          </div>
+
+          
+
         </div>   
 
       </div>
