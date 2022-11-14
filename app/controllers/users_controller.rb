@@ -41,7 +41,7 @@ class UsersController < ApplicationController
       if @user.update(user_params)
         #format.html { redirect_to user_url(@user), notice: "Datos actualizados correctamente." }
         #format.html { redirect_to "#{user_url(@user)}/edit", notice: "Datos actualizados correctamente." }
-        format.html { redirect_to request.referrer, notice: "Datos actualizados correctamente." }
+        format.html { redirect_to request.referrer, notice: "Datos procesados correctamente." }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }

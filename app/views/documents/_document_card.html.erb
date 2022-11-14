@@ -51,10 +51,35 @@
              <%= image_tag usr.license_photo, width: 295 if usr.license_photo.attached? %> 
           </div>
 
-          
+          <table class="table table-borderless" style="max-width:300px;">
+            <tbody>
+                    <tr>
+                        <td>
+                          <%= form_with model: usr do |form| %>
+                            <%= form.hidden_field :state, :value => :admitted %>
+                            <%= form.button "Aceptar Datos" , type: "submit", :class=> "btn btn-primary" %>
+                          <% end %>
+                        </td>
+                        <td>
+                          <%= form_with model: usr do |form| %>
+                             <%= form.hidden_field :state, :value => :rejected %>
+                             <%= form.button "Rechazar Datos" , type: "submit", :class=> "btn btn-danger" %>
+                          <% end %>  
+                        </td> 
+                    </tr>
+            </tbody>
+          </table> 
 
         </div>   
 
       </div>
     </div>
+
+
+
+
+
+
+
+
 
