@@ -1,5 +1,9 @@
 
-[ALERTAS Y ESTADO DEL USUARIO]
+<% if current_user.driver? %>
+		
+	<%= render partial: "avisos" %>
+	
+<% end %>
 
 <h1> [DOCUMENTOS] </h1>
 <div style="margin-left:50px;">
