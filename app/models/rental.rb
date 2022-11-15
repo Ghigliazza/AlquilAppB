@@ -16,7 +16,7 @@ class Rental < ApplicationRecord
   MAX_DURATION = 24
 
   #ENUMERATIVES
-  enum state: { started: STARTED_PRICE, extended: EXTENDED_PRICE, expired: EXPIRED_PRICE }
+  enum state: { started: STARTED_PRICE, extended: EXTENDED_PRICE, expired: EXPIRED_PRICE, bloked: -1}
 
   #SCOPES
   # scope :expired, -> { where("expires < ?", Time.now) }
