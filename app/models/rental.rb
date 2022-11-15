@@ -1,4 +1,8 @@
 class Rental < ApplicationRecord
+  #VALIDATIONS
+  validates :user_id, uniqueness: false
+  validates :car_id, uniqueness: false
+
   #ASSOCIATIONS
   belongs_to :user
   belongs_to :car
@@ -15,5 +19,5 @@ class Rental < ApplicationRecord
   enum state: { started: STARTED_PRICE, extended: EXTENDED_PRICE, expired: EXPIRED_PRICE }
 
   #SCOPES
-  scope :expired, -> { where("expires < ?", Time.now) }
+  # scope :expired, -> { where("expires < ?", Time.now) }
 end

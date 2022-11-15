@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   
   resources :cars do
-    resources :rentals, only: [:new, :create]
+    resources :rentals, only: [:new]
   end
 
   resources :locations, only: :create

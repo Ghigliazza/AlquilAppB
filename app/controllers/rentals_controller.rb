@@ -22,13 +22,7 @@ class RentalsController < ApplicationController
 
   # POST /rentals or /rentals.json
   def create
-
-    @car = Car.find(params[:car_id])
-    
-
     @rental = Rental.new(rental_params)
-    
-    print @rental
 
     respond_to do |format|
       if @rental.save
@@ -75,7 +69,7 @@ class RentalsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def rental_params
-    if params["_method"] == "post"
+    if request.method() == "POST"
       params.require(:rental).permit(:price, :expires, :user_id, :car_id)
     else
       params.require(:rental).permit(:price, :expires)
@@ -84,6 +78,8 @@ class RentalsController < ApplicationController
 
 
   def requirements
+    alert = ''
+
     if params[:rental][:price].to_i > current_user.balance
       alert = "No tiene suficiente saldo"
     end
@@ -97,35 +93,8 @@ class RentalsController < ApplicationController
       alert = "debe estar habilitado para alquialr este auto"
     end
 
-    if alert != ''
+    if !alert.empty?
       redirect_to rentals_path, alert: alert
     end
   end
-
-
-
-
-  def distancia(car_x,car_y,user_x,user_y)
-
-    @total = 999
-
-    # Si no se tiene la posicion del user actual, la distancia es 0
-    #if (session[:lat] && session[:lng])
-
-    if (user_x != nil && user_y != nil)
-
-      @distx = (car_x - user_x).magnitude * 111000
-      @disty = (car_y - user_y).magnitude * 111000
-
-      @total = (@distx * @distx) + (@disty * @disty)
-      @total = Math.sqrt(@total)
-
-      @total = @total
-        
-    end
-    
-
-    return @total
-  end
-  helper_method :distancia
 end

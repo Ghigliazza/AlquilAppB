@@ -8,17 +8,52 @@
 <div>
   <%= link_to "Extender Alquiler", edit_rental_path(@rental), class: "btn btn-primary" %>
 
-  
-  <%= link_to "cancelar alquiler", rentals_path, class: "btn btn-danger", onclick: "cancel_rent()" %>
-
+  <%= link_to "Cancelar Alquiler", '', class: "btn btn-danger", id: "endRentBtn#{@rental.id}", onclick: "end_rent()" %>
 
 <% if current_user.admin? %>
-  <%= button_to "Destroy this rental", @rental, method: :delete %>
+  <%= button_to "Destroy this rental", @rental, method: :delete, class: "btn btn-danger"  %>
 <% end %>
 
 </div>
+
+<%= @rental.state %>
+<%= @rental.id %>
+<%= @rental.user.balance %>
+
+
 <script>
-  function cancel_rent() {
+  const endRentBtn<%= @rental.id %> = $("#endRentBtn<%= @rental.id %>")
+
+  //si pasaron 10 minutos: true
+  function TenMinPassed() {
+    const diezMin = 10*60*1000
+    return new Date().getTime() - <%= @rental.created_at.to_i %> > diezMin
+  }
+
+  // si el alquiler esta caduco oculta el boton
+  if (<%= @rental.expired? %>) {
+    endRentBtn<%= @rental.id %>.hide()
+  }
+
+  //si pasaron los 10 minutos o encendio el auto cambia al boton de finalizar alquiler
+  if (TenMinPassed() || <%= @rental.car.engine %>) {
+    endRentBtn<%= @rental.id %>.html("Finalizar Alquiler")
+
+  } else {
+    endRentBtn<%= @rental.id %>.html("Cancelar Alquiler")
+  }
+
+  //si se cancela o finaliza el alquiler, este expira y se devuelve el costo del mismo en el 1er caso
+  function end_rent() {
+    //si la renta no esta caduca
+    if (<%= !@rental.expired? %>) {
+      //si se esta cancelando el alquiler se devuelve el costo de este
+      if (endRentBtn<%= @rental.id %>.value == "Cancelar Alquiler") {
+        <% @rental.user.update_attribute :balance, @rental.user.balance + @rental.price %>
+      }
+      //hace que el alquiler caduque y esconde el boton
       <% @rental.update_attribute :state, :expired %>
+      endRentBtn<%= @rental.id %>.hide()
+    }
   }
 </script>

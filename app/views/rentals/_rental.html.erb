@@ -7,13 +7,7 @@
   <p>
     <strong>Expira en :</strong>
     <%= rental.expires.strftime('%Y-%m-%e, a las %k:%M:%S') %>
-  <p>
-    <strong> Tiempo Restante </strong><br>
-    /////////TIMER////////////////////
-  </p> 
-
   </p>
-  
   
   <p>
     <% user = rental.user %>
@@ -42,17 +36,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><b> <%= "Distancia (Aprox.)" %></b></td>
+                      <td><b> <%= "Distancia (Aprox.)" %></b></td>
 
-                        <td>
-
-                        <%# Solo calcula la distancia si se tiene la posicion del usuario <%>
-                        <% if (current_user.coords_x && current_user.coords_y) %>
-
-                            <%= distancia(car.coords_x,car.coords_y,current_user.coords_x,current_user.coords_y).round %> <%= " Metros" %>
-
-                        <% end %> 
-                       </td> 
+                      <td> <%= car.distance %> </td> 
 
                     </tr>
                     <tr>
@@ -80,21 +66,19 @@
                         <td><%= "#{car.license}" %></td> 
                     </tr>
 
-                    <% if current_user.supervisor? %>
-                      <tr>
-                        <td><b> <%= "Estado" %></b> </td>
-                        <% case car.state %>
-                            <% when 'ready' %> 
-                              <td><%= "Disponible" %></td> 
-                            <% when 'rented' %>                         
-                              <td><%= "En uso" %></td> 
-                            <% when 'blocked' %>                           
-                              <td><%= "Bloqueado" %></td> 
-                            <% else %>
-                              <td><%= car.state %></td> 
-                            <% end %>                     
-                      </tr>
-                    <% end %>
+                    <tr>
+                      <td><b> <%= "Estado" %></b> </td>
+                      <% case car.state %>
+                        <% when 'ready' %> 
+                          <td><%= "Disponible" %></td> 
+                        <% when 'rented' %>                         
+                          <td><%= "En uso" %></td> 
+                        <% when 'blocked' %>                           
+                          <td><%= "Bloqueado" %></td> 
+                        <% else %>
+                          <td><%= car.state %></td> 
+                        <% end %>                     
+                    </tr>
 
                 </tbody>
           </table>       
@@ -103,7 +87,6 @@
               <%= "#{car.description}" %>
             <% end %>
           </p>
-
     
     </div>
   </p> 
