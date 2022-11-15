@@ -1,0 +1,37 @@
+	
+<% if current_user.driver? %>   
+
+	<% if current_user.empty? %>	  
+	  <div >
+        <p id="notice" class="alert alert-info alert-dismissible fade show"> 
+        	Tu cuenta no está habilitada para manejar. Introducí tus datos en la pestaña <a href="/documents/index" class="alert-link">Documentos</a>.   
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </p>
+      </div>
+    <% end %>
+    <% if current_user.submitted? %>	  
+	  <div >
+        <p id="notice" class="alert alert-warning alert-dismissible fade show"> 
+        	Tu cuenta aún no está habilitada para manejar. Los datos estan siendo verificados por un supervisor... 	
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </p>
+      </div>
+    <% end %>
+    <% if current_user.blocked? %>	  
+	  <div >
+        <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
+        	Tu cuenta ha sido bloqueada por un supervisor. 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </p>
+      </div>
+    <% end %>
+    <% if current_user.rejected? %>	  
+	  <div >
+        <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
+        	Tus datos han sido rechazados por un supervisor. Revisalos y envialos nuevamente desde la pestaña <a href="/documents/index" class="alert-link">Documentos</a>..
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </p>
+      </div>
+    <% end %>
+
+<% end %>

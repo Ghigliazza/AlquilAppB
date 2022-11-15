@@ -101,16 +101,22 @@
             <% end %>
 
             <% if current_user.supervisor? || current_user.admin? %>
+
               <% if car.ready? %>
-                  <button type="button" class="btn btn-primary">
-                    Bloquear Auto
-                  </button>  
+                  <%= form_with model: car do |form| %>
+                      <%= form.hidden_field :state, :value => :blocked %>
+                      <%= form.button "Bloquear Auto" , type: "submit", :class=> "btn btn-danger" %>
+                  <% end %>
               <% end %>
+
               <% if car.blocked? %>
-                  <button type="button" class="btn btn-primary">
-                    Desbloquear Auto
-                  </button>  
+                  <%= form_with model: car do |form| %>
+                      <%= form.hidden_field :state, :value => :ready %>
+                      <%= form.button "Desbloquear Auto" , type: "submit", :class=> "btn btn-primary" %>
+                  <% end %>  
               <% end %>
+
+
             <% end %>
           </p>  
 

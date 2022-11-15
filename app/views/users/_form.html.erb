@@ -1,5 +1,5 @@
 
-<div style="margin-left:50px;">
+<div style="margin-left:50px; margin-top:15px;">
 
 <%= form_with(model: user) do |form| %>
 
@@ -34,17 +34,17 @@
   <%= form.hidden_field :coords_x %>
 
   <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email, :required => true%>
+    <%= form.label "E-mail", style: "display: block"%>
+    <%= form.text_field :email, :required => true, placeholder: "ejemplo@gmail.com" %>
   </div>
 
   <div class="field">
-    <%= form.label :password %><br />
+    <%= form.label "Contraseña" %><br />
     <%= form.password_field :password, :required => true%>
   </div>
  
   <div class="field">
-    <%= form.label :password_confirmation %><br />
+    <%= form.label "Confirmar contraseña" %><br />
     <%= form.password_field :password_confirmation, :required => true%>
   </div>
 
@@ -54,18 +54,19 @@
   </div>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <%#= form.label :name, style: "display: block" %>
+    <%= form.label "Nombre", style: "display: block" %>
+    <%= form.text_field :name , placeholder: "Nombre" %>
   </div>
 
   <div>
-    <%= form.label :lastName, style: "display: block" %>
-    <%= form.text_field :lastName %>
+    <%= form.label "Apellido", style: "display: block" %>
+    <%= form.text_field :lastName , placeholder: "Apellido" %>
   </div>
 
   <div>
-    <%= form.label :document, style: "display: block" %>
-    <%= form.number_field :document, :required => true %>
+    <%= form.label "Documento", style: "display: block" %>
+    <%= form.number_field :document, :required => true , placeholder: "12345678" %>
   </div>
 
   <div>
@@ -77,6 +78,13 @@
     <% form.label :license_url, style: "display: block" %>
     <% form.text_field :license_url %>
   </div>
+
+  <div>
+    <% form.label :license_photo, style: "display: block" %>
+    <% form.file_field :license_photo %>
+  </div>
+
+
 
   <div>
 

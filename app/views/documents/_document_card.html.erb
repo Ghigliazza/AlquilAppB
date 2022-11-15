@@ -1,0 +1,85 @@
+  
+ <%# RECIBE EL USUARIO usr %>
+
+  <div class="accordion-item">
+
+    <h2 class="accordion-header" id="flush-ID1<%=usr.id%>">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-ID2<%=usr.id%>" aria-expanded="false" aria-controls="flush-ID2<%=usr.id%>">
+        <span style="font-weight:bolder"> 
+          <%= usr.name + '  ' + usr.lastName + " " %> 
+        </span> 
+      </button>
+    </h2>
+
+
+    <div id="flush-ID2<%=usr.id%>" class="accordion-collapse collapse" aria-labelledby="flush-ID1<%=usr.id%>" data-bs-parent="#accordionListaDocs">
+      <div class="accordion-body">
+
+
+          <table class="table table-striped" style="max-width:600px;">
+                <thead>
+                    <tr>
+                        <%# th colspan="2">Detalles</th> <%>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b> <%= "Nombre" %></b> </td>
+                        <td><%= "#{usr.name}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Apellido" %></b> </td>
+                        <td><%= "#{usr.lastName}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Documento:" %></b> </td>
+                        <td><%= "#{usr.document}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Nº Licencia:" %></b> </td>
+                        <td><%= "#{usr.licenseNumber}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Vencimiento de licencia:" %></b> </td>
+                        <td><%= "#{usr.licenseExpiration}" %></td> 
+                    </tr>
+
+                </tbody>
+          </table>   
+
+          <div>
+             <%= image_tag usr.license_photo, width: 295 if usr.license_photo.attached? %> 
+          </div>
+
+          <table class="table table-borderless" style="max-width:300px;">
+            <tbody>
+                    <tr>
+                        <td>
+                          <%= form_with model: usr do |form| %>
+                            <%= form.hidden_field :state, :value => :admitted %>
+                            <%= form.button "Aceptar Datos" , type: "submit", :class=> "btn btn-primary" %>
+                          <% end %>
+                        </td>
+                        <td>
+                          <%= form_with model: usr do |form| %>
+                             <%= form.hidden_field :state, :value => :rejected %>
+                             <%= form.button "Rechazar Datos" , type: "submit", :class=> "btn btn-danger" %>
+                          <% end %>  
+                        </td> 
+                    </tr>
+            </tbody>
+          </table> 
+
+        </div>   
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+

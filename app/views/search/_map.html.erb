@@ -42,7 +42,7 @@
 				 	<script>
 				  	const marker<%= car.license %> = new mapboxgl.Marker({ color: 'blue', rotation: 0, scale: 0.5 })
 						.setLngLat([<%= car.coords_x %>, <%= car.coords_y %>])
-						.setPopup(new mapboxgl.Popup().setHTML("<b> <%= car.brand %> <%= car.model %> </b>"))
+						.setPopup(new mapboxgl.Popup().setHTML("<b> <%= car.brand %> <%= car.model %> - Disponible </b>"))
 						.addTo(map);
 					</script>
 			<% end %>

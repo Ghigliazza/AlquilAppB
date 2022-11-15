@@ -1,0 +1,94 @@
+
+
+	<%= form_with model: user do |form| %>
+
+		<div>
+   			 <%= form.label "Nombre", style: "display: block"%>
+   			 <%= form.text_field :name, :required => true, placeholder: "Nombre" %>
+  		</div>
+
+  		<div>
+   			 <%= form.label "Apellido", style: "display: block"%>
+   			 <%= form.text_field :lastName, :required => true, placeholder: "Apellido" %>
+  		</div>
+
+  		<div>
+   			 <%= form.label "Nº Documento", style: "display: block"%>
+   			 <%= form.number_field :document, :required => true, placeholder: "12345678" %>
+  		</div>
+
+		<div>
+   			 <%= form.label "Nº Licencia", style: "display: block"%>
+   			 <%= form.number_field :licenseNumber, :required => true, placeholder: "99999999" %>
+  		</div>
+
+  		<div>
+   			 <%= form.label "Fecha de vencimiento", style: "display: block"%>
+   			 <%= form.date_field :licenseExpiration, :required => true %>
+  		</div>
+
+  			
+  		<div>
+  			 <%= form.label "Foto de la licencia", style: "display: block"%>
+   			 <%#= form.file_field :license_photo, :required => true %>
+   			 <%= form.file_field :license_photo %>
+  		</div>
+
+  		<div>
+   			<%= image_tag @usuario.license_photo, width: 295 if user.license_photo.attached? %> 
+  		</div>
+
+
+		<%# Enviar el formulario setea el estado del usuario a "submitted" %>
+		<% if current_user.blocked? %>
+			<%# Un usuario bloqueado seguira estando bloqueado al subir el formulario %>
+   	    	<%= form.hidden_field :state, :value => :blocked %>
+   	    <% else %>
+   	    	<%= form.hidden_field :state, :value => :submitted %>
+   	    <% end %>
+
+   	    <% if current_user.admitted? %>
+   	    	<p><p>
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+				  Enviar Datos
+				</button>
+
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h1 class="modal-title fs-5" id="exampleModalLabel">Advertencia</h1>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body">
+				        Tu cuenta ya está habilitada para manejar. <p> <p>
+				        Cualquier cambio que realices deberá ser verificado por un supervisor. <p>
+				        No podrás manejar hasta que tu cuenta haya sido verificada de nuevo. <p>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+				        <%= form.button "Enviar de todas formas" , type: "submit", :class=> "btn btn-primary" %>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			</p>
+   	    <% else %>	    
+			<p><p>
+				<%= form.button "Enviar Datos" , type: "submit", :class=> "btn btn-primary" %>
+			</p>
+   	    <% end %>
+
+
+
+
+
+
+
+
+	<% end %>
+
+
+
