@@ -16,9 +16,11 @@
 
 </div>
 
-<%= @rental.state %>
-<%= @rental.id %>
-<%= @rental.user.balance %>
+<%= @rental.state %><br>
+<%= @rental.id %><br>
+<%= @rental.user.balance %><br>
+<%= rentals_path + '/' + @rental.id.to_s %><br>
+<%= request.fullpath() %><br>
 
 
 <script>
