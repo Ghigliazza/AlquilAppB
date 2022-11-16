@@ -8,9 +8,32 @@
       <ul>
         <% user.errors.each do |error| %>
           <%# flash[:alert] = error.full_message %>
-          <div >
-           <p id="notice" class="alert alert-danger alert-dismissible fade show"><%= error.full_message %></p>
-          </div>
+          
+          <% if error.full_message == "Password confirmation doesn't match Password" %>
+            <div >
+             <p id="notice" class="alert alert-danger alert-dismissible fade show"> Las contraseñas no coinciden </p>
+            </div>
+          <% else %>
+             <% if error.full_message == "Email has already been taken" %>
+                <div >
+                 <p id="notice" class="alert alert-danger alert-dismissible fade show"> E-mail ya existe en el sistema </p>
+                </div>
+              <% else %>    
+                  <% if error.full_message == "Document has already been taken" %>
+                    <div >
+                     <p id="notice" class="alert alert-danger alert-dismissible fade show"> El DNI ya existe en el sistema </p>
+                    </div>
+                  <% else %>
+                    <div >
+                     <p id="notice" class="alert alert-danger alert-dismissible fade show"><%= error.full_message %></p>
+                    </div>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+
+
+
         <% end %>
       </ul>
     </div>
