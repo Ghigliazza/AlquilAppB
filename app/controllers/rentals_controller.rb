@@ -85,7 +85,7 @@ class RentalsController < ApplicationController
     end
 
     last_rent = current_user.rentals.first
-    if last_rent && last_rent[:expires] > Time.now - 3
+    if last_rent && last_rent[:expires] > Time.now - 3.hours
       alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
     end
 

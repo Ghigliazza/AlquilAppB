@@ -54,9 +54,15 @@
     const out_price = $('#out_price')
     const in_expire = $('#in_expire')
     const out_expired = $('#out_expired')
-    const hs = $('#hsRange').val()  
+    const hs = $('#hsRange').val()
 
-    in_price.val(hs * <%= Rental.states["#{@rental.state}"] %>)
+
+    if (<%= @rental.price == nil %>) {
+      in_price.val(hs * <%= Rental.states[:started] %>)
+      
+    } else {
+      in_price.val(<%= @rental.price %> + hs*<%= Rental.states[:extended] %>)
+    }
     out_price.val(in_price.val())
 
     date = new Date().getTime() + hs*60*60*1000 //1hs->60m, 1m->60s, 1s->1000ms
