@@ -9,6 +9,7 @@ class RentalsController < ApplicationController
 
   # GET /rentals/1 or /rentals/1.json
   def show
+    
   end
 
   # GET /rentals/new

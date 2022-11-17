@@ -3,44 +3,7 @@
 
 <%= form_with(model: user) do |form| %>
 
-      <% if user.errors.any? %>
-        <div style="color: red">
-          <ul>
-            <% user.errors.each do |error| %>
-              <%# flash[:alert] = error.full_message %>
-              
-              <% if error.full_message == "Password confirmation doesn't match Password" %>
-                <div >
-                 <p id="notice" class="alert alert-danger alert-dismissible fade show"> Las contraseñas no coinciden </p>
-                </div>
-              <% else %>
-                 <% if error.full_message == "Email has already been taken" %>
-                    <div >
-                     <p id="notice" class="alert alert-danger alert-dismissible fade show"> E-mail ya existe en el sistema </p>
-                    </div>
-                  <% else %>    
-                      <% if error.full_message == "Document has already been taken" %>
-                        <div >
-                         <p id="notice" class="alert alert-danger alert-dismissible fade show"> El DNI ya existe en el sistema </p>
-                        </div>
-                      <% else %>
-                        <% if error.full_message == "Password is too short (minimum is 3 characters)" %>
-                          <div >
-                           <p id="notice" class="alert alert-danger alert-dismissible fade show"> La contraseña es muy corta (menos de 3 caracteres) </p>
-                          </div>
-                        <% else %>
-                          <div >
-                           <p id="notice" class="alert alert-danger alert-dismissible fade show"><%= error.full_message %></p>
-                          </div>
-                        <% end %>
-                      <% end %>
-                  <% end %>
-              <% end %>
-
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+      <%= render partial: 'users/errors_user', locals:{user: user} %> 
 
   <%# Para guardar la localizacion %>
   <script>
@@ -60,39 +23,44 @@
   <%= form.hidden_field :coords_x %>
 
   <div>
-    <%= form.label "E-mail", style: "display: block"%>
-    <%= form.text_field :email, :required => true, placeholder: "ejemplo@gmail.com" %>
+    <p><b><%= form.label "E-mail", style: "display: block"%></b>
+    <%= form.text_field :email, :required => true, placeholder: "ejemplo@gmail.com" %></p>
   </div>
 
   <div class="field">
-    <%= form.label "Contraseña" %><br />
-    <%= form.password_field :password, :required => true%>
+    <p><b><%= form.label "Contraseña" %><br /></b>
+    <%= form.password_field :password, :required => true%></p>
   </div>
  
   <div class="field">
-    <%= form.label "Confirmar contraseña" %><br />
-    <%= form.password_field :password_confirmation, :required => true%>
+    <p><b><%= form.label "Confirmar contraseña" %><br /></b>
+    <%= form.password_field :password_confirmation, :required => true%></p>
   </div>
 
   <div>
-    <% form.label :rol, style: "display: block" %>
-    <% form.number_field :rol %>
+    <p><b><% form.label :rol, style: "display: block" %></b>
+    <% form.number_field :rol %></p>
   </div>
 
   <div>
     <%#= form.label :name, style: "display: block" %>
-    <%= form.label "Nombre", style: "display: block" %>
-    <%= form.text_field :name , placeholder: "Nombre" %>
+    <p><b><%= form.label "Nombre", style: "display: block" %></b>
+    <%= form.text_field :name , placeholder: "Nombre", :required => true %></p>
   </div>
 
   <div>
-    <%= form.label "Apellido", style: "display: block" %>
-    <%= form.text_field :lastName , placeholder: "Apellido" %>
+    <p><b><%= form.label "Apellido", style: "display: block" %></b>
+    <%= form.text_field :lastName , placeholder: "Apellido", :required => true %></p>
   </div>
 
   <div>
-    <%= form.label "Documento", style: "display: block" %>
-    <%= form.number_field :document, :required => true , placeholder: "12345678" %>
+    <p><b><%= form.label "Documento", style: "display: block" %></b>
+    <%= form.number_field :document, :required => true , placeholder: "12345678" %></p>
+  </div>
+
+  <div>
+    <p><b><%= form.label "Fecha de nacimiento", style: "display: block" %></b>
+    <%= form.date_field :birthdate, :required => true%></p>
   </div>
 
   <div>

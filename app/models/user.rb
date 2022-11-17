@@ -18,9 +18,20 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
   validates :document, uniqueness: true
 
+  validates :email, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/, message: "La dirección de email debe tener un formato válido (nombre@ejemplo.com)" }
+
+  validates :birthdate, presence: true
+  validate :validate_age
+  validate :validate_age_old
+
+  validate :validate_expiration
+
+
+  
+
   #ENUMERATIVES
   enum rol: [:admin, :supervisor, :driver]
-  enum state: [:empty, :submitted, :admitted, :rejected, :blocked]
+  enum state: [:empty, :submitted, :admitted, :rejected, :blocked, :expired]
   
   # empty: cuenta recien creada/ no hay datos subidos
   # submitted: subio o actualizo los datos para manejar
@@ -40,4 +51,23 @@ class User < ApplicationRecord
   scope :defaulter,        -> { self.debtors.blocked }
   scope :licenses_expired, -> { where("licenseExpiration < ?", Time.now)}
   scope :recent_rental?,   -> { self.rental.order('expires').first['expires'] < Time.now }
+
+
+  private 
+  def validate_age
+      if birthdate.present? && birthdate > 18.years.ago.to_date
+          errors.add(:birthdate, 'Debes ser mayor de 18 años para utilizar esta aplicación')
+      end
+  end
+  def validate_age_old
+      if birthdate.present? && birthdate < 150.years.ago.to_date
+          errors.add(:birthdate, 'Fecha de nacimiento invalida (mayor a 150 años)')
+      end
+  end
+  def validate_expiration
+      if licenseExpiration.present? && licenseExpiration < Date.today
+          errors.add(:birthdate, 'La licencia está expirada')
+      end
+  end
+
 end
