@@ -6,8 +6,10 @@
 <%= render partial: 'rentals/timer', locals:{tiempo: 4} %>
 
 <div>
-  <%= link_to "Extender Alquiler", edit_rental_path(@rental), class: "btn btn-primary" %>
-
+  <% if !@rental.expired? %>
+    <%= link_to "Extender Alquiler", edit_rental_path(@rental), class: "btn btn-primary" %>
+  <% end %>
+  
   <%= link_to "Cancelar Alquiler", '', class: "btn btn-danger", id: "endRentBtn#{@rental.id}", onclick: "end_rent()" %>
 
 <% if current_user.admin? %>

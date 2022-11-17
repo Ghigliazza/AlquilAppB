@@ -44,7 +44,26 @@ class UsersController < ApplicationController
         format.html { redirect_to request.referrer, notice: "Datos procesados correctamente." }
         format.json { render :edit, status: :ok, location: @user }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+
+        if @user.errors.any?
+          @user.errors.each do |error|
+            if error.full_message == "Password confirmation doesn't match Password"
+              format.html { redirect_to request.referrer, alert: "Las contraseñas no coinciden" }
+            end
+            if error.full_message == "Email has already been taken"
+              format.html { redirect_to request.referrer, alert: "E-mail ya existe en el sistema" }
+            end
+            if error.full_message == "Password is too short (minimum is 3 characters)"
+              format.html { redirect_to request.referrer, alert: "La contraseña es muy corta (menos de 3 caracteres)" }
+            end      
+            if error.full_message == "Document has already been taken"  
+              format.html { redirect_to request.referrer, alert: "El DNI ya existe en el sistema" }
+            end   
+          end
+        end 
+
+        format.html { redirect_to request.referrer, notice: "Datos incorrectos." }
+        #format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end

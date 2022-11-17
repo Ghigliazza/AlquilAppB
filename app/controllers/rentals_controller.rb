@@ -40,14 +40,18 @@ class RentalsController < ApplicationController
 
   # PATCH/PUT /rentals/1 or /rentals/1.json
   def update
-    respond_to do |format|
-      if @rental.update(rental_params)
-        format.html { redirect_to rental_url(@rental), notice: "Rental was successfully updated." }
-        format.json { render :show, status: :ok, location: @rental }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @rental.errors, status: :unprocessable_entity }
+    if !@rental.expired?
+      respond_to do |format|
+        if @rental.update(rental_params)
+          format.html { redirect_to rental_url(@rental), notice: "Rental was successfully updated." }
+          format.json { render :show, status: :ok, location: @rental }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @rental.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to rental_path(@rental), alert: "No es posible extender el alquiler porque este ah expirado"
     end
   end
 
