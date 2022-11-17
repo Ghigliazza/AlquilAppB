@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     #       act_rent_path = rentals_path + "/" + act_rent.id.to_s
 
     #       #Si hay una renta activa y si se intenta salir de la renta actual
-    #       if act_rent.started? && (request.fullpath() != act_rent_path || request.method() != "GET")
+    #       if act_rent.started? && !(request.fullpath() == act_rent_path && request.method() == "GET")
     #         puts '333333333333<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'
     #         redirect_to rental_path, alert: "No Puede Realizar Otra Accion Hasta Terminado Su alquiler"
     #       end

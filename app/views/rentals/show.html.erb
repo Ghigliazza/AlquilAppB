@@ -6,13 +6,11 @@
 <%= render partial: 'rentals/timer', locals: { tiempo: ((@rental.expires - Time.now)/1.minute).round } %>
 
 <div>
-  <%= link_to "Extender Alquiler", edit_rental_path(@rental), class: "btn btn-primary" %>
-
-  <button class="btn btn-danger", id="cancelRentBtn", onclick="cancel_rent()"> Cancelar Alquiler </button>
-
-  <%= link_to "Fianlizar Alquiler", new_report_path, class: "btn btn-danger", id: "endRentBtn", onclick: "end_rent()" %>
-
-  <%= link_to "Hacer un Reporte", new_report_path, class: "btn btn-warning", display: :none, id: "reportBtn", onclick: "report_rent()" %>
+  <% if !@rental.expired? %>
+    <%= link_to "Extender Alquiler", edit_rental_path(@rental), class: "btn btn-primary" %>
+  <% end %>
+  
+  <%= link_to "Cancelar Alquiler", '', class: "btn btn-danger", id: "endRentBtn#{@rental.id}", onclick: "end_rent()" %>
 
 <% if current_user.admin? %>
   <%= button_to "Destroy this rental", @rental, method: :delete, class: "btn btn-danger"  %>

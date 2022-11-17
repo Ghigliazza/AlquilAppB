@@ -10,6 +10,7 @@
 #==================================================##==================================================#
 #																									CAR
 #==================================================##==================================================#
+=begin
 
 Car.destroy_all;
 
@@ -153,9 +154,15 @@ end
 
 p "Seed created #{Rental.count} rentals";
 
+=end
+
+#==================================================##==================================================#
+#							  					SEED MANUAL
+#==================================================##==================================================#
 
 
 #Creo un par de usuarios manualmente para facilitar el testeo
+User.destroy_all;
 User.create!([
 	{
 	email: "super",                                                   
@@ -181,14 +188,89 @@ User.create!([
 	rol: :driver,                                                       
 	name: "Juan",                                                 
 	lastName: "Garcia",                                                
-	document: 42345679,                                           
+	document: 40849561,                                           
 	state: :admitted,                                                  
 	license_url: "",  
-	licenseNumber: nil,
-	licenseExpiration: nil,
+	licenseNumber: 99999999,
+	licenseExpiration: Date.today + 6.month,
 	balance: 5000,
 	coords_x: -57.957160476901834,
 	coords_y: -34.919451958400096 
 
 	},
 ])
+
+p "Seed created #{User.count} users"
+
+Car.destroy_all;
+Car.create!([{
+	model: "Fiesta",
+	brand: "Ford",
+	license:"AB111CD",
+	color:"Blanco",
+	img_url:"/autos/AB111CD.jpg",
+	doors: 4,
+	seats: 4,
+	state: :ready,
+	engine: 0,
+	#position_id: ,
+	fuel: 30,
+	transmission: "Manual",
+	description: "Esta es una descripcion del vehiculo. Aca se especifican detalles que no entran en la tabla, como por ejemplo, si tiene una abolladura.",
+	coords_x: -57.942948097923505,
+	coords_y: -34.90961858045628
+	},
+	{
+	model: "500",
+	brand: "Fiat",
+	license:"AB333CD",
+	color:"Azul",
+	img_url:"/autos/AB333CD.jpg",
+	doors: 2,
+	seats: 4,
+	state: :blocked,
+	engine: 0,
+	#position_id: ,
+	fuel: 30,
+	transmission: "Manual",
+	description: "",
+	coords_x: -57.95706724595495,
+	coords_y: -34.90940742232333
+	},
+	{
+	model: "Aveo",
+	brand: "Chevrolet",
+	license:"AB444CD",
+	color:"Blanco",
+	img_url:"/autos/AB444CD.jpg",
+	doors: 4,
+	seats: 4,
+	state: :rented,
+	engine: 0,
+	#position_id: ,
+	fuel: 23,
+	transmission: "Manual",
+	description: "",
+	coords_x: -57.96440576970384,
+	coords_y: -34.913947202499656
+	},
+	{
+	model: "Ariya",
+	brand: "Nissan",
+	license:"AB555CD",
+	color:"Plateado",
+	img_url:"/autos/AB555CD.jpg",
+	doors: 4,
+	seats: 5,
+	state: :ready,
+	engine: 0,
+	#position_id: ,
+	fuel: 20,
+	transmission: "Manual",
+	description: "",
+	coords_x: -57.95835470642984,
+	coords_y: -34.92598168391016 
+	}
+])
+
+p "Seed created #{Car.count} cars";

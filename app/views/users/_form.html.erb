@@ -3,18 +3,44 @@
 
 <%= form_with(model: user) do |form| %>
 
-  <% if user.errors.any? %>
-    <div style="color: red">
-      <ul>
-        <% user.errors.each do |error| %>
-          <%# flash[:alert] = error.full_message %>
-          <div >
-           <p id="notice" class="alert alert-danger alert-dismissible fade show"><%= error.full_message %></p>
-          </div>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+      <% if user.errors.any? %>
+        <div style="color: red">
+          <ul>
+            <% user.errors.each do |error| %>
+              <%# flash[:alert] = error.full_message %>
+              
+              <% if error.full_message == "Password confirmation doesn't match Password" %>
+                <div >
+                 <p id="notice" class="alert alert-danger alert-dismissible fade show"> Las contraseñas no coinciden </p>
+                </div>
+              <% else %>
+                 <% if error.full_message == "Email has already been taken" %>
+                    <div >
+                     <p id="notice" class="alert alert-danger alert-dismissible fade show"> E-mail ya existe en el sistema </p>
+                    </div>
+                  <% else %>    
+                      <% if error.full_message == "Document has already been taken" %>
+                        <div >
+                         <p id="notice" class="alert alert-danger alert-dismissible fade show"> El DNI ya existe en el sistema </p>
+                        </div>
+                      <% else %>
+                        <% if error.full_message == "Password is too short (minimum is 3 characters)" %>
+                          <div >
+                           <p id="notice" class="alert alert-danger alert-dismissible fade show"> La contraseña es muy corta (menos de 3 caracteres) </p>
+                          </div>
+                        <% else %>
+                          <div >
+                           <p id="notice" class="alert alert-danger alert-dismissible fade show"><%= error.full_message %></p>
+                          </div>
+                        <% end %>
+                      <% end %>
+                  <% end %>
+              <% end %>
+
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
   <%# Para guardar la localizacion %>
   <script>
