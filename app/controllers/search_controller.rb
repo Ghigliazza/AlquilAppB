@@ -1,7 +1,9 @@
 class SearchController < ApplicationController
 
-
   def index
+
+     #Verifica el estado de expiracion de la licencia del conductor
+     verificar_licencia
   
      # Guarda todos los autos en estado 1(disponible) y los ordena por combustible (luego sera por distancia)
      @carsDisponibles = Car.where(:state => 0).order(fuel: :desc)
@@ -58,6 +60,17 @@ class SearchController < ApplicationController
   end
   helper_method :distancia
 
+  # Verifica el estado de la licencia de conducir, y bloquea al usuario si está vencida
+  def verificar_licencia
+    if current_user.driver? && current_user.admitted?
+      if current_user.licenseExpiration.present? && current_user.licenseExpiration < Date.today
+
+        #Pasar al usuario al estado :expired (pone la licencia en nil para que no impida hacer un update el 'validates')
+        current_user.update(state: 'expired', licenseExpiration: nil);
+
+      end
+    end
+  end
 
 
 end
