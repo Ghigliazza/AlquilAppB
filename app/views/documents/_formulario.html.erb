@@ -33,15 +33,25 @@
   		</div>
 
   			
-  		<div>
-  			 <p><b><%= form.label "Foto de la licencia", style: "display: block"%></b>
-   			 <%#= form.file_field :license_photo, :required => true %>
-   			 <%= form.file_field :license_photo %></p>
-  		</div>
+  			<%# Si ya tiene una foto, no es obligatorio subir otra  %>
+  			<% if user.license_photo.attached? %>
+		  		<div>
+		  			 <p><b><%= form.label "Foto de la licencia", style: "display: block"%></b>
+		   			 <%#= form.file_field :license_photo, :required => true %>
+		   			 <%= form.file_field :license_photo %></p>
+		  		</div>
+	  			<div>
+	   				<%= image_tag @usuario.license_photo, width: 295 if user.license_photo.attached? %> 
+	  			</div>
+  			<% else %>
+		   		<div>
+		  			 <p><b><%= form.label "Foto de la licencia", style: "display: block"%></b>
+		   			 <%#= form.file_field :license_photo, :required => true %>
+		   			 <%= form.file_field :license_photo, :required => true %></p>
+		  		</div>
+		  	<% end %>
 
-  		<div>
-   			<%= image_tag @usuario.license_photo, width: 295 if user.license_photo.attached? %> 
-  		</div>
+  		
 
 
 		<%# Enviar el formulario setea el estado del usuario a "submitted" %>

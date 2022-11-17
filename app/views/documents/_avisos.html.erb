@@ -36,7 +36,11 @@
     <% if current_user.rejected? %>   
       <div >
         <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
-            Tus datos han sido rechazados por un supervisor. Revisalos y envialos nuevamente.
+            Tus datos han sido rechazados por un supervisor.            
+            Revisalos y envialos nuevamente. 
+            <% if current_user.rejectedMessage? %>
+                <b>(Nota: <%= current_user.rejectedMessage %>). </b>     
+            <% end %>  
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
         </p>
       </div>

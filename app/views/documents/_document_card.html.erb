@@ -64,10 +64,14 @@
                           <% end %>
                         </td>
                         <td>
-                          <%= form_with model: usr do |form| %>
-                             <%= form.hidden_field :state, :value => :rejected %>
-                             <%= form.button "Rechazar Datos" , type: "submit", :class=> "btn btn-danger" %>
-                          <% end %>  
+                           
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%=usr.id%>">
+                                Rechazar Datos
+                            </button>
+
+                           
                         </td> 
                     </tr>
             </tbody>
@@ -79,7 +83,36 @@
     </div>
 
 
+                <!-- Modal REJECT MOTIVE -->
+                <%= form_with model: usr do |form| %>
+                <div class="modal fade" id="exampleModal<%=usr.id%>" tabindex="-1" aria-labelledby="exampleModalLabel<%=usr.id%>" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel<%=usr.id%>">Motivo del rechazo</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      
+                      <div class="modal-body">
 
+                            <%= form.hidden_field :state, :value => :rejected %>
+                            <%#= form.text_field :rejectedMessage, :required => true %>
+
+
+                            <div class="mb-3">
+                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required="required" type="text" name="user[rejectedMessage]" id="user_rejectedMessage"></textarea>
+                            </div>
+
+                                      
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <%= form.button "Rechazar Datos" , type: "submit", :class=> "btn btn-danger" %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% end %> 
 
 
 
