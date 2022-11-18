@@ -9,6 +9,7 @@ class RentalsController < ApplicationController
 
   # GET /rentals/1 or /rentals/1.json
   def show
+    
   end
 
   # GET /rentals/new
@@ -55,12 +56,28 @@ class RentalsController < ApplicationController
     end
   end
 
+  # CANCEL /rental/id
+  def end
+    notice = "El alquiler ha sido cancelado exitosamente"
+    alert = ""
+    # Duracion del alquiler en minutos
+    rent_duration = ((@rental.expires - Time.now)/1.minute).round;
+    # Si no encendio el auto y si no pasaron 10 minutos entonces cancela el alquiler (devuelve el precio del mismo)
+    if !@rental.car.engine && rent_duration - 10.minutes > 0
+      @rental.user.update_attribute :balance, @rental.user.balance + @rental.price
+      notice += " y se le ha devuelto el costo del mismo, con un valor de: $#{@rental.price}"
+    else
+      alert = "Lo sentimos, pero como ya encendio el motor no se le devolvera el costo del alquiler"
+    end
+    @rental.update_attribute :state, :expired
+  end
+  
   # DELETE /rentals/1 or /rentals/1.json
   def destroy
     @rental.destroy
 
     respond_to do |format|
-      format.html { redirect_to rentals_url, notice: "Rental was successfully destroyed." }
+      format.html { redirect_to rentals_url, notice: "El alquiler ha sido eliminado exitosamente." }
       format.json { head :no_content }
     end
   end

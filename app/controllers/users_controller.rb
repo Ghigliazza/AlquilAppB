@@ -54,11 +54,12 @@ class UsersController < ApplicationController
               format.html { redirect_to request.referrer, alert: "E-mail ya existe en el sistema" }
             end
             if error.full_message == "Password is too short (minimum is 3 characters)"
-              format.html { redirect_to request.referrer, alert: "La contraseña es muy corta (menos de 3 caracteres)" }
+              format.html { redirect_to request.referrer, alert: "La contraseña es muy corta (menor a 3 caracteres)" }
             end      
             if error.full_message == "Document has already been taken"  
               format.html { redirect_to request.referrer, alert: "El DNI ya existe en el sistema" }
-            end   
+            end  
+            format.html { redirect_to request.referrer, alert: error.message }
           end
         end 
 
@@ -88,6 +89,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :rol, :name, :lastName, :document, :state, :license_url, :position_id, :coords_y, :coords_x, :licenseNumber, :licenseExpiration, :license_photo)
+      params.require(:user).permit(:email, :password, :password_confirmation, :rol, :name, :lastName, :document, :state, :license_url, :position_id, :coords_y, :coords_x, :licenseNumber, :licenseExpiration, :license_photo, :birthdate, :rejectedMessage)
     end
 end

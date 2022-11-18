@@ -22,7 +22,7 @@
   <div>
     <%= form.label :price, style: "display: block" %>
     <%= form.hidden_field :price, :id => "in_price", :value => Rental.states["#{@rental.state}"] %>
-    <output id="out_price"><%= Rental.states["#{@rental.state}"] %> </output>
+    <output id="out_price"> <%= Rental.states["#{@rental.state}"] %> </output>
   </div>
 
   <div>
@@ -59,13 +59,15 @@
 
     if (<%= @rental.price == nil %>) {
       in_price.val(hs * <%= Rental.states[:started] %>)
+      date = new Date().getTime() + hs*60*60*1000 //1hs->60m, 1m->60s, 1s->1000ms
       
     } else {
       in_price.val(<%= @rental.price %> + hs*<%= Rental.states[:extended] %>)
+      date = <%= @rental.expires.to_i/1.hour %> + (new Date().getTime()) + hs*60*60*1000
     }
     out_price.val(in_price.val())
 
-    date = new Date().getTime() + hs*60*60*1000 //1hs->60m, 1m->60s, 1s->1000ms
+    
     date = new Date(date)
 
     in_expire.val(date_format(date))

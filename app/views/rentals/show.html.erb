@@ -1,16 +1,18 @@
-<p style="color: green"><%= notice %></p>
-
 <%= render @rental %>
 
+<%# @tiempo = @rental.expires - Date.today %>
 <%# Renderiza el partial del timer - enviando el tiempo en minutos %>
-<%= render partial: 'rentals/timer', locals: { tiempo: ((@rental.expires - Time.now)/1.minute).round } %>
+<%= render partial: 'rentals/timer', locals: { tiempo: ((@rental.expires - Time.now)/1.second).round } %>
 
 <div>
   <% if !@rental.expired? %>
     <%= link_to "Extender Alquiler", edit_rental_path(@rental), class: "btn btn-primary" %>
+
+    <%= link_to "Cancelar Alquiler", '', class: "btn btn-danger", id: "endRentBtn" %>
+
+  <% else %>
+    <%= link_to "Hacer un Reporte", new_report_path, class: "btn btn-warning" %>
   <% end %>
-  
-  <%= link_to "Cancelar Alquiler", '', class: "btn btn-danger", id: "endRentBtn#{@rental.id}", onclick: "end_rent()" %>
 
 <% if current_user.admin? %>
   <%= button_to "Destroy this rental", @rental, method: :delete, class: "btn btn-danger"  %>
@@ -18,67 +20,26 @@
 
 </div>
 
-  <% @rental.update(state: :started) %>
-  <% @rental.car.engine = false %>
-
-  <%= @rental.user.balance %><br>
-  <%= @rental.price %><br>
-
-
-
+<p>  
+  ESTADO: <%= @rental.state %><p> 
+  ID: <%= @rental.id %><p> 
+  BALANCE DE USUARI0: <%= @rental.user.balance %><p> 
+  EXPIRA: <%= @rental.expires %><p> 
+</p> 
 
 <script>
-  const cancelRentBtn = $("#cancelRentBtn")
+  const diezMin = 10*60*1000
+  const min = tiempo_Segundos/60
   const endRentBtn = $("#endRentBtn")
-  const reportBtn = $("#reportBtn")
 
-  reportBtn.hide()
+  endRentBtn.show()
 
   //si pasaron 10 minutos: true
-  function TenMinPassed() {
-    const diezMin = <%= 10.minutes %>
-    return new Date().getTime() - <%= @rental.created_at.to_i %> > diezMin
+  if (min > diezMin) {
+    endRentBtn.val("Finalizar Alquiler")
   }
 
-  //si pasaron los 10 minutos o encendio el auto cambia al boton de finalizar alquiler
-  if ((TenMinPassed() || <%= !@rental.car.engine %>) && false) {
-    cancelRentBtn.hide()
-    endRentBtn.show()
-
-  } else {
-    cancelRentBtn.show()
+  if (tiempo_Segundos == 0) {
     endRentBtn.hide()
-  }
-
-  // si el alquiler esta caduco oculta el boton
-  if (<%= @rental.expired? %>) {
-    endRentBtn.hide()
-    cancelRentBtn.hide()
-  } else {
-    reportBtn.show()
-  }
-
-  //si se cancela o finaliza el alquiler, este expira y se devuelve el costo del mismo en el 1er caso
-  function cancel_rent() {
-    //si la renta no esta caduca
-    if (<%= !@rental.expired? %>) {
-      //si se esta cancelando el alquiler se devuelve el costo de este
-      <% @rental.user.update_attribute :balance, @rental.user.balance + @rental.price %>
-      //hace que el alquiler caduque y esconde el boton
-      <% @rental.update_attribute :state, :expired %>
-      endRentBtn.hide()
-      reportBtn.show()
-    }
-  }
-  
-  //si se cancela o finaliza el alquiler, este expira y se devuelve el costo del mismo en el 1er caso
-  function end_rent() {
-    //si la renta no esta caduca
-    if (<%= !@rental.expired? %>) {
-      //hace que el alquiler caduque y esconde el boton
-      <% @rental.update_attribute :state, :expired %>
-      endRentBtn.hide()
-      reportBtn.show()
-    }
   }
 </script>
