@@ -40,7 +40,12 @@
         document.getElementById('notificacion_15_Minutos').innerHTML = notificacion;
         }
 
-        },1000)            
+// ==============================FUNCIONES=QUE=DEPENDAN=DEL=TIMMER=================================
+        let range = horas*60*60 + minutos*60 + segundos
+        const limit = range - 10*60*60
+        actualizar_botones(range, limit)
+// ================================================================================================
+        },1000)
   </script>
 </head>
 
@@ -58,3 +63,26 @@
 </section>
 
 </body>
+
+
+<script>
+// ================================================================================================
+function actualizar_botones(range, limit, e) {
+  e.preventdefoult()
+  const endRentBtn = $("#endRentBtn")
+  // const 
+
+  endRentBtn.show()
+
+  //si pasaron 10 minutos: true
+  if (range < limit) {
+    endRentBtn.val("Finalizar Alquiler")
+  }
+
+  if (range <= 0) {
+    endRentBtn.hide()
+  }
+}
+// ================================================================================================
+</script>
+

@@ -8,17 +8,22 @@ Rails.application.routes.draw do
 
   
   resources :cars do
-    resources :rentals, only: [:new]
+    resources :rentals, only: :new
+  end
+
+  resources :rentals do
+    resources :reports, only: :new
   end
 
   resources :locations, only: :create
 
-  resources :search
+  resources :search, only: :index
 
   get '/documents/index' 
 
   get '/users/editar_perfil'
  
+  get 'rentals/:id/cancel', to: 'rentals#cancel', :as => :cancel_rental
   
   resources :rentals
   resources :users

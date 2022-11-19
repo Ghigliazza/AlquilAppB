@@ -27,8 +27,10 @@ class RentalsController < ApplicationController
 
     respond_to do |format|
       if @rental.save
-
-        Car.find(@rental.car_id).rented! #actializa el estado del auto
+        # Actualiza el balance del usuario
+        current_user.update(balance: current_user.balance - @rental.price)
+        # Actializa el estado del auto
+        Car.find(@rental.car_id).rented!
 
         format.html { redirect_to rental_url(@rental), notice: "Auto alquilado correctamente" }
         format.json { render :show, status: :created, location: @rental }
@@ -56,8 +58,9 @@ class RentalsController < ApplicationController
     end
   end
 
-  # CANCEL /rental/id
-  def end
+  # GET /rental/id
+  def cancel
+    set_rental
     notice = "El alquiler ha sido cancelado exitosamente"
     alert = ""
     # Duracion del alquiler en minutos
@@ -70,6 +73,7 @@ class RentalsController < ApplicationController
       alert = "Lo sentimos, pero como ya encendio el motor no se le devolvera el costo del alquiler"
     end
     @rental.update_attribute :state, :expired
+    redirect_to rental_path, notice: notice, alert: alert
   end
   
   # DELETE /rentals/1 or /rentals/1.json
@@ -105,8 +109,9 @@ class RentalsController < ApplicationController
       alert = "No tiene suficiente saldo"
     end
 
-    last_rent = current_user.rentals.first
-    if last_rent && last_rent[:expires] > Time.now - 3.hours
+    last_rent = current_user.rentals.last
+    # Si hay una renta, esta tiene el mismo auto que se quiere alquilar y pasaron 3 hs desde el ultimo alquiler
+    if last_rent && last_rent.car == params[:car_id] && last_rent[:expires] > Time.now - 3.hours 
       alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
     end
 

@@ -5,17 +5,14 @@
 <%= render partial: 'rentals/timer', locals: { tiempo: ((@rental.expires - Time.now)/1.second).round } %>
 
 <div>
-  <% if !@rental.expired? %>
-    <%= link_to "Extender Alquiler", edit_rental_path(@rental), class: "btn btn-primary" %>
+  <%= link_to "Extender Alquiler", edit_rental_path, class: "btn btn-primary", id: "RentBtn" %>
 
-    <%= link_to "Cancelar Alquiler", '', class: "btn btn-danger", id: "endRentBtn" %>
+  <%= link_to "Cancelar Alquiler", cancel_rental_path, class: "btn btn-danger", id: "endRentBtn" %>
 
-  <% else %>
-    <%= link_to "Hacer un Reporte", new_report_path, class: "btn btn-warning" %>
-  <% end %>
+  <%= link_to "Reportar", new_rental_report_path(@rental), class: "btn btn-warning", id: "RentBtn" %>
 
 <% if current_user.admin? %>
-  <%= button_to "Destroy this rental", @rental, method: :delete, class: "btn btn-danger"  %>
+  <%= button_to "Eliminar Alquiler", @rental, method: :delete, class: "btn btn-danger"  %>
 <% end %>
 
 </div>
@@ -27,19 +24,9 @@
   EXPIRA: <%= @rental.expires %><p> 
 </p> 
 
+
 <script>
-  const diezMin = 10*60*1000
-  const min = tiempo_Segundos/60
-  const endRentBtn = $("#endRentBtn")
-
-  endRentBtn.show()
-
-  //si pasaron 10 minutos: true
-  if (min > diezMin) {
-    endRentBtn.val("Finalizar Alquiler")
-  }
-
-  if (tiempo_Segundos == 0) {
-    endRentBtn.hide()
-  }
+  let range = <%= ((@rental.expires - Time.now)/1.second).round %>
+  const limit = range - 10*60*60
+  actualizar_botones(range, limit)
 </script>
