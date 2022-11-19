@@ -5,7 +5,7 @@ class UserSessionsController < ApplicationController
     @user = login(params[:email], params[:password])
 
     if @user
-      redirect_back_or_to("/search", notice: "Bienvenido #{current_user.name}")
+      redirect_back_or_to("/search", notice: "Hola #{current_user.name}!")
     else
       flash.now[:alert] = 'Los datos son incorrectos'
       render action: 'new', status: :unprocessable_entity
