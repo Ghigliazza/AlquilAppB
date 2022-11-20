@@ -257,7 +257,7 @@ User.create!([
 	licenseNumber: 99999999,
 	licenseExpiration: Date.today + 6.month,
 	birthdate: Date.today - 26.years,
-	balance: 2000,
+	balance: 10000,
 	coords_x: -57.957160476901834,
 	coords_y: -34.919451958400096 
 	},

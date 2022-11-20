@@ -2,7 +2,17 @@
 
 <%# @tiempo = @rental.expires - Date.today %>
 <%# Renderiza el partial del timer - enviando el tiempo en minutos %>
-<%= render partial: 'rentals/timer', locals: { tiempo: ((@rental.expires - Time.now)/1.seconds).round} %>
+
+<% if @rental.expired? %>
+  <% time = 0 %>
+<% else %>
+  <% time = ((Time.now - @rental.expires)/1.seconds).round %>
+<% end %>
+
+
+<div style="min-height:50px">
+  <span> <%= render partial: 'rentals/timer', locals: { tiempo: time } %> </span>
+</div>
 
 <div>
   <% if !@rental.expired? %>
@@ -20,13 +30,14 @@
 ++++++++++++++  RENTAL  ++++++++++++++<br>
 ID: <%= @rental.id %><br>
 PRICE: <%= @rental.price %><br>
-EXPIRE: <%= @rental.expires %><br>
 STATE: <%= @rental.state %><br>
-
-++++++++++++++  CAR  ++++++++++++++<br>
-<% car = @rental.car %><br>
-ID: <%= car.id %><br>
-
+EXPIRE: <%= @rental.expires %><br>
 
 ++++++++++++++  TIME  ++++++++++++++<br>
-TIEMPO EN SEG DEL ALQUILER: <%= ((@rental.expires - Time.now)/1.seconds).round %><br>
+TIEMPO ACTUAL: <%= Time.now %><br>
+TIEMPO EN SEG DEL ALQUILER: <%= time %><br>
+
+++++++++++++++  CAR  ++++++++++++++<br>
+<% car = @rental.car %>
+ID: <%= car.id %><br>
+

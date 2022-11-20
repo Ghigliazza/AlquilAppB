@@ -2,7 +2,7 @@
 
 <% if (current_user.coords_x && current_user.coords_y) %>
 
-		<div id='map' style='width: 800px; height: 300px;'></div>
+		<div id='map'></div>
 		<script>
 		  mapboxgl.accessToken = "<%= Rails.application.credentials.mapbox %>";
 		  var map = new mapboxgl.Map({
@@ -21,7 +21,7 @@
 <% else %> 
 <%# Si no tengo las coordenadas del usuario, grafico el mapa centrado en un punto predeterminado %>   
 
-		<div id='map' style='width: 800px; height: 300px;'></div>
+		<div id='map'></div>
 		<script>
 		  mapboxgl.accessToken = "<%= Rails.application.credentials.mapbox %>";
 		  var map = new mapboxgl.Map({

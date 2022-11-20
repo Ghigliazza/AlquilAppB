@@ -59,18 +59,24 @@ class RentalsController < ApplicationController
   # GET /rental/id
   def cancel
     set_rental()
-    alert = ""
-    notice = "El alquiler ha sido cancelado exitosamente"
-    # Si no encendio el auto y si no pasaron 10 minutos entonces cancela el alquiler (devuelve el precio del mismo)
-    if !@rental.car.engine && ((@rental.expires - Time.now)/1.seconds).round - 10.minutes > 0
-      @rental.user.update_attribute :balance, @rental.user.balance + @rental.price
-      notice += " y se le ha devuelto el costo del mismo, con un valor de: $#{@rental.price}"
-    
+    # Si no encendio el auto
+    if !@rental.car.engine
+      alert = ""
+      notice = "El alquiler ha sido cancelado exitosamente"
+      # Si no pasaron 10 minutos entonces cancela el alquiler (devuelve el precio del mismo)
+      if @rental.created_at + 10.minutes < Time.now
+        @rental.user.update_attribute :balance, @rental.user.balance + @rental.price
+        notice += " y se le ha devuelto el costo del mismo, con un valor de: $#{@rental.price}"
+      
+      else  
+        alert = "Lo sentimos, pero como ya encendio el motor no se le devolvera el costo del alquiler"
+      end
+      
+      @rental.update_attribute :state, :expired
     else
-      alert = "Lo sentimos, pero como ya encendio el motor no se le devolvera el costo del alquiler"
+      alert = "El motor debe estar apagado para cancelar el alquiler"
     end
-    
-    @rental.update_attribute :state, :expired
+
     redirect_to rental_path, notice: notice, alert: alert
   end
   
@@ -88,6 +94,9 @@ class RentalsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_rental
     @rental = Rental.find(params[:id])
+    if @rental
+      @rent_time = ((@rental.expires - Time.now)/-1.seconds).round
+    end
   end
 
   # Only allow a list of trusted parameters through.
@@ -126,7 +135,7 @@ class RentalsController < ApplicationController
   def timeOut?
     set_rental()
     # si el alquiler expiro 0 termino el tiempo de alquiler
-    if @rental.expired? || ((@rental.expires - Time.now)/1.seconds).round <= 0
+    if @rental.expired? || @rent_time <= 0
       if !@rental.expired?
         @rental.expired!
       end
