@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   
   resources :cars do
-    resources :rentals, only: :new
+    resources :rentals, only: %i[new edit]
   end
 
   resources :rentals do

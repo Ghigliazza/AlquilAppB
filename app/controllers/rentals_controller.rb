@@ -1,7 +1,9 @@
 class RentalsController < ApplicationController
-  before_action :set_rental, only: %i[ show edit update destroy ]
-  before_action :requirements, only: [:create]
-
+  before_action :set_rental,    only: %i[ show edit update destroy ]
+  before_action :timeOut?,      only: %i[ update cancel ]
+  before_action :requirements,  only: :create
+ 
+# ================================================================================================================
   # GET /rentals or /rentals.json
   def index
     @rentals = Rental.all
@@ -43,35 +45,31 @@ class RentalsController < ApplicationController
 
   # PATCH/PUT /rentals/1 or /rentals/1.json
   def update
-    if !@rental.expired?
-      respond_to do |format|
-        if @rental.update(rental_params)
-          format.html { redirect_to rental_url(@rental), notice: "Rental was successfully updated." }
-          format.json { render :show, status: :ok, location: @rental }
-        else
-          format.html { render :edit, status: :unprocessable_entity }
-          format.json { render json: @rental.errors, status: :unprocessable_entity }
-        end
+    respond_to do |format|
+      if @rental.update(rental_params)
+        format.html { redirect_to rental_url(@rental), notice: "El alquiler ha sido extendido exitosamente." }
+        format.json { render :show, status: :ok, location: @rental }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @rental.errors, status: :unprocessable_entity }
       end
-    else
-      redirect_to rental_path(@rental), alert: "No es posible extender el alquiler porque este ah expirado"
     end
   end
 
   # GET /rental/id
   def cancel
-    set_rental
-    notice = "El alquiler ha sido cancelado exitosamente"
+    set_rental()
     alert = ""
-    # Duracion del alquiler en minutos
-    rent_duration = ((@rental.expires - Time.now)/1.minute).round;
+    notice = "El alquiler ha sido cancelado exitosamente"
     # Si no encendio el auto y si no pasaron 10 minutos entonces cancela el alquiler (devuelve el precio del mismo)
-    if !@rental.car.engine && rent_duration - 10.minutes > 0
+    if !@rental.car.engine && ((@rental.expires - Time.now)/1.seconds).round - 10.minutes > 0
       @rental.user.update_attribute :balance, @rental.user.balance + @rental.price
       notice += " y se le ha devuelto el costo del mismo, con un valor de: $#{@rental.price}"
+    
     else
       alert = "Lo sentimos, pero como ya encendio el motor no se le devolvera el costo del alquiler"
     end
+    
     @rental.update_attribute :state, :expired
     redirect_to rental_path, notice: notice, alert: alert
   end
@@ -79,13 +77,13 @@ class RentalsController < ApplicationController
   # DELETE /rentals/1 or /rentals/1.json
   def destroy
     @rental.destroy
-
     respond_to do |format|
       format.html { redirect_to rentals_url, notice: "El alquiler ha sido eliminado exitosamente." }
       format.json { head :no_content }
     end
   end
 
+# ================================================================================================================
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_rental
@@ -123,4 +121,17 @@ class RentalsController < ApplicationController
       redirect_to rentals_path, alert: alert
     end
   end
+
+
+  def timeOut?
+    set_rental()
+    # si el alquiler expiro 0 termino el tiempo de alquiler
+    if @rental.expired? || ((@rental.expires - Time.now)/1.seconds).round <= 0
+      if !@rental.expired?
+        @rental.expired!
+      end
+      redirect_to rental_path, alert: "El alquiler ah expirado"
+    end
+  end
+
 end

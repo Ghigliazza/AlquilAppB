@@ -2,31 +2,31 @@
 
 <%# @tiempo = @rental.expires - Date.today %>
 <%# Renderiza el partial del timer - enviando el tiempo en minutos %>
-<%= render partial: 'rentals/timer', locals: { tiempo: ((@rental.expires - Time.now)/1.second).round } %>
+<%= render partial: 'rentals/timer', locals: { tiempo: ((@rental.expires - Time.now)/1.seconds).round} %>
 
 <div>
-  <%= link_to "Extender Alquiler", edit_rental_path, class: "btn btn-primary", id: "RentBtn" %>
+  <% if !@rental.expired? %>
+    <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-primary", id: "extendRentBtn" %>
+    <%= link_to "Cancelar Alquiler", cancel_rental_path, class: "btn btn-danger", id: "cancelRentBtn" %>
+  <% end %>
 
-  <%= link_to "Cancelar Alquiler", cancel_rental_path, class: "btn btn-danger", id: "endRentBtn" %>
+  <%= link_to "Reportar", new_rental_report_path(@rental), class: "btn btn-warning", id: "reporttBtn" %>
 
-  <%= link_to "Reportar", new_rental_report_path(@rental), class: "btn btn-warning", id: "RentBtn" %>
-
-<% if current_user.admin? %>
-  <%= button_to "Eliminar Alquiler", @rental, method: :delete, class: "btn btn-danger"  %>
-<% end %>
-
+  <% if current_user.admin? %>
+    <%= button_to "Eliminar Alquiler", @rental, method: :delete, class: "btn btn-danger"  %>
+  <% end %>
 </div>
 
-<p>  
-  ESTADO: <%= @rental.state %><p> 
-  ID: <%= @rental.id %><p> 
-  BALANCE DE USUARI0: <%= @rental.user.balance %><p> 
-  EXPIRA: <%= @rental.expires %><p> 
-</p> 
+++++++++++++++  RENTAL  ++++++++++++++<br>
+ID: <%= @rental.id %><br>
+PRICE: <%= @rental.price %><br>
+EXPIRE: <%= @rental.expires %><br>
+STATE: <%= @rental.state %><br>
+
+++++++++++++++  CAR  ++++++++++++++<br>
+<% car = @rental.car %><br>
+ID: <%= car.id %><br>
 
 
-<script>
-  let range = <%= ((@rental.expires - Time.now)/1.second).round %>
-  const limit = range - 10*60*60
-  actualizar_botones(range, limit)
-</script>
+++++++++++++++  TIME  ++++++++++++++<br>
+TIEMPO EN SEG DEL ALQUILER: <%= ((@rental.expires - Time.now)/1.seconds).round %><br>
