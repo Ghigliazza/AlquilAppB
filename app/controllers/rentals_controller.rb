@@ -64,7 +64,7 @@ class RentalsController < ApplicationController
       alert = ""
       notice = "El alquiler ha sido cancelado exitosamente"
       # Si no pasaron 10 minutos entonces cancela el alquiler (devuelve el precio del mismo)
-      if @rental.created_at + 10.minutes < Time.now
+      if Time.now < @rental.created_at + 10.minutes
         @rental.user.update_attribute :balance, @rental.user.balance + @rental.price
         notice += " y se le ha devuelto el costo del mismo, con un valor de: $#{@rental.price}"
       
@@ -77,7 +77,12 @@ class RentalsController < ApplicationController
       alert = "El motor debe estar apagado para cancelar el alquiler"
     end
 
-    redirect_to rental_path, notice: notice, alert: alert
+    if alert.empty?
+      redirect_to rental_path, notice: notice
+      
+    else
+      redirect_to rental_path, notice: notice, alert: alert
+    end
   end
   
   # DELETE /rentals/1 or /rentals/1.json
@@ -95,7 +100,7 @@ class RentalsController < ApplicationController
   def set_rental
     @rental = Rental.find(params[:id])
     if @rental
-      @rent_time = ((@rental.expires - Time.now)/-1.seconds).round
+      @rent_time = (@rental.expires - Time.now).round
     end
   end
 

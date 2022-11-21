@@ -1,12 +1,13 @@
-<%= render @rental %>
 
-<%# @tiempo = @rental.expires - Date.today %>
-<%# Renderiza el partial del timer - enviando el tiempo en minutos %>
+
+
+<%= render @rental %>
 
 <% if @rental.expired? %>
   <% time = 0 %>
+
 <% else %>
-  <% time = ((Time.now - @rental.expires)/1.seconds).round %>
+  <% time = @rent_time %>
 <% end %>
 
 
