@@ -28,7 +28,15 @@
     <% if current_user.rejected? %>	  
 	  <div >
         <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
-        	Tus datos han sido rechazados por un supervisor. Revisalos y envialos nuevamente desde la pestaña <a href="/documents/index" class="alert-link">Documentos</a>..
+        	Tus datos han sido rechazados por un supervisor. Revisalos y envialos nuevamente en la pestaña <a href="/documents/index" class="alert-link">Documentos</a>.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </p>
+      </div>
+    <% end %>
+    <% if current_user.expired? %>   
+      <div >
+        <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
+            Tu licencia de conducir ha expirado. Actualiza tus datos en la pestaña <a href="/documents/index" class="alert-link">Documentos</a>.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
         </p>
       </div>

@@ -157,15 +157,18 @@ p "Seed created #{Rental.count} rentals";
 =end
 
 #==================================================##==================================================#
-#							  					SEED MANUAL
+#							  				                     	SEED MANUAL
 #==================================================##==================================================#
 
+#==================================================##==================================================#
+#																									USER
+#==================================================##==================================================#
 
 #Creo un par de usuarios manualmente para facilitar el testeo
 User.destroy_all;
 User.create!([
 	{
-	email: "super",                                                   
+	email: "super@gmail.com",                                                   
 	password: 1234,
 	password_confirmation: 1234,                                 
 	rol: :supervisor,                                                       
@@ -176,13 +179,13 @@ User.create!([
 	license_url: "",    
 	licenseNumber: nil,
 	licenseExpiration: nil,
+	birthdate: Date.today - 26.years,
 	balance: 5000,
 	coords_x: -57.957160476901834,
 	coords_y: -34.919451958400096 
 	},
-
 	{
-	email: "a",                                                   
+	email: "a@gmail.com",                                                   
 	password: 1234,
 	password_confirmation: 1234,                                 
 	rol: :driver,                                                       
@@ -193,14 +196,78 @@ User.create!([
 	license_url: "",  
 	licenseNumber: 99999999,
 	licenseExpiration: Date.today + 6.month,
+	birthdate: Date.today - 26.years,
 	balance: 5000,
 	coords_x: -57.957160476901834,
 	coords_y: -34.919451958400096 
+	},
+])
 
+# Crea un usuario individual para saltear el 'validates' (licencia expirada)
+u = User.new(
+	email: "vencido@gmail.com", 
+	crypted_password: "$2a$10$S8iA.kmjBnrO8VefLuDqbeNztExIc.HHmDISnYYHrF19m043BLUhS",  
+	salt: "cLFho39dqLpgoSbTNxoT",                                                
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: :driver,                                                       
+	name: "Alberto",                                                 
+	lastName: "Gonzales",                                                
+	document: 40849568,                                           
+	state: :admitted,                                                  
+	license_url: "",  
+	licenseNumber: 99999999,
+	licenseExpiration: Date.today - 6.month,
+	birthdate: Date.today - 26.years,
+	balance: 5000,
+	coords_x: -57.957160476901834,
+	coords_y: -34.919451958400096)
+u.save(validate:false)
+
+# usuarios para probar INICIAR ALQUILER
+# *************************************
+User.create!([
+	{
+	email: "noHabilitado@gmail.com",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: :driver,                                                       
+	name: "no",                                                 
+	lastName: "Habilitado",                                                
+	document: 42345644,                                           
+	state: :empty,                                                  
+	license_url: "",    
+	licenseNumber: nil,
+	licenseExpiration: nil,
+	birthdate: Date.today - 26.years,
+	balance: 5000,
+	coords_x: -57.957160476901834,
+	coords_y: -34.919451958400096 
+	},
+	{
+	email: "paraAlquilar@gmail.com",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: :driver,                                                       
+	name: "para",                                                 
+	lastName: "Alquilar",                                                
+	document: 42157548,                                           
+	state: :admitted,                                                  
+	license_url: "",  
+	licenseNumber: 99999999,
+	licenseExpiration: Date.today + 6.month,
+	birthdate: Date.today - 26.years,
+	balance: 10000,
+	coords_x: -57.957160476901834,
+	coords_y: -34.919451958400096 
 	},
 ])
 
 p "Seed created #{User.count} users"
+
+#==================================================##==================================================#
+#																									CAR
+#==================================================##==================================================#
 
 Car.destroy_all;
 Car.create!([{

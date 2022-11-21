@@ -13,6 +13,20 @@
  *= require_tree .
  *= require_self
  */
+
+/* CLASS */
+
+
+
+/* ID */
+#map {
+    min-width: 500px;
+    min-height: 500px;
+    width: auto;
+    height: auto;
+}
+
+
 #alert {
     color: red;
 }

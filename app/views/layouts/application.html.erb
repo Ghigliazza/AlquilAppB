@@ -48,22 +48,23 @@
       <p id="alert"><%#= flash[:alert] %></p>
     </div>
     -->
+    <div class="text-center">
+      <% if flash[:notice] != nil %>
+        <div calss="align-items-center" >
+          <p id="notice" class="alert alert-primary alert-dismissible fade show"><%= flash[:notice] %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+          </p>
+        </div>
+      <% end %>
 
-    <% if flash[:notice] != nil %>
-      <div >
-        <p id="notice" class="alert alert-primary alert-dismissible fade show"><%= flash[:notice] %>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-        </p>
-      </div>
-    <% end %>
-
-    <% if flash[:alert] != nil %>
-      <div >
-        <p id="notice" class="alert alert-danger alert-dismissible fade show"><%= flash[:alert] %>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-        </p>
-      </div>
-    <% end %>
+      <% if flash[:alert] != nil %>
+        <div >
+          <p id="notice" class="alert alert-danger alert-dismissible fade show"><%= flash[:alert] %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+          </p>
+        </div>
+      <% end %>
+    </div>
 
     <%= yield %>
 

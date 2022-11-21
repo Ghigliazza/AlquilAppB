@@ -15,14 +15,24 @@
 
   <div>
     <label for="hsRange" class="form-label">Indique la cantidad de horas: </label> 
-    <input type="range" id="hsRange" value="1" min=1 max=24 step="1" oninput="this.nextElementSibling.value = this.value" onchange="calcule_rent()">
+    <input type="range" id="hsRange" value="1" min=1
+      <% if  %>
+        max=24
+        
+      <% else %>
+        max=24 - 
+      <% end %>
+      
+    
+      step="1" oninput="this.nextElementSibling.value = this.value" onchange="calcule_rent()">
     <output> 1 </output>
   </div>
 
   <div>
     <%= form.label :price, style: "display: block" %>
     <%= form.hidden_field :price, :id => "in_price", :value => Rental.states["#{@rental.state}"] %>
-    <output id="out_price"><%= Rental.states["#{@rental.state}"] %> </output>
+    <%# VALORES INICIALES DE PRECIO %>
+    <output id="out_price"> <%= Rental.states["#{@rental.state}"] %> </output>
   </div>
 
   <div>
@@ -32,7 +42,8 @@
   <div>
     <%= form.label :expires, style: "display: block" %>
     <%= form.hidden_field :expires, :id => "in_expire", :value => Time.now + 1.hour %>
-    <output id="out_expired"><%= (Time.now + 1.hour).strftime('%Y-%m-%e %k:%M:%S') %></output>
+    <%# VALORES INICIALES DE FECHA %>
+    <output id="out_expired"> <%= (Time.now + 1.hour).strftime('%Y-%m-%e %k:%M:%S') %> </output>
   </div>
 
   <div>
@@ -48,18 +59,32 @@
   </div>
 <% end %>
 
+
+
+<%# ================================================================================================== %>
 <script>
+  calcule_rent()
+
+
+
   function calcule_rent() {
     const in_price = $('#in_price')
     const out_price = $('#out_price')
     const in_expire = $('#in_expire')
     const out_expired = $('#out_expired')
-    const hs = $('#hsRange').val()  
+    const hs = $('#hsRange').val()
 
-    in_price.val(hs * <%= Rental.states["#{@rental.state}"] %>)
+    let date = new Date().getTime() + hs*60*60*1000 //1hs->60m, 1m->60s, 1s->1000ms
+
+    if (<%= @rental.price == nil %>) {
+      in_price.val(hs * <%= Rental.states[:started] %>)
+      
+    } else {
+      in_price.val(<%= @rental.price %> + hs * <%= Rental.states[:extended] %>)
+      date += <%= @rental.expires.to_i/1.hours + 1*60*60*1000 %>
+    }
     out_price.val(in_price.val())
 
-    date = new Date().getTime() + hs*60*60*1000 //1hs->60m, 1m->60s, 1s->1000ms
     date = new Date(date)
 
     in_expire.val(date_format(date))
@@ -69,5 +94,4 @@
   function date_format(date) {
     return `${date.getFullYear()}-${date.getMonth()+1}-${[date.getDate()]} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
   }
-
 </script>
