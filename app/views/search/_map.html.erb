@@ -5,7 +5,7 @@
 		<div id='map'></div>
 		<script>
 		  mapboxgl.accessToken = "<%= Rails.application.credentials.mapbox %>";
-		  var map = new mapboxgl.Map({
+		  let map = new mapboxgl.Map({
 		    container: 'map',
 		    style: 'mapbox:///nico-map/cla8t5s8s004m15t3so6gnqt5',
 		    center: [<%= current_user.coords_x %>, <%= current_user.coords_y %>],
@@ -24,7 +24,7 @@
 		<div id='map'></div>
 		<script>
 		  mapboxgl.accessToken = "<%= Rails.application.credentials.mapbox %>";
-		  var map = new mapboxgl.Map({
+		  let map = new mapboxgl.Map({
 		    container: 'map',
 		    style: 'mapbox:///nico-map/cla8t5s8s004m15t3so6gnqt5',
 		    center: [<%= -57.955452556184845 %>, <%= -34.92224309032785 %>],
