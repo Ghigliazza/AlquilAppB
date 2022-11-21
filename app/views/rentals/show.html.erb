@@ -1,7 +1,6 @@
-<p style="color: green"><%= notice %></p>
-
 <%= render @rental %>
 
+<%# @tiempo = @rental.expires - Date.today %>
 <%# Renderiza el partial del timer - enviando el tiempo en minutos %>
 <%= render partial: 'rentals/timer', locals:{tiempo: 4} %>
 
@@ -15,10 +14,6 @@
 <% end %>
 
 </div>
-
-<%= @rental.state %>
-<%= @rental.id %>
-<%= @rental.user.balance %>
 
 
 <script>

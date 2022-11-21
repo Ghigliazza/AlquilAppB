@@ -274,3 +274,4 @@ Car.create!([{
 ])
 
 p "Seed created #{Car.count} cars";
+Rental.destroy_all
