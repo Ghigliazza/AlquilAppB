@@ -18,7 +18,7 @@
 <div>
   <% if !@rental.expired? %>
     <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-primary", id: "extendRentBtn" %>
-    <%= link_to "Cancelar Alquiler", cancel_rental_path, class: "btn btn-danger", id: "cancelRentBtn" %>
+    <%= link_to "Finalizar Alquiler", cancel_rental_path, class: "btn btn-danger", id: "cancelRentBtn" %>
   <% end %>
 
   <%= link_to "Reportar", new_rental_report_path(@rental), class: "btn btn-warning", id: "reporttBtn" %>
@@ -34,6 +34,7 @@ ID: <%= @rental.id %><br>
 PRICE: <%= @rental.price %><br>
 STATE: <%= @rental.state %><br>
 EXPIRE: <%= @rental.expires %><br>
+HORAS TOTALES: <%= @rental.total_hours %><br>
 
 ++++++++++++++  TIME  ++++++++++++++<br>
 
