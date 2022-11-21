@@ -1,5 +1,6 @@
 <% @driver = params[:driver] %>
 
+<!-- ERRORES -->
 <%= form_with(model: rental) do |form| %>
   <% if rental.errors.any? %>
     <div style="color: red">
@@ -13,12 +14,19 @@
     </div>
   <% end %>
 
+
+<!-- SELECTOR DE HORAS -->
   <div>
-      <% max = 24 %>
-      <%# Si se esta extendiendo el tiempo el maximo de hs para extender es el maximo de hs - la cantidad de hs que se alquilo el auto %>
-      <% if  @rental.expires != nil %>        
-        <% max -= @rent_time %>
+      <!-- Cuando se crea el alquiler, el numero maximo de horas es determinado por el balance del usuairo --> 
+      <% if (@rental.expires == nil) && ((current_user.balance/1000).round <= 24) %>       
+        <% max = (current_user.balance / 1000).round %>
       <% end %>
+
+      <% if (@rental.expires != nil) %>  
+        <!-- Calcular el maximo segun la cantidad de horas alquiladas -->     
+        <% max = 24 %>
+      <% end %>
+
     <label for="hsRange" class="form-label">Indique la cantidad de horas: </label> 
     <input type="range" id="hsRange" value="1" min=1 max= <%= max %> step="1" oninput="this.nextElementSibling.value = this.value" onchange="calcule_rent()">
     <output> 1 </output>
@@ -32,7 +40,7 @@
   </div>
 
   <div>
-    Saldo: <%= current_user.balance %>
+    <b>Saldo:</b> <%= current_user.balance %>
   </div>
 
   <div>

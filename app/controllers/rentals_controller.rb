@@ -62,12 +62,12 @@ class RentalsController < ApplicationController
     # Si no encendio el auto
     if !@rental.car.engine
       alert = ""
-      notice = "El alquiler ha sido cancelado exitosamente"
+      notice = "El alquiler ha sido finalizado exitosamente"
+      Car.find(@rental.car_id).ready!
       # Si no pasaron 10 minutos entonces cancela el alquiler (devuelve el precio del mismo)
       if Time.now < @rental.created_at + 10.minutes
         @rental.user.update_attribute :balance, @rental.user.balance + @rental.price
         notice += " y se le ha devuelto el costo del mismo, con un valor de: $#{@rental.price}"
-      
       else  
         alert = "Lo sentimos, pero como ya encendio el motor no se le devolvera el costo del alquiler"
       end
@@ -78,8 +78,7 @@ class RentalsController < ApplicationController
     end
 
     if alert.empty?
-      redirect_to rental_path, notice: notice
-      
+      redirect_to rental_path, notice: notice   
     else
       redirect_to rental_path, notice: notice, alert: alert
     end
@@ -107,9 +106,9 @@ class RentalsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def rental_params
     if request.method() == "POST"
-      params.require(:rental).permit(:price, :expires, :user_id, :car_id)
+      params.require(:rental).permit(:price, :expires, :user_id, :car_id, :total_hours, :initial_fuel, :summary, :state)
     else
-      params.require(:rental).permit(:price, :expires)
+      params.require(:rental).permit(:price, :expires, :total_hours, :initial_fuel, :summary, :state)
     end
   end
 
@@ -144,7 +143,7 @@ class RentalsController < ApplicationController
       if !@rental.expired?
         @rental.expired!
       end
-      redirect_to rental_path, alert: "El alquiler ah expirado"
+      redirect_to rental_path, alert: "El alquiler ha expirado"
     end
   end
 
