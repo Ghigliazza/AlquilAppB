@@ -73,26 +73,49 @@
 
 
 
-<!----------------------------- BOTON DE ALQUILAR/EXTENDER -------------------------------------->
+<!----------------------------- BOTONES DE ALQUILAR/EXTENDER -------------------------------------->
   <div>
     <% if (@rental.expires == nil) %>
       <p><p>
-          <!-- Guardo el valor inicial del combustible para comparar luego -->
-          <%= form.hidden_field :initial_fuel, :value => Car.where(id: params[:car_id]).first.fuel %>
-          <%= form.button "Alquilar Auto" , type: "submit", :class=> "btn btn-primary" %>
+            <table class="table table-borderless" style="max-width:300px;">
+            <tbody>
+                    <tr>
+                        <td>
+                          <!-- Guardo el valor inicial del combustible para comparar luego -->
+                          <%= form.hidden_field :initial_fuel, :value => Car.where(id: params[:car_id]).first.fuel %>
+                          <%= form.button "Alquilar Auto" , type: "submit", :class=> "btn btn-primary" %>
+                        </td>
+                        <td>
+                          <a class="btn btn-secondary" href="/search" role="button">Cancelar</a>
+                        </td> 
+                    </tr>
+            </tbody>
+          </table> 
       </p>
     <% else %>
       <p><p>
-          HORAS DE ALQUILER COMPRADAS: <%= @rental.total_hours %> </p>
-          <%= form.button "Extender Alquiler" , type: "submit", :class=> "btn btn-primary" %>
+            HORAS DE ALQUILER COMPRADAS: <%= @rental.total_hours %> </p>
+            <table class="table table-borderless" style="max-width:300px;">
+            <tbody>
+                    <tr>
+                        <td>
+                          <%= form.button "Extender Alquiler" , type: "submit", :class=> "btn btn-primary" %>
+                        </td>
+                        <td>
+                          <a class="btn btn-secondary" href="/rentals/<%= rental.id %>" role="button">Cancelar</a>
+                        </td> 
+                    </tr>
+            </tbody>
+          </table> 
       </p>
     <% end %>
   </div>
 
-
 <!----------------------------- FIN DEL FORMULARIO -------------------------------------->
 
 <% end %>
+
+
 
 
 
