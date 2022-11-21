@@ -1,3 +1,5 @@
+
+
 <% @driver = params[:driver] %>
 
 <!-- ERRORES -->
@@ -34,82 +36,139 @@
          <% end %>     
       <% end %>
 
-<!----------------------------- SELECTOR DE HORAS -------------------------------------->
- <div>
-    <label for="hsRange" class="form-label">Indique la cantidad de horas: </label> 
-    <input type="range" id="hsRange" value="1" min=1 max= <%= max %> step="1" oninput="this.nextElementSibling.value = this.value" onchange="calcule_rent()">
-    <output> 1 </output>
-  </div>
-
-  <div>
-    <b>Costo Total: </b>
-    <%= form.hidden_field :price, :id => "in_price", :value => Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %>
-    <%# VALORES INICIALES DE PRECIO %>
-    <output id="out_price"> <%= Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %> </output>
-  </div>
-
-  <%= form.hidden_field :total_hours, :id => "in_hours" %>
 
 
-<!----------------------------- DATOS PARA EL USUARIO -------------------------------------->
-  <div>
-    <b>Saldo:</b> <%= current_user.balance %>
-  </div>
+<!----------------------------- FORMULARIO (DEPENDE DEL MAXIMO DE HORAS POSIBLE) -------------------------------------->
 
-  <div>
-    <b>Expira:</b>
-    <%= form.hidden_field :expires, :id => "in_expire", :value => Time.now + 1.hour %>
-    <%# VALORES INICIALES DE FECHA %>
-    <output id="out_expired"> <%= ((@rental.expires != nil ? @rental.expires : Time.now)  + 1.hour).strftime('%Y-%m-%e %k:%M:%S') %> </output>
-  </div>
+  <% if max > 0 %>
+    <div style="margin-left:25px; margin-top:15px;">
 
-  <div>
-    <%= form.hidden_field :user_id, :value => current_user.id %>
-  </div>
+      <% if @rental.expires != nil%>
+        <h1><i><b>Extender Alquiler</b></i></h1> </p>
+      <% else %>
+        <h1><i><b>Iniciar Alquiler</b></i></h1> </p>
+      <% end %>
 
-  <div>
-    <%= form.hidden_field :car_id, :value => params[:car_id]%>
-  </div>
+        <!----------------------------- SELECTOR DE HORAS -------------------------------------->
+         <div>
+            <label for="hsRange" class="form-label">Indique la cantidad de horas: </label> 
+            <input type="range" id="hsRange" value="1" min=1 max= <%= max %> step="1" oninput="this.nextElementSibling.value = this.value" onchange="calcule_rent()">
+            <output> 1 </output>
+          </div>
+
+          <div>
+            <b>Costo Total: </b>
+            <%= form.hidden_field :price, :id => "in_price", :value => Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %>
+            <%# VALORES INICIALES DE PRECIO %>
+            <output id="out_price"> <%= Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %> </output>
+          </div>
+
+          <%= form.hidden_field :total_hours, :id => "in_hours" %>
+
+
+        <!----------------------------- DATOS PARA EL USUARIO -------------------------------------->
+          <div>
+            <b>Saldo:</b> $<%= current_user.balance %>
+          </div>
+
+          <div>
+            <b>Expira:</b>
+            <%= form.hidden_field :expires, :id => "in_expire", :value => Time.now + 1.hour %>
+            <%# VALORES INICIALES DE FECHA %>
+            <output id="out_expired"> <%= ((@rental.expires != nil ? @rental.expires : Time.now)  + 1.hour).strftime('%Y-%m-%e %k:%M:%S') %> </output>
+          </div>
+
+          <div>
+            <%= form.hidden_field :user_id, :value => current_user.id %>
+          </div>
+
+          <div>
+            <%= form.hidden_field :car_id, :value => params[:car_id]%>
+          </div>
 
 
 
-<!----------------------------- BOTONES DE ALQUILAR/EXTENDER -------------------------------------->
-  <div>
-    <% if (@rental.expires == nil) %>
-      <p><p>
-            <table class="table table-borderless" style="max-width:300px;">
-            <tbody>
-                    <tr>
-                        <td>
-                          <!-- Guardo el valor inicial del combustible para comparar luego -->
-                          <%= form.hidden_field :initial_fuel, :value => Car.where(id: params[:car_id]).first.fuel %>
-                          <%= form.button "Alquilar Auto" , type: "submit", :class=> "btn btn-primary" %>
-                        </td>
-                        <td>
-                          <a class="btn btn-secondary" href="/search" role="button">Cancelar</a>
-                        </td> 
-                    </tr>
-            </tbody>
-          </table> 
-      </p>
+        <!----------------------------- BOTONES DE ALQUILAR/EXTENDER -------------------------------------->
+          <div>
+            <% if (@rental.expires == nil) %>
+              <p><p>
+                    <table class="table table-borderless" style="max-width:300px;">
+                    <tbody>
+                            <tr>
+                                <td>
+                                  <!-- Guardo el valor inicial del combustible para comparar luego -->
+                                  <%= form.hidden_field :initial_fuel, :value => Car.where(id: params[:car_id]).first.fuel %>
+                                  <%= form.button "Alquilar Auto" , type: "submit", :class=> "btn btn-primary" %>
+                                </td>
+                                <td>
+                                  <a class="btn btn-secondary" href="/search" role="button">Cancelar</a>
+                                </td> 
+                            </tr>
+                    </tbody>
+                  </table> 
+              </p>
+            <% else %>
+              <p><p>
+                    HORAS DE ALQUILER COMPRADAS: <%= @rental.total_hours %> </p>
+                    <table class="table table-borderless" style="max-width:300px;">
+                    <tbody>
+                            <tr>
+                                <td>
+                                  <%= form.button "Extender Alquiler" , type: "submit", :class=> "btn btn-primary" %>
+                                </td>
+                                <td>
+                                  <a class="btn btn-secondary" href="/rentals/<%= rental.id %>" role="button">Cancelar</a>
+                                </td> 
+                            </tr>
+                    </tbody>
+                  </table> 
+              </p>
+            <% end %>
+          </div>
+    </div>
+  <% else %>
+
+  <!----------------------------- SI NO PUEDE INICIAR/EXTENDER EL ALQUILER -------------------------------------->
+ 
+    <% if rental.expires == nil %>
+        <div class="text-center"> 
+          <% if (current_user.balance/1000).round < 1 %>    
+            <div >
+                <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
+                  No tienes suficiente saldo para iniciar el alquiler (Saldo actual: $<%= current_user.balance %>)
+                </p>
+            </div>
+          <% end %> 
+        </div>
+
+       <div style="margin-left:25px; margin-top:15px;">
+        <a class="btn btn-secondary" href="/search" role="button">Cancelar</a>
+       </div>   
+
     <% else %>
-      <p><p>
-            HORAS DE ALQUILER COMPRADAS: <%= @rental.total_hours %> </p>
-            <table class="table table-borderless" style="max-width:300px;">
-            <tbody>
-                    <tr>
-                        <td>
-                          <%= form.button "Extender Alquiler" , type: "submit", :class=> "btn btn-primary" %>
-                        </td>
-                        <td>
-                          <a class="btn btn-secondary" href="/rentals/<%= rental.id %>" role="button">Cancelar</a>
-                        </td> 
-                    </tr>
-            </tbody>
-          </table> 
-      </p>
+        <div class="text-center"> 
+          <% if @rental.total_hours == 24 %>    
+            <div >
+                <p id="notice" class="alert alert-warning alert-dismissible fade show"> 
+                  Ya alcanzaste la cantidad de horas maxima de alquiler (24 horas)
+                </p>
+            </div>
+          <% end %> 
+          <% if (current_user.balance/1750).round < 1 %>    
+            <div >
+                <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
+                  No tienes suficiente saldo para extender el alquiler (Saldo actual: $<%= current_user.balance %>)
+                </p>
+            </div>
+          <% end %> 
+        </div>
+
+       <div style="margin-left:25px; margin-top:15px;">
+        <a class="btn btn-secondary" href="/rentals/<%= rental.id %>" role="button">Volver al alquiler</a>
+       </div>    
     <% end %>
-  </div>
+
+  <% end %>
 
 <!----------------------------- FIN DEL FORMULARIO -------------------------------------->
 
@@ -161,3 +220,5 @@
     return `${date.getFullYear()}-${date.getMonth()+1}-${[date.getDate()]} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
   }
 </script>
+
+

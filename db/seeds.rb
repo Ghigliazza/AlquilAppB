@@ -218,6 +218,23 @@ User.create!([
 	coords_x: -57.957160476901834,
 	coords_y: -34.919451958400096 
 	},
+	{
+	email: "poor@gmail.com",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: :driver,                                                       
+	name: "James",                                                 
+	lastName: "Garcia",                                                
+	document: 40849510,                                           
+	state: :admitted,                                                  
+	license_url: "",  
+	licenseNumber: 99999999,
+	licenseExpiration: Date.today + 6.month,
+	birthdate: Date.today - 26.years,
+	balance: 20,
+	coords_x: -57.957160476901834,
+	coords_y: -34.919451958400096 
+	},
 ])
 
 # Crea un usuario individual para saltear el 'validates' (licencia expirada)
