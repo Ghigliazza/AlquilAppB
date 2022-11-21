@@ -23,6 +23,7 @@
 
   <%= link_to "Reportar", new_rental_report_path(@rental), class: "btn btn-warning", id: "reporttBtn" %>
 
+
   <% if current_user.admin? %>
     <%= button_to "Eliminar Alquiler", @rental, method: :delete, class: "btn btn-danger"  %>
   <% end %>
