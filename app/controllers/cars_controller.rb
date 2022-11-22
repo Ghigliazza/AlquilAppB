@@ -1,6 +1,5 @@
 class CarsController < ApplicationController
   before_action :set_car,   only: %i[ show edit update destroy turnedOn? ]
-  before_action :turnedOn?, only: %i[ show edit update ]
 
   # GET /cars or /cars.json
   def index
@@ -70,9 +69,4 @@ class CarsController < ApplicationController
   end
 
 
-  def turnedOn?
-    if @car.empty? && car.engine
-      @car.update_attribute :turned_on, :true;
-    end
-  end
 end

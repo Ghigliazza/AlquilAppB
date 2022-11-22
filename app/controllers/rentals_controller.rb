@@ -96,27 +96,29 @@ class RentalsController < ApplicationController
 
   # GET /rental/id
   def cancel
-    # Si no encendio el auto
+
+    # Setea un valor inicial del Alert (vacio)
+    alert = ''
+
+    # Si el motor está apagado
     if !@rental.car.engine
-      alert = ""
-      notice = "El alquiler ha sido finalizado exitosamente"
       Car.find(@rental.car_id).ready!
-      # Si no pasaron 10 minutos entonces cancela el alquiler o si encendio el motor (devuelve el precio del mismo)
-      if Time.now < @rental.created_at + 10.minutes || @rental.turnedOn?
 
+      # Si no pasaron 10 minutos entonces cancela el alquiler (devuelve el precio del mismo)
+      if Time.now < @rental.created_at + 10.minutes #|| @rental.turnedOn?
         @rental.user.update_attribute :balance, @rental.user.balance + @rental.price
-        notice += " y se le ha devuelto el costo del mismo, con un valor de: $#{@rental.price}"
-
+        notice = "El alquiler ha sido cancelado, y se le ha devuelto el costo del mismo, con un valor de: $#{@rental.price}"
       else
-        alert = "Lo sentimos, pero como ya "
-        alert += Time.now < @rental.created_at + 10.minutes ? "pasaron 10 minutos " : ""
-        alert += @rental.turnedOn? ? "y encendio el motor " : ""
-        alert += ", por lo que no se le devolvera el costo del alquiler"
-      end
-      
+        # Si pasaron 10 minutos entonces simplemente se finaliza, sin devolver el dinero
+        if (Time.now >= @rental.created_at + 10.minutes)
+          notice = "El alquiler ha sido finalizado correctamente. Precio final: $#{@rental.price}"
+        end
+      end   
+
       @rental.update_attribute :state, :expired
+
     else
-      alert = "Debe apagar el mptor para cancelar el alquiler"
+      alert = "Debe apagar el motor antes de finalizar el alquiler"
     end
 
     if alert.empty?
@@ -166,11 +168,11 @@ class RentalsController < ApplicationController
     last_rent = current_user.rentals.last
     # Si hay una renta, esta tiene el mismo auto que se quiere alquilar y pasaron 3 hs desde el ultimo alquiler
     if last_rent && last_rent.car == params[:car_id] && last_rent[:expires] > Time.now - 3.hours 
-      alert = "no puede alquialr este auto antes de 3 hs de su ultimo alquiler"
+      alert = "No puede alquilar este auto a menos de 3 hs desde su ultimo alquiler"
     end
 
     if !current_user.admitted?
-      alert = "debe estar habilitado para alquialr este auto"
+      alert = "Debe estar habilitado para alquilar un auto"
     end
 
     if !alert.empty?
@@ -184,9 +186,9 @@ class RentalsController < ApplicationController
     if @time_left <= 0
       if !@rental.car.engine
         @rental.expired!
-        alert = "El alquiler ha expirado"
+        alert = "El alquiler ha sido finalizado correctamente. Precio final: $#{@rental.price}"
       else
-        alert = "Para terminr el alquiler por favor apague el motor"
+        alert = "Debe apagar el motor antes de finalizar el alquiler"
       end
       redirect_to rental_path, alert: alert
     end
