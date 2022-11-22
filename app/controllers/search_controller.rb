@@ -2,6 +2,11 @@ class SearchController < ApplicationController
 
   def index
 
+     #Redirecciona al usuario si tiene un alquiler activo
+     if (current_user.driver? && current_user.rentals.any? && !current_user.rentals.last.expired?)
+        redirect_to "/rentals/#{current_user.rentals.last.id}", notice: "Alquiler activo..."
+     end
+
      #Verifica el estado de expiracion de la licencia del conductor
      verificar_licencia
   

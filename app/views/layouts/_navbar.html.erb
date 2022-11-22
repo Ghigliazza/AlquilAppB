@@ -13,26 +13,35 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
 
-     <% if current_user %>   
+     <% if current_user %>  
 
-        <li class="nav-item active">
-          <a class="nav-link" href="/search" data-turbolinks="false">Encontrar Autos</a>
-        </li>
+        <!-- OCULTA LA NAVBAR SI HAY UN ALQUILER EN CURSO -->
+        <% if current_user.driver? && current_user.rentals.any? && !current_user.rentals.last.expired? %>   
+          
 
-        <% if current_user.driver? %>
-            <a class="nav-link" href="/documents/index" >Documentos</a>
+        <% else %> 
+
+          <li class="nav-item active">
+            <a class="nav-link" href="/search" data-turbolinks="false">Encontrar Autos</a>
+          </li>
+
+          <% if current_user.driver? %>
+              <a class="nav-link" href="/documents/index" >Documentos</a>
+          <% end %>
+
+          <% if current_user.supervisor? %>
+              <a class="nav-link" href="/documents/index" >Evaluar Documentos</a>
+          <% end %>
+
+          <%= link_to "Editar Perfil", edit_user_path(current_user.id) , class:"nav-link"%>  
+          <%= link_to "Cerrar Sesión", :logout, data: { turbo_method: :post } , class:"nav-link"%>    
+
         <% end %>
 
-        <% if current_user.supervisor? %>
-            <a class="nav-link" href="/documents/index" >Evaluar Documentos</a>
-        <% end %>
-
-        <%= link_to "Editar Perfil", edit_user_path(current_user.id) , class:"nav-link"%>  
-        <%= link_to "Cerrar Sesión", :logout, data: { turbo_method: :post } , class:"nav-link"%>    
-     <% else %>   
+    <% else %>   
         <%= link_to "Iniciar Sesión", :login , class:"nav-link"%>
         <%= link_to "Crear Cuenta", new_user_path, class:"nav-link" %> 
-     <% end %> 
+    <% end %> 
    
 
 

@@ -45,10 +45,10 @@
 
    <!-- DEBBUGGING -->
 
-    <% if current_user.rentals.any? && !current_user.rentals.last.expired? %>   
+    <% if current_user.driver? && current_user.rentals.any? && !current_user.rentals.last.expired? %>   
       <div >
         <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
-            El ultimo rental aun esta ACTIVO.
+            El alquiler aun esta ACTIVO.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
         </p>
       </div>
