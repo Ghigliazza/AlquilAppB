@@ -91,7 +91,10 @@ class RentalsController < ApplicationController
 
   # PATCH/PUT /rentals/1 or /rentals/1.json
   def update
-    current_user.update_attribute :balance, current_user.balance #- params[:price] 
+    # Actualiza el balance del usuario
+    current_user.update_attribute :balance, current_user.balance - params[:rental][:price].to_i
+    #Actualiza el Valor total de la renta
+    params[:rental][:price] = params[:rental][:price].to_i + @rental.price
 
     respond_to do |format|
       if @rental.update(rental_params)

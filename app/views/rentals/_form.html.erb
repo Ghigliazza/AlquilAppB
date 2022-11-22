@@ -52,7 +52,7 @@
 
           <div>
             <b>Costo Total: </b>
-            <%= form.hidden_field :price, :id => "in_price", :value => Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %>
+            <%= form.hidden_field :price, :id => "in_price", :value => Rental.states["#{@rental.state}"] %>
             <%# VALORES INICIALES DE PRECIO %>
             $<output id="out_price"> <%= Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %> </output>
           </div>
@@ -129,8 +129,6 @@
   <!----------------------------- FIN DEL FORMULARIO -------------------------------------->
 <% end %>
 
-
-
 <%# ================================================================================================== %>
 <script>
   calcule_rent()
@@ -144,14 +142,16 @@
 
     const in_hours = $('#in_hours')
 
-    let date = new Date().getTime() + hs*60*60*1000 //1hs->60m, 1m->60s, 1s->1000ms
+    let date = hs*60*60*1000 //1hs->60m, 1m->60s, 1s->1000ms
 
     if (<%= @rental.price == nil %>) {
-      in_price.val(hs * <%= Rental.states[:started] %>) 
+      in_price.val(hs * <%= Rental.states[:started] %>)
+      date +=  new Date().getTime()
     } else {
-      in_price.val(<%= @rental.price %> + hs * <%= Rental.states[:extended] %>)
-      date += <%= @rental.expires.to_i/1.hours + 1*60*60*1000 %>
+      in_price.val(hs * <%= Rental.states[:extended] %>)
+      date += <%= (@rental.created_at + @rental.total_hours.hours).to_i %> * 1000
     }
+    date = new Date(date)
 
     //Actualiza la cantidad de horas totales del alquiler
     if (<%= @rental.total_hours == nil %>) {
@@ -160,16 +160,18 @@
       in_hours.val(<%= @rental.total_hours %> + hs * 1)
     }
 
-
-    out_price.val(in_price.val())
-
-    date = new Date(date)
+    out_price.val(<%= @rental.price.to_i %> + parseInt(in_price.val()))
 
     in_expire.val(date_format(date))
     out_expired.val(in_expire.val())
   }
 
   function date_format(date) {
-    return `${date.getFullYear()}-${date.getMonth()+1}-${[date.getDate()]} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+    let Month   = date.getMonth().toString().length   == 2 ? date.getMonth()+1 : "0" + (date.getMonth()+1)
+    let Date    = date.getDate().toString().length    == 2 ? date.getDate()    : "0" + date.getDate()
+    let Hours   = date.getHours().toString().length   == 2 ? date.getHours()   : "0" + date.getHours()
+    let Minutes = date.getMinutes().toString().length == 2 ? date.getMinutes() : "0" + date.getMinutes()
+    let Seconds = date.getSeconds().toString().length == 2 ? date.getSeconds() : "0" + date.getSeconds()
+    return `${date.getFullYear()}-${Month}-${Date} A las ${Hours}:${Minutes}:${Seconds}`
   }
 </script>
