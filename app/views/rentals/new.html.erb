@@ -1,13 +1,15 @@
-<h1>Detalles Alquiler</h1>
 
-<%= notice %>
+<div calss="text-center align-items-center">
+  <div class="card" style="width: 30rem">
+    <h1 class="card-header">Detalles Alquiler</h1>
+    <%= notice %>
 
-<%= notice %>
+    <%= render "form", rental: @rental %>
 
-<%= render "form", rental: @rental %>
+    <br>
 
-<br>
-
-<div>
-  <%= link_to "Volver a la lista de autos", "/search" %>
+    <div>
+      <%= link_to "Volver a la lista de autos", "/search" %>
+    </div>
+  </div>
 </div>

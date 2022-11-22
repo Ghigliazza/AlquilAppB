@@ -1,60 +1,59 @@
-<% @driver = params[:driver] %>
+<div class="card-body">
+  <%= form_with(model: rental) do |form| %>
+    <% if rental.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(rental.errors.count, "error") %> prohibited this rental from being saved:</h2>
+        
+        <ul>
+          <% rental.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-<%= form_with(model: rental) do |form| %>
-  <% if rental.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(rental.errors.count, "error") %> prohibited this rental from being saved:</h2>
-      
-      <ul>
-        <% rental.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+    <div>
+        <% max = 24 %>
+        <%# Si se esta extendiendo el tiempo el maximo de hs para extender es el maximo de hs - la cantidad de hs que se alquilo el auto %>
+        <% if  @rental.expires != nil %>        
+          <% max -= @rent_time %>
         <% end %>
-      </ul>
+      <label for="hsRange" class="form-label">Indique la cantidad de horas: </label> 
+      <input type="range" id="hsRange" value="1" min=1 max= <%= max %> step="1" oninput="this.nextElementSibling.value = this.value" onchange="calcule_rent()">
+      <output> 1 </output>
+    </div>
+
+    <div>
+      <%= form.label :price, style: "display: block" %>
+      <%= form.hidden_field :price, :id => "in_price", :value => Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %>
+      <%# VALORES INICIALES DE PRECIO %>
+      <output id="out_price"> <%= Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %> </output>
+    </div>
+
+    <div>
+      Saldo: <%= current_user.balance %>
+    </div>
+
+    <div>
+      <%= form.label :expires, style: "display: block" %>
+      <%= form.hidden_field :expires, :id => "in_expire", :value => Time.now + 1.hour %>
+      <%# VALORES INICIALES DE FECHA %>
+      <output id="out_expired"> <%= ((@rental.expires != nil ? @rental.expires : Time.now)  + 1.hour).strftime('%Y-%m-%e %k:%M:%S') %> </output>
+    </div>
+
+    <div>
+      <%= form.hidden_field :user_id, :value => current_user.id %>
+    </div>
+
+    <div>
+      <%= form.hidden_field :car_id, :value => params[:car_id]%>
+    </div>
+
+    <div>
+      <%= form.submit %>
     </div>
   <% end %>
-
-  <div>
-      <% max = 24 %>
-      <%# Si se esta extendiendo el tiempo el maximo de hs para extender es el maximo de hs - la cantidad de hs que se alquilo el auto %>
-      <% if  @rental.expires != nil %>        
-        <% max -= @rent_time %>
-      <% end %>
-    <label for="hsRange" class="form-label">Indique la cantidad de horas: </label> 
-    <input type="range" id="hsRange" value="1" min=1 max= <%= max %> step="1" oninput="this.nextElementSibling.value = this.value" onchange="calcule_rent()">
-    <output> 1 </output>
-  </div>
-
-  <div>
-    <%= form.label :price, style: "display: block" %>
-    <%= form.hidden_field :price, :id => "in_price", :value => Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %>
-    <%# VALORES INICIALES DE PRECIO %>
-    <output id="out_price"> <%= Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %> </output>
-  </div>
-
-  <div>
-    Saldo: <%= current_user.balance %>
-  </div>
-
-  <div>
-    <%= form.label :expires, style: "display: block" %>
-    <%= form.hidden_field :expires, :id => "in_expire", :value => Time.now + 1.hour %>
-    <%# VALORES INICIALES DE FECHA %>
-    <output id="out_expired"> <%= ((@rental.expires != nil ? @rental.expires : Time.now)  + 1.hour).strftime('%Y-%m-%e %k:%M:%S') %> </output>
-  </div>
-
-  <div>
-    <%= form.hidden_field :user_id, :value => current_user.id %>
-  </div>
-
-  <div>
-    <%= form.hidden_field :car_id, :value => params[:car_id]%>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
-
+</div>
 
 
 <%# ================================================================================================== %>
