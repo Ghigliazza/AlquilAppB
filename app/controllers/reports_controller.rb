@@ -12,14 +12,17 @@ class ReportsController < ApplicationController
 
   # GET /reports/new
   def new
-    @report = Report.new
-     if current_user.rentals.any? #Esta es la logica para que no te deje entrar
-         sin rentas
-     @report.car_id = current_user.rentals.last.car_id
-        else
-        flash[:notice] = "You don't have any rentals"
-           redirect_to "/reports"
-         end
+    @report = Report.new(user_id: current_user.id)
+
+    #@report.update()
+
+    # if current_user.rentals.any? #Esta es la logica para que no te deje entrar
+    #     sin rentas
+    # @report.car_id = current_user.rentals.last.car_id
+    #    else
+    #    flash[:notice] = "You don't have any rentals"
+    #       redirect_to "/reports"
+    #     end
   end
 
   # GET /reports/1/edit
