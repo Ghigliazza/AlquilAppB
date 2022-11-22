@@ -1,7 +1,6 @@
 class RentalsController < ApplicationController
   before_action :set_rental,    only: %i[ show edit update destroy cancel timeOut? turnedOn? ]
-  before_action :requirements,  only: :create
-  before_action :timeOut?,      only: %i[ update cancel ]
+  #before_action :requirements,  only: :create
  
 # ================================================================================================================
   # GET /rentals or /rentals.json
@@ -12,6 +11,12 @@ class RentalsController < ApplicationController
   # GET /rentals/1 or /rentals/1.json
   def show
 
+    # Si se pasa el tiempo de expiracion, el motor esta apagado y no se finalizo aun, se finaliza automaticamente
+    if ((Time.now > @rental.expires) && (!@rental.expired?) && (!@rental.car.engine?))
+        @rental.expired!
+        @rental.car.ready!
+        redirect_to "/rentals/#{current_user.rentals.last.id}", alert:"El alquiler ha sido finalizado automaticamente. Precio final: $#{@rental.price}"
+    end
   end
 
   # GET /rentals/new
@@ -29,6 +34,11 @@ class RentalsController < ApplicationController
         # Si el usuario no tiene al menos $1000, no puede iniciar ningun alquiler
         if ((current_user.balance/Rental.states[:started]) < 1)
           redirect_to request.referrer, alert: "No tienes suficeinte saldo para realizar un alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $#{Rental.states[:started]})"
+        else
+          # Si el usuario alquilo el mismo auto hace menos de 3 horas (No solo chequea el ultimo alquiler, sino los anteriores tambien)
+          if (current_user.rentals.any? && (current_user.rentals.where(car_id: params[:car_id].to_i).any?) && (current_user.rentals.where(car_id: params[:car_id].to_i).last.updated_at < Time.now + 3.hours))
+            redirect_to request.referrer, alert: "Debes esperar al menos 3 horas antes de alquilar el mismo auto."
+          end
         end
       end
     end
@@ -158,34 +168,29 @@ class RentalsController < ApplicationController
   end
 
 
-  def requirements
-    alert = ''
+#  CHEQUEOS CAMBIADOS DE LUGAR
+#
+#  def requirements
+#    alert = ''
+#
+#    if params[:rental][:price].to_i > current_user.balance
+#      alert = "No tiene suficiente saldo"
+#    end
+#
+#    last_rent = current_user.rentals.last
+#    # Si hay una renta, esta tiene el mismo auto que se quiere alquilar y pasaron 3 hs desde el ultimo alquiler
+#    if last_rent && last_rent.car == params[:car_id] && last_rent[:expires] > Time.now - 3.hours 
+#      alert = "No puede alquilar este auto a menos de 3 hs desde su ultimo alquiler"
+#    end
+#
+#    if !current_user.admitted?
+#      alert = "Debe estar habilitado para alquilar un auto"
+#    end
+#
+#    if !alert.empty?
+#      redirect_to "/rentals/#{current_user.rentals.last.id}", alert: alert
+#    end
+#  end
 
-    if params[:rental][:price].to_i > current_user.balance
-      alert = "No tiene suficiente saldo"
-    end
-
-    last_rent = current_user.rentals.last
-    # Si hay una renta, esta tiene el mismo auto que se quiere alquilar y pasaron 3 hs desde el ultimo alquiler
-    if last_rent && last_rent.car == params[:car_id] && last_rent[:expires] > Time.now - 3.hours 
-      alert = "No puede alquilar este auto a menos de 3 hs desde su ultimo alquiler"
-    end
-
-    if !current_user.admitted?
-      alert = "Debe estar habilitado para alquilar un auto"
-    end
-
-    if !alert.empty?
-      redirect_to "/rentals/#{current_user.rentals.last.id}", alert: alert
-    end
-  end
-
-  def timeOut?
-    # Si se pasa el tiempo de expiracion, el motor esta apagado y no se finalizo aun, se finaliza automaticamente
-    if ((Time.now > @rental.expires) && (!@rental.expired?) && (!@rental.car.engine?))
-        @rental.expired!
-        redirect_to "/rentals/#{current_user.rentals.last.id}", alert:"El alquiler ha sido finalizado automaticamente. Precio final: $#{@rental.price}"
-    end
-  end
 
 end
