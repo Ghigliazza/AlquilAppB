@@ -31,9 +31,10 @@ class RentalsController < ApplicationController
 
   # GET /rentals/1/edit
   def edit
+
     #Si se alcanza la cantidad de horas maxima
-    if @rent_time >= 24
-      redirect_to request.referrer, alert: "Ya alcanzaste la cantidad de horas maxima de alquiler (24 horas)"
+    if @rental.total_hours == 24
+      redirect_to request.referrer, alert: "No puedes alquilar un auto por mas de 24 horas."
     end
 
     #Si no hay suficiente saldo
@@ -65,7 +66,7 @@ class RentalsController < ApplicationController
 
   # PATCH/PUT /rentals/1 or /rentals/1.json
   def update
-    current_user.update_attribute :balance, current_user.balance - params[:price] 
+    current_user.update_attribute :balance, current_user.balance #- params[:price] 
 
     respond_to do |format|
       if @rental.update(rental_params)
@@ -132,9 +133,9 @@ class RentalsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def rental_params
     if request.method() == "POST"
-      params.require(:rental).permit(:price, :expires, :user_id, :car_id, :initial_fuel, :summary, :state)
+      params.require(:rental).permit(:price, :expires, :user_id, :car_id, :initial_fuel, :summary, :state, :total_hours)
     else
-      params.require(:rental).permit(:price, :expires, :initial_fuel, :summary, :state)
+      params.require(:rental).permit(:price, :expires, :initial_fuel, :summary, :state, :total_hours)
     end
   end
 
