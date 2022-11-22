@@ -29,7 +29,7 @@ class RentalsController < ApplicationController
 
     #Si se alcanza la cantidad de horas maxima
     if @rental.total_hours == 24
-      redirect_to request.referrer, alert: "Ya alcanzaste la cantidad de horas maxima de alquiler (24 horas)"
+      redirect_to request.referrer, alert: "No puedes alquilar un auto por mas de 24 horas"
     end
 
     #Si no hay suficiente saldo

@@ -1,8 +1,4 @@
 
-
-
-<%= render @rental %>
-
 <% if @rental.expired? %>
   <% time = 0 %>
 <% else %>
@@ -10,8 +6,10 @@
 <% end %>
 
 <div style="min-height:50px">
-  <h1><b><span> <%= render partial: 'rentals/timer', locals: { tiempo: time } %> </span></b></h1>
+  <h2><b><span> <%= render partial: 'rentals/timer', locals: { tiempo: time } %> </span></b></h2>
 </div>
+
+<%= render @rental %>
 
   <!--------------------------------------BOTONES---------------------------->
 <div>
@@ -41,20 +39,4 @@
     <%= button_to "Eliminar Alquiler", @rental, method: :delete, class: "btn btn-danger"  %>
   <% end %>
 </div>
-
-++++++++++++++  RENTAL  ++++++++++++++<br>
-ID: <%= @rental.id %><br>
-PRICE: <%= @rental.price %><br>
-STATE: <%= @rental.state %><br>
-EXPIRE: <%= @rental.expires %><br>
-HORAS TOTALES: <%= @rental.total_hours %><br>
-
-++++++++++++++  TIME  ++++++++++++++<br>
-
-TIEMPO ACTUAL: <%= Time.now %><br>
-TIEMPO EN SEG DEL ALQUILER: <%= time %><br>
-
-++++++++++++++  CAR  ++++++++++++++<br>
-<% car = @rental.car %>
-ID: <%= car.id %><br>
 
