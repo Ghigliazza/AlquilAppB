@@ -235,6 +235,24 @@ User.create!([
 	coords_x: -57.957160476901834,
 	coords_y: -34.919451958400096 
 	},
+	{
+	id: 60,
+	email: "renting@gmail.com",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: :driver,                                                       
+	name: "Franco",                                                 
+	lastName: "Garcia",                                                
+	document: 40841510,                                           
+	state: :admitted,                                                  
+	license_url: "",  
+	licenseNumber: 99999999,
+	licenseExpiration: Date.today + 6.month,
+	birthdate: Date.today - 26.years,
+	balance: 20,
+	coords_x: -57.957160476901834,
+	coords_y: -34.919451958400096 
+	},
 ])
 
 # Crea un usuario individual para saltear el 'validates' (licencia expirada)
@@ -339,6 +357,7 @@ Car.create!([{
 	coords_y: -34.90940742232333
 	},
 	{
+	id: 60,
 	model: "Aveo",
 	brand: "Chevrolet",
 	license:"AB444CD",
@@ -375,4 +394,19 @@ Car.create!([{
 ])
 
 p "Seed created #{Car.count} cars";
+
 Rental.destroy_all
+Rental.create!([
+	{
+	price: 3000,
+	expires: Time.now + 1.hours,
+	user_id: 60,
+	car_id: 60,
+	state: :started,
+	created_at: Time.now - 2.hours,
+	total_hours: 3,
+	initial_fuel: 30
+	},
+])
+
+p "Seed created #{Rental.count} rentals";
