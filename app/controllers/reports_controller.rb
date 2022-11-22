@@ -13,6 +13,13 @@ class ReportsController < ApplicationController
   # GET /reports/new
   def new
     @report = Report.new
+     if current_user.rentals.any? #Esta es la logica para que no te deje entrar
+         sin rentas
+     @report.car_id = current_user.rentals.last.car_id
+        else
+        flash[:notice] = "You don't have any rentals"
+           redirect_to "/reports"
+         end
   end
 
   # GET /reports/1/edit
@@ -60,11 +67,15 @@ class ReportsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_report
+      if Report.any?
       @report = Report.find(params[:id])
+      else
+        flash[:message] = "There is no report."
+      end
     end
 
     # Only allow a list of trusted parameters through.
     def report_params
-      params.require(:report).permit(:description, :user_id, :car_id, :image)
+      params.require(:report).permit(:description, :user_id, :car_id, :image, :state)
     end
 end

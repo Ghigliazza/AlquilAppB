@@ -12,23 +12,47 @@
   <% end %>
 
   <div>
+  <%= form.label :state, style: "display: block" %>
+
+  <%= form.radio_button :state, "dented" %>
+  <%= form.label :state_dented, "The car has dents." %>
+
+  <%= form.radio_button :state, "scratched" %>
+  <%= form.label :state_scratched, "The car has scratches." %>
+  
+  <<%= form.radio_button :state, "wontStart" %>
+  <%= form.label :state_wontStart, "The car won't start." %>
+  </div>
+
+  <div>
     <%= form.label :description, style: "display: block" %>
     <%= form.text_area :description %>
   </div>
 
   <div>
+  <p>
     <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
+    <% @report.user_id = current_user.id %>
+    <%= current_user.id %>
+    </p>
   </div>
 
   <div>
+  <p>
     <%= form.label :car_id, style: "display: block" %>
-    <%= form.text_field :car_id %>
+    <% if current_user.rentals.any? %> 
+    <% current_user.rentals.last.car_id %>
+    <% else %>
+    No rentals.
+    <% end %>
+    </p>
   </div>
 
   <div>
+  <p>
     <%= form.label :image, style: "display: block" %>
-    <%= f.file_field :image %>
+    <%= form.file_field :image %>
+    </p>
   </div>
 
   <div>
