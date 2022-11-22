@@ -1,22 +1,32 @@
 <div id="<%= dom_id report %>">
-  <p>
-    <strong>Description:</strong>
-    <%= report.description %>
-  </p>
 
-  <p>
-    <strong>User:</strong>
-    <%= report.user_id %>
-  </p>
+          <table class="table table-striped" style="max-width:600px;">
+                <thead>
+                    <tr>
+                        <%# th colspan="2">Detalles</th> <%>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b> <%= "Descripción:" %></b> </td>
+                        <td><%= "#{report.description}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Conductor:" %></b> </td>
+                        <td><%= "#{User.find(report.user_id).name} #{User.find(report.user_id).lastName}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Auto:" %></b> </td>
+                        <td><%= "#{Car.find(report.car_id).brand} #{Car.find(report.car_id).model}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Patente:" %></b> </td>
+                        <td><%= "#{Car.find(report.car_id).license}" %></td> 
+                    </tr>
+                </tbody>
+          </table>   
 
-  <p>
-    <strong>Car:</strong>
-    <%= report.car_id %>
-  </p>
-
-  <p>
-  <strong>Image</strong>
-  <%= image_tag @report.image, :alt => 'report_image' %>
-  </p>
-
+          <p>
+               <%= image_tag report.image, width: 295 if report.image.attached? %> 
+          </p>
 </div>
