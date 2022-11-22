@@ -10,7 +10,7 @@
 <% end %>
 
 <div style="min-height:50px">
-  <span> <%= render partial: 'rentals/timer', locals: { tiempo: time } %> </span>
+  <h1><b><span> <%= render partial: 'rentals/timer', locals: { tiempo: time } %> </span></b></h1>
 </div>
 
   <!--------------------------------------BOTONES---------------------------->
@@ -23,7 +23,7 @@
             <% if @rental.total_hours < 24 && current_user.balance > 1750 %>  
                 <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-primary", id: "extendRentBtn" %>   
             <% else %>
-                <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-secondary", id: "extendRentBtn" %>
+                <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-info", id: "extendRentBtn"  %>
             <% end %>         
           </td>
           <td>
