@@ -16,8 +16,8 @@
 
       <!-- Cuando se crea el alquiler, el numero maximo de horas es determinado por el balance del usuairo --> 
       <% max = 24 %> 
-      <% if (@rental.expires == nil) && ((current_user.balance/Rental.states[:started]).round <= 24) %>       
-        <% max = (current_user.balance / Rental.states[:started]).round %>
+      <% if (@rental.expires == nil) && ((current_user.balance/Rental.states[:started]) <= 24) %>       
+        <% max = (current_user.balance / Rental.states[:started]) %>
       <% end %>
 
       <% if (@rental.expires != nil) %>   
@@ -25,8 +25,8 @@
          <% max = 24 - @rental.total_hours %>
 
          <!-- Y luego, se limita segun el saldo del usuario -->
-         <% if ((current_user.balance/Rental.states[:extended]).round < max) %>
-           <% max = (current_user.balance/Rental.states[:extended]).round %>          
+         <% if ((current_user.balance/Rental.states[:extended]) < max) %>
+           <% max = (current_user.balance/Rental.states[:extended]) %>          
          <% end %>     
       <% end %>
 
