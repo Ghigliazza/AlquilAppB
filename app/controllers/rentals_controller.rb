@@ -18,9 +18,14 @@ class RentalsController < ApplicationController
   def new
     @rental = Rental.new()
 
+    # Si el usuario no esta habilitado para manejar
+    if (! current_user.admitted?)
+      redirect_to request.referrer, alert: "Tu cuenta debe estar habilitada para alquilar un auto."
+    end
+
     # Si el usuario no tiene al menos $1000, no puede iniciar ningun alquiler
     if ((current_user.balance/1000) < 1)
-      redirect_to request.referrer, alert: "No tienes suficeinte saldo para realizar un alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1000)"
+      redirect_to request.referrer, alert: "No tienes suficeinte saldo para realizar un alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1000)."
     end
   end
 
@@ -29,12 +34,12 @@ class RentalsController < ApplicationController
 
     #Si se alcanza la cantidad de horas maxima
     if @rental.total_hours == 24
-      redirect_to request.referrer, alert: "No puedes alquilar un auto por mas de 24 horas"
+      redirect_to request.referrer, alert: "No puedes alquilar un auto por mas de 24 horas."
     end
 
     #Si no hay suficiente saldo
     if (current_user.balance/1750) < 1
-      redirect_to request.referrer, alert: "No tienes suficiente saldo para extender el alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1750)"
+      redirect_to request.referrer, alert: "No tienes suficiente saldo para extender el alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1750)."
     end
 
   end
