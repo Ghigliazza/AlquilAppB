@@ -1,31 +1,12 @@
 <div id="<%= dom_id rental %>">
-  <p>
-    <strong>Precio de Alquiler:</strong>
-    <%= rental.price %>
-  </p>
-
-  <p>
-    <strong>Expira en :</strong>
-    <%= rental.expires.strftime('%Y-%m-%e, a las %k:%M:%S') %>
-  </p>
-  
-  <p>
-    <% user = rental.user %>
-    <strong>User:</strong>
-    <%= user.name %>
-    <%= user.lastName %>
-  </p> 
     
-  
-
-  <p>
     <% car = rental.car %>
-    <% if File.exists?("#{Rails.root}/app/assets/images#{car.img_url}") %>
-              <div class="clearfix">
-              <img src="/assets<%= car.img_url %>" alt="" class="col-md-4 float-md-end mb-3 ms-md-3" >
+
+          </p>
+          <% if File.exists?("#{Rails.root}/app/assets/images#{car.img_url}") %>
+              <img src="/assets<%= car.img_url %>" alt="" style="max-width:600px;" > </p>
           <% else %>             
-              <div class="clearfix">
-              <img src="/assets/autos/notfound.jpg" alt="" class="col-md-4 float-md-end mb-3 ms-md-3" >
+              <img src="/assets/autos/notfound.jpg" alt="" style="max-width:600px;" > </p>
           <% end %>
 
           <table class="table table-striped" style="max-width:600px;">
@@ -53,18 +34,28 @@
                     </tr>
                     <tr>
                         <td><b> <%= "Combustible Inicial" %></b> </td>
-                        <td><%= "#{rental.initial_fuel}" %></td> 
+                        <td><%= "#{rental.initial_fuel} litros" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Precio de Alquiler" %></b> </td>
+                        <td><%= "$#{rental.price}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Horas Alquiladas" %></b> </td>
+                        <td>  <%= rental.total_hours %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Expira" %></b> </td>
+                        <td><%= rental.expires.strftime('%Y-%m-%e, a las %k:%M:%S') %></td> 
                     </tr>
 
                 </tbody>
           </table>       
-          <p>
+          
             <% if car.description != "" %>
-              <%= "#{car.description}" %>
+              <p>
+                <%= "#{car.description}" %>
+              </p>
             <% end %>
-          </p>
-    
-    </div>
-  </p> 
-
+   
 </div>

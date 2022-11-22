@@ -5,7 +5,7 @@
   <script>
         let tiempo_Segundos = <%= tiempo %>;
         //let tiempo_Segundos = 5 //Fuerzo el timer a 5 segundos para testear
-        let dias;
+        //let dias;
         let horas;
         let minutos;
         let segundos;
@@ -13,18 +13,20 @@
 
         var aviso = setInterval(function mostrar_Tiempo() {
 
-          dias     = Math.floor(tiempo_Segundos/(60*24*60));
+          //dias     = Math.floor(tiempo_Segundos/(60*24*60));
           horas    = Math.floor(tiempo_Segundos/(60*60));
           minutos  = Math.floor(tiempo_Segundos/60);
           segundos = Math.floor(tiempo_Segundos);
 
-          horas    = horas - dias*24;
-          minutos  = minutos - (dias*24*60 + horas*60);
-          segundos = segundos - (dias*24*60*60 + horas*60*60 + minutos*60);
+          //horas    = horas - dias*24;
+          //minutos  = minutos - (dias*24*60 + horas*60);
+          //segundos = segundos - (dias*24*60*60 + horas*60*60 + minutos*60);
+          minutos  = minutos - (horas*60);
+          segundos = segundos - (horas*60*60 + minutos*60);
 
           if (tiempo_Segundos > 0) { 
 
-          document.getElementById('dias').innerHTML     = dias     + " dias";
+          //document.getElementById('dias').innerHTML     = dias     + " dias";
           document.getElementById('horas').innerHTML    = horas    + " horas";
           document.getElementById('minutos').innerHTML  = minutos  + " minutos";
           document.getElementById('segundos').innerHTML = segundos + " segundos";

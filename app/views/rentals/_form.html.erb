@@ -51,12 +51,21 @@
         <output id="outHsRange"> 1 </output>
       </div>
 
+<<<<<<< HEAD
       <div>
         <b>Costo Total: </b>
         <%= form.hidden_field :price, :id => "in_price", :value => Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %>
         <%# VALORES INICIALES DE PRECIO %>
         <output id="out_price"> <%= Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %> </output>
       </div>
+=======
+          <div>
+            <b>Costo Total: </b>
+            <%= form.hidden_field :price, :id => "in_price", :value => Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %>
+            <%# VALORES INICIALES DE PRECIO %>
+            $<output id="out_price"> <%= Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %> </output>
+          </div>
+>>>>>>> c6e2ab85c0dfb60f4325105bdbf15f3332e2083a
 
     <!----------------------------- DATOS PARA EL USUARIO -------------------------------------->
       <div>
