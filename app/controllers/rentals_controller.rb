@@ -49,6 +49,10 @@ class RentalsController < ApplicationController
         #Si no hay suficiente saldo
         if (current_user.balance/Rental.states[:extended]) < 1
           redirect_to request.referrer, alert: "No tienes suficiente saldo para extender el alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $#{Rental.states[:extended]})"
+        else
+          if (Time.now > @rental.expires)
+            redirect_to request.referrer, alert: "No puedes extender el alquiler si ya está vencido."
+          end
         end
       end
     end
@@ -99,6 +103,7 @@ class RentalsController < ApplicationController
       Car.find(@rental.car_id).ready!
       # Si no pasaron 10 minutos entonces cancela el alquiler o si encendio el motor (devuelve el precio del mismo)
       if Time.now < @rental.created_at + 10.minutes || @rental.turnedOn?
+
         @rental.user.update_attribute :balance, @rental.user.balance + @rental.price
         notice += " y se le ha devuelto el costo del mismo, con un valor de: $#{@rental.price}"
 
@@ -136,7 +141,7 @@ class RentalsController < ApplicationController
   def set_rental
     @rental = Rental.find(params[:id])
     if @rental
-      @time_left = (@rental.expires - Time.now).round
+      @time_left = (@rental.expires - Time.now)
       @rent_time = ((@rental.expires - @rental.created_at)/1.hour).round
     end
   end

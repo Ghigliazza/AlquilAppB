@@ -377,7 +377,25 @@ User.create!([
 	licenseNumber: 99999999,
 	licenseExpiration: Date.today + 6.month,
 	birthdate: Date.today - 26.years,
-	balance: 20,
+	balance: 2000,
+	coords_x: -57.957160476901834,
+	coords_y: -34.919451958400096 
+	},
+	{
+	id: 65,
+	email: "rent_expired@gmail.com",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: :driver,                                                       
+	name: "Francisco",                                                 
+	lastName: "Garcia",                                                
+	document: 40141510,                                           
+	state: :admitted,                                                  
+	license_url: "",  
+	licenseNumber: 99999999,
+	licenseExpiration: Date.today + 6.month,
+	birthdate: Date.today - 26.years,
+	balance: 2000,
 	coords_x: -57.957160476901834,
 	coords_y: -34.919451958400096 
 	},
@@ -402,6 +420,42 @@ Car.create!([
 	coords_x: -57.96440576970384,
 	coords_y: -34.913947202499656
 	},
+	{
+	id: 65,
+	model: "308",
+	brand: "Peugeot",
+	license:"AB888CD",
+	color:"Blanco",
+	img_url:"/autos/AB888CD.jpg",
+	doors: 4,
+	seats: 4,
+	state: :rented,
+	engine: 1,
+	#position_id: ,
+	fuel: 3,
+	transmission: "Manual",
+	description: "",
+	coords_x: -57.94944155306433,
+	coords_y: -34.94550968612329 
+	},
+	{
+	id: 70,
+	model: "Forester",
+	brand: "Subaru",
+	license:"AB999CD",
+	color:"Azul",
+	img_url:"/autos/AB999CD.jpg",
+	doors: 4,
+	seats: 5,
+	state: :rented,
+	engine: 0,
+	#position_id: ,
+	fuel: 29.8,
+	transmission: "Manual",
+	description: "",
+	coords_x: -57.96302557666058,
+	coords_y: -34.897135267221365 
+	},
 ])
 
 Rental.destroy_all
@@ -413,6 +467,16 @@ Rental.create!([
 	car_id: 60,
 	state: :started,
 	created_at: Time.now - 2.hours,
+	total_hours: 3,
+	initial_fuel: 30
+	},
+	{
+	price: 3000,
+	expires: Time.now - 1.hours,
+	user_id: 65,
+	car_id: 65,
+	state: :started,
+	created_at: Time.now - 5.hours,
 	total_hours: 3,
 	initial_fuel: 30
 	},

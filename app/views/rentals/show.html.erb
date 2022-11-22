@@ -18,9 +18,9 @@
       <tr>
         <% if !@rental.expired? %>
           <td>
-            <% if @rent_time < 24 && current_user.balance > Rental.states[:extended] %>  
+            <% if (@rent_time < 24 && current_user.balance > Rental.states[:extended]) && !(Time.now > @rental.expires) %>  
                 <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-primary", id: "extendRentBtn" %>   
-            <% else %>
+            <% else %> 
                 <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-info", id: "extendRentBtn"  %>
             <% end %>         
           </td>
