@@ -14,10 +14,10 @@
 
           <% if File.exists?("#{Rails.root}/app/assets/images#{car.img_url}") %>
               <div class="clearfix">
-              <img src="/assets<%= car.img_url %>" alt="" class="col-md-4 float-md-end mb-3 ms-md-3" >
+              <img src="/assets<%= car.img_url %>" alt="" width= "295" > </p>
           <% else %>             
               <div class="clearfix">
-              <img src="/assets/autos/notfound.jpg" alt="" class="col-md-4 float-md-end mb-3 ms-md-3" >
+              <img src="/assets/autos/notfound.jpg" alt="" width= "295" > </p>
           <% end %>
 
           <table class="table table-striped" style="max-width:600px;">

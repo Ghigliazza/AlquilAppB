@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_21_170317) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_22_032055) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_21_170317) do
     t.integer "doors"
     t.integer "seats"
     t.integer "state"
-    t.boolean "engine"
+    t.boolean "engine", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float "fuel"
@@ -65,6 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_21_170317) do
     t.float "coords_x"
     t.float "coords_y"
     t.float "distance"
+    t.boolean "turn_on", default: false
   end
 
   create_table "positions", force: :cascade do |t|
@@ -85,6 +86,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_21_170317) do
     t.datetime "updated_at", null: false
     t.integer "state", default: 1000
     t.datetime "dateCarNear"
+    t.float "initial_fuel"
+    t.text "summary"
   end
 
   create_table "reports", force: :cascade do |t|

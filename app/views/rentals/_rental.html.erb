@@ -36,12 +36,6 @@
                 </thead>
                 <tbody>
                     <tr>
-                      <td><b> <%= "Distancia (Aprox.)" %></b></td>
-
-                      <td> <%= car.distance %> </td> 
-
-                    </tr>
-                    <tr>
                         <td><b> <%= "Marca" %></b> </td>
                         <td><%= "#{car.model}" %></td> 
                     </tr>
@@ -54,38 +48,12 @@
                         <td><%= "#{car.color}" %></td> 
                     </tr>
                     <tr>
-                        <td><b> <%= "Transmision" %></b> </td>
-                        <td><%= "#{car.transmission}" %></td> 
-                    </tr>
-                    <tr>
-                        <td><b> <%= "Combustible" %></b> </td>
-                        <td><%= "#{car.fuel} litros" %></td> 
-                    </tr>
-                    <tr>
                         <td><b> <%= "Patente" %></b> </td>
                         <td><%= "#{car.license}" %></td> 
                     </tr>
                     <tr>
-                        <td><b> <%= "Puertas" %></b> </td>
-                        <td><%= "#{car.doors}" %></td> 
-                    </tr>
-                    <tr>
-                        <td><b> <%= "Asientos" %></b> </td>
-                        <td><%= "#{car.seats}" %></td> 
-                    </tr>
-
-                    <tr>
-                      <td><b> <%= "Estado" %></b> </td>
-                      <% case car.state %>
-                        <% when 'ready' %> 
-                          <td><%= "Disponible" %></td> 
-                        <% when 'rented' %>                         
-                          <td><%= "En uso" %></td> 
-                        <% when 'blocked' %>                           
-                          <td><%= "Bloqueado" %></td> 
-                        <% else %>
-                          <td><%= car.state %></td> 
-                        <% end %>                     
+                        <td><b> <%= "Combustible Inicial" %></b> </td>
+                        <td><%= "#{rental.initial_fuel}" %></td> 
                     </tr>
 
                 </tbody>

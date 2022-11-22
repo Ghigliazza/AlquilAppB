@@ -5,24 +5,37 @@
 
 <% if @rental.expired? %>
   <% time = 0 %>
-
 <% else %>
-  <% time = @rent_time %>
+  <% time = @time_left %>
 <% end %>
 
-
 <div style="min-height:50px">
-  <span> <%= render partial: 'rentals/timer', locals: { tiempo: time } %> </span>
+  <h1><b><span> <%= render partial: 'rentals/timer', locals: { tiempo: time } %> </span></b></h1>
 </div>
 
+  <!--------------------------------------BOTONES---------------------------->
 <div>
-  <% if !@rental.expired? %>
-    <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-primary", id: "extendRentBtn" %>
-    <%= link_to "Cancelar Alquiler", cancel_rental_path, class: "btn btn-danger", id: "cancelRentBtn" %>
-  <% end %>
-
-  <%= link_to "Reportar", new_rental_report_path(@rental), class: "btn btn-warning", id: "reporttBtn" %>
-
+  <table class="table table-borderless" style="max-width:300px;">
+   <tbody>
+      <tr>
+        <% if !@rental.expired? %>
+          <td>
+            <% if @rent_time < 24 && current_user.balance > Rental.states[:extended] %>  
+                <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-primary", id: "extendRentBtn" %>   
+            <% else %>
+                <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-info", id: "extendRentBtn"  %>
+            <% end %>         
+          </td>
+          <td>
+            <%= link_to "Finalizar Alquiler", cancel_rental_path, class: "btn btn-danger", id: "cancelRentBtn" %>                        
+          </td> 
+        <% end %>
+        <td>
+          <%= link_to "Reportar", new_rental_report_path(@rental), class: "btn btn-warning", id: "reporttBtn" %>                        
+        </td>         
+      </tr>
+   </tbody>
+  </table> 
 
   <% if current_user.admin? %>
     <%= button_to "Eliminar Alquiler", @rental, method: :delete, class: "btn btn-danger"  %>
@@ -34,10 +47,13 @@ ID: <%= @rental.id %><br>
 PRICE: <%= @rental.price %><br>
 STATE: <%= @rental.state %><br>
 EXPIRE: <%= @rental.expires %><br>
+HORAS TOTALES: <%= @time_left %><br>
 
 ++++++++++++++  TIME  ++++++++++++++<br>
+
 TIEMPO ACTUAL: <%= Time.now %><br>
 TIEMPO EN SEG DEL ALQUILER: <%= time %><br>
+TIEMPO DE ALQUILER: <%= @rent_time %><br>
 
 ++++++++++++++  CAR  ++++++++++++++<br>
 <% car = @rental.car %>
