@@ -1,7 +1,7 @@
 class RentalsController < ApplicationController
-  before_action :set_rental,    only: %i[ show edit update destroy ]
-  before_action :timeOut?,      only: %i[ update cancel ]
+  before_action :set_rental,    only: %i[ show edit update destroy cancel timeOut? turnedOn? ]
   before_action :requirements,  only: :create
+  before_action :timeOut?,      only: %i[ update cancel ]
  
 # ================================================================================================================
   # GET /rentals or /rentals.json
@@ -24,22 +24,21 @@ class RentalsController < ApplicationController
     end
 
     # Si el usuario no tiene al menos $1000, no puede iniciar ningun alquiler
-    if ((current_user.balance/1000) < 1)
-      redirect_to request.referrer, alert: "No tienes suficeinte saldo para realizar un alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1000)."
+    if ((current_user.balance/Rental.states[:started]) < 1)
+      redirect_to request.referrer, alert: "No tienes suficeinte saldo para realizar un alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1000)"
     end
   end
 
   # GET /rentals/1/edit
   def edit
-
     #Si se alcanza la cantidad de horas maxima
-    if @rental.total_hours == 24
-      redirect_to request.referrer, alert: "No puedes alquilar un auto por mas de 24 horas."
+    if @rent_time >= 24
+      redirect_to request.referrer, alert: "Ya alcanzaste la cantidad de horas maxima de alquiler (24 horas)"
     end
 
     #Si no hay suficiente saldo
-    if (current_user.balance/1750) < 1
-      redirect_to request.referrer, alert: "No tienes suficiente saldo para extender el alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1750)."
+    if (current_user.balance/Rental.states[:extended]) < 1
+      redirect_to request.referrer, alert: "No tienes suficiente saldo para extender el alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1750)"
     end
 
   end
@@ -66,6 +65,8 @@ class RentalsController < ApplicationController
 
   # PATCH/PUT /rentals/1 or /rentals/1.json
   def update
+    current_user.update_attribute :balance, current_user.balance - params[:price] 
+
     respond_to do |format|
       if @rental.update(rental_params)
         format.html { redirect_to rental_url(@rental), notice: "El alquiler ha sido extendido exitosamente." }
@@ -79,23 +80,26 @@ class RentalsController < ApplicationController
 
   # GET /rental/id
   def cancel
-    set_rental()
     # Si no encendio el auto
     if !@rental.car.engine
       alert = ""
       notice = "El alquiler ha sido finalizado exitosamente"
       Car.find(@rental.car_id).ready!
-      # Si no pasaron 10 minutos entonces cancela el alquiler (devuelve el precio del mismo)
-      if Time.now < @rental.created_at + 10.minutes
+      # Si no pasaron 10 minutos entonces cancela el alquiler o si encendio el motor (devuelve el precio del mismo)
+      if Time.now < @rental.created_at + 10.minutes || @rental.turnedOn?
         @rental.user.update_attribute :balance, @rental.user.balance + @rental.price
         notice += " y se le ha devuelto el costo del mismo, con un valor de: $#{@rental.price}"
-      else  
-        alert = "Lo sentimos, pero como ya encendio el motor no se le devolvera el costo del alquiler"
+
+      else
+        alert = "Lo sentimos, pero como ya "
+        alert += Time.now < @rental.created_at + 10.minutes ? "pasaron 10 minutos " : ""
+        alert += @rental.turnedOn? ? "y encendio el motor " : ""
+        alert += ", por lo que no se le devolvera el costo del alquiler"
       end
       
       @rental.update_attribute :state, :expired
     else
-      alert = "El motor debe estar apagado para cancelar el alquiler"
+      alert = "Debe apagar el mptor para cancelar el alquiler"
     end
 
     if alert.empty?
@@ -120,16 +124,17 @@ class RentalsController < ApplicationController
   def set_rental
     @rental = Rental.find(params[:id])
     if @rental
-      @rent_time = (@rental.expires - Time.now).round
+      @time_left = (@rental.expires - Time.now).round
+      @rent_time = ((@rental.expires - @rental.created_at)/1.hour).round
     end
   end
 
   # Only allow a list of trusted parameters through.
   def rental_params
     if request.method() == "POST"
-      params.require(:rental).permit(:price, :expires, :user_id, :car_id, :total_hours, :initial_fuel, :summary, :state)
+      params.require(:rental).permit(:price, :expires, :user_id, :car_id, :initial_fuel, :summary, :state)
     else
-      params.require(:rental).permit(:price, :expires, :total_hours, :initial_fuel, :summary, :state)
+      params.require(:rental).permit(:price, :expires, :initial_fuel, :summary, :state)
     end
   end
 
@@ -156,15 +161,17 @@ class RentalsController < ApplicationController
     end
   end
 
-
   def timeOut?
-    set_rental()
-    # si el alquiler expiro 0 termino el tiempo de alquiler
-    if @rental.expired? || @rent_time <= 0
-      if !@rental.expired?
+    alert = ""
+    # si el alquiler expiro y esta apagado el motor
+    if @time_left <= 0
+      if !@rental.car.engine
         @rental.expired!
+        alert = "El alquiler ha expirado"
+      else
+        alert = "Para terminr el alquiler por favor apague el motor"
       end
-      redirect_to rental_path, alert: "El alquiler ha expirado"
+      redirect_to rental_path, alert: alert
     end
   end
 

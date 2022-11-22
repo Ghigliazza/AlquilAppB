@@ -2,7 +2,7 @@
 <% if @rental.expired? %>
   <% time = 0 %>
 <% else %>
-  <% time = @rent_time %>
+  <% time = @time_left %>
 <% end %>
 
 <div style="min-height:50px">
@@ -18,7 +18,7 @@
       <tr>
         <% if !@rental.expired? %>
           <td>
-            <% if @rental.total_hours < 24 && current_user.balance > 1750 %>  
+            <% if @rent_time < 24 && current_user.balance > Rental.states[:extended] %>  
                 <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-primary", id: "extendRentBtn" %>   
             <% else %>
                 <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-info", id: "extendRentBtn"  %>

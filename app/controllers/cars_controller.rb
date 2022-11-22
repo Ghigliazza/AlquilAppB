@@ -1,5 +1,6 @@
 class CarsController < ApplicationController
-  before_action :set_car, only: %i[ show edit update destroy ]
+  before_action :set_car,   only: %i[ show edit update destroy turnedOn? ]
+  before_action :turnedOn?, only: %i[ show edit update ]
 
   # GET /cars or /cars.json
   def index
@@ -58,13 +59,20 @@ class CarsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_car
-      @car = Car.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_car
+    @car = Car.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def car_params
-      params.require(:car).permit(:model, :brand, :license, :color, :img_url, :doors, :seats, :state, :engine, :fuel, :position_id)
+  # Only allow a list of trusted parameters through.
+  def car_params
+    params.require(:car).permit(:model, :brand, :license, :color, :img_url, :doors, :seats, :state, :engine, :fuel, :position_id)
+  end
+
+
+  def turnedOn?
+    if @car.empty? && car.engine
+      @car.update_attribute :turned_on, :true;
     end
+  end
 end
