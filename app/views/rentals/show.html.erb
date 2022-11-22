@@ -5,24 +5,37 @@
 
 <% if @rental.expired? %>
   <% time = 0 %>
-
 <% else %>
   <% time = @rent_time %>
 <% end %>
-
 
 <div style="min-height:50px">
   <span> <%= render partial: 'rentals/timer', locals: { tiempo: time } %> </span>
 </div>
 
+  <!--------------------------------------BOTONES---------------------------->
 <div>
-  <% if !@rental.expired? %>
-    <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-primary", id: "extendRentBtn" %>
-    <%= link_to "Finalizar Alquiler", cancel_rental_path, class: "btn btn-danger", id: "cancelRentBtn" %>
-  <% end %>
-
-  <%= link_to "Reportar", new_rental_report_path(@rental), class: "btn btn-warning", id: "reporttBtn" %>
-
+  <table class="table table-borderless" style="max-width:300px;">
+   <tbody>
+      <tr>
+        <% if !@rental.expired? %>
+          <td>
+            <% if @rental.total_hours < 24 && current_user.balance > 1750 %>  
+                <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-primary", id: "extendRentBtn" %>   
+            <% else %>
+                <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-secondary", id: "extendRentBtn" %>
+            <% end %>         
+          </td>
+          <td>
+            <%= link_to "Finalizar Alquiler", cancel_rental_path, class: "btn btn-danger", id: "cancelRentBtn" %>                        
+          </td> 
+        <% end %>
+        <td>
+          <%= link_to "Reportar", new_rental_report_path(@rental), class: "btn btn-warning", id: "reporttBtn" %>                        
+        </td>         
+      </tr>
+   </tbody>
+  </table> 
 
   <% if current_user.admin? %>
     <%= button_to "Eliminar Alquiler", @rental, method: :delete, class: "btn btn-danger"  %>

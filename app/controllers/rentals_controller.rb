@@ -11,16 +11,32 @@ class RentalsController < ApplicationController
 
   # GET /rentals/1 or /rentals/1.json
   def show
-    
+
   end
 
   # GET /rentals/new
   def new
     @rental = Rental.new()
+
+    # Si el usuario no tiene al menos $1000, no puede iniciar ningun alquiler
+    if ((current_user.balance/1000) < 1)
+      redirect_to request.referrer, alert: "No tienes suficeinte saldo para realizar un alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1000)"
+    end
   end
 
   # GET /rentals/1/edit
   def edit
+
+    #Si se alcanza la cantidad de horas maxima
+    if @rental.total_hours == 24
+      redirect_to request.referrer, alert: "Ya alcanzaste la cantidad de horas maxima de alquiler (24 horas)"
+    end
+
+    #Si no hay suficiente saldo
+    if (current_user.balance/1750) < 1
+      redirect_to request.referrer, alert: "No tienes suficiente saldo para extender el alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1750)"
+    end
+
   end
 
   # POST /rentals or /rentals.json

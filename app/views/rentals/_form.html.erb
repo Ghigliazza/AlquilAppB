@@ -37,7 +37,6 @@
       <% end %>
 
 
-
 <!----------------------------- FORMULARIO (DEPENDE DEL MAXIMO DE HORAS POSIBLE) -------------------------------------->
 
   <% if max > 0 %>
@@ -87,7 +86,6 @@
           </div>
 
 
-
         <!----------------------------- BOTONES DE ALQUILAR/EXTENDER -------------------------------------->
           <div>
             <% if (@rental.expires == nil) %>
@@ -109,7 +107,7 @@
               </p>
             <% else %>
               <p><p>
-                    HORAS DE ALQUILER COMPRADAS: <%= @rental.total_hours %> </p>
+                    <b>Horas alquiladas anteriormente:</b> <%= @rental.total_hours %> </p>
                     <table class="table table-borderless" style="max-width:300px;">
                     <tbody>
                             <tr>
@@ -130,50 +128,14 @@
 
   <!----------------------------- SI NO PUEDE INICIAR/EXTENDER EL ALQUILER -------------------------------------->
  
-    <% if rental.expires == nil %>
-        <div class="text-center"> 
-          <% if (current_user.balance/1000).round < 1 %>    
-            <div >
-                <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
-                  No tienes suficiente saldo para iniciar el alquiler (Saldo actual: $<%= current_user.balance %>)
-                </p>
-            </div>
-          <% end %> 
-        </div>
-
-       <div style="margin-left:25px; margin-top:15px;">
-        <a class="btn btn-secondary" href="/search" role="button">Cancelar</a>
-       </div>   
-
-    <% else %>
-        <div class="text-center"> 
-          <% if @rental.total_hours == 24 %>    
-            <div >
-                <p id="notice" class="alert alert-warning alert-dismissible fade show"> 
-                  Ya alcanzaste la cantidad de horas maxima de alquiler (24 horas)
-                </p>
-            </div>
-          <% end %> 
-          <% if (current_user.balance/1750).round < 1 %>    
-            <div >
-                <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
-                  No tienes suficiente saldo para extender el alquiler (Saldo actual: $<%= current_user.balance %>)
-                </p>
-            </div>
-          <% end %> 
-        </div>
-
-       <div style="margin-left:25px; margin-top:15px;">
-        <a class="btn btn-secondary" href="/rentals/<%= rental.id %>" role="button">Volver al alquiler</a>
-       </div>    
-    <% end %>
+    <!-- No deberia ser posible llegar a esta pantalla-->
+    ERROR: EL ALQUILER NO SE PUEDE EXTENDER/INICIAR
 
   <% end %>
 
-<!----------------------------- FIN DEL FORMULARIO -------------------------------------->
+  <!----------------------------- FIN DEL FORMULARIO -------------------------------------->
 
 <% end %>
-
 
 
 
