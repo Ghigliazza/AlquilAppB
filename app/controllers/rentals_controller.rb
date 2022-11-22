@@ -176,21 +176,15 @@ class RentalsController < ApplicationController
     end
 
     if !alert.empty?
-      redirect_to rentals_path, alert: alert
+      redirect_to "/rentals/#{current_user.rentals.last.id}", alert: alert
     end
   end
 
   def timeOut?
-    alert = ""
-    # si el alquiler expiro y esta apagado el motor
-    if @time_left <= 0
-      if !@rental.car.engine
+    # Si se pasa el tiempo de expiracion, el motor esta apagado y no se finalizo aun, se finaliza automaticamente
+    if ((Time.now > @rental.expires) && (!@rental.expired?) && (!@rental.car.engine?))
         @rental.expired!
-        alert = "El alquiler ha sido finalizado correctamente. Precio final: $#{@rental.price}"
-      else
-        alert = "Debe apagar el motor antes de finalizar el alquiler"
-      end
-      redirect_to rental_path, alert: alert
+        redirect_to "/rentals/#{current_user.rentals.last.id}", alert:"El alquiler ha sido finalizado automaticamente. Precio final: $#{@rental.price}"
     end
   end
 
