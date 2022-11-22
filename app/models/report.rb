@@ -5,5 +5,5 @@ class Report < ApplicationRecord
 
     #enum state: { dented: "El auto está abollado", scratched: "El auto está rayado", wontStart: "El auto no enciende" }
 
-    enum state: [:dented, :scratched, :wontStart]
+    enum state: [:dented, :scratched, :wontStart, :other]
 end

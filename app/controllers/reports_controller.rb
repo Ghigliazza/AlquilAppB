@@ -35,10 +35,10 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       if @report.save
-        format.html { redirect_to report_url(@report), notice: "El reporte fue enviado correctamente" }
+        format.html { redirect_to request.referrer, notice: "El reporte fue enviado correctamente." }
         format.json { render :show, status: :created, location: @report }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to request.referrer, alert: "El reporte no pudo ser enviado." }
         format.json { render json: @report.errors, status: :unprocessable_entity }
       end
     end

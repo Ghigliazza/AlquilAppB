@@ -1,52 +1,42 @@
-<%= form_with(model: report) do |form| %>
+<div style="margin-left:30px; margin-top:15px;">
 
-<!----------------------------- ERRORES ------------------------------------------------------------->
-  <% if report.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(report.errors.count, "error") %> prohibited this report from being saved:</h2>
 
-      <ul>
-        <% report.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+
+  <%= form_with(model: report) do |form| %>
+    <div>
+        <p><b><%= form.label "Problema:", style: "display: block"%></b>
+        <%= form.radio_button :state, :dented %>
+        <%= form.label :state_dented, "El auto está abollado." %></p>
+        <%= form.radio_button :state, :scratched %>
+        <%= form.label :state_scratched, "El auto está rayado." %></p>
+        <%= form.radio_button :state, :wontStart %>
+        <%= form.label :state_wontStart, "El auto no enciende." %></p>  
+        <%= form.radio_button :state, :other %>
+        <%= form.label :state_other, "Otro problema." %></p>     
     </div>
+
+     <%#= form.hidden_field :state, :value => :dented %>
+
+    <div>
+      <b> Descripción (Opcional)</b></p>
+      <%= form.text_area :description %>
+    </div>
+
+
+    <%= form.hidden_field :car_id, :value => current_user.rentals.last.car_id.to_i %>
+    <%= form.hidden_field :user_id, :value => current_user.id.to_i %>
+
+    <div>
+    <p><b><%= form.label "Subir una foto (Opcional)", style: "display: block"%></b>
+          <%= form.file_field :image %></p>
+    </div>
+
+    
+    <div>
+      <%= form.button "Enviar Reporte" , type: "submit", :class=> "btn btn-primary" %>
+    </div>
+
   <% end %>
 
-<!----------------------------- FORMULARIO ------------------------------------------------------------->
-
-
-  <div>
-      <p><b><%= form.label "Estado:", style: "display: block"%></b>
-      <%#= form.radio_button :state, :dented %>
-      <%#= form.label :state_dented, "The car has dents." %></p>
-      <%#= form.radio_button :state, :scratched %>
-      <%#= form.label :state_scratched, "The car has scratches." %></p>
-      <%#= form.radio_button :state, :wontStart %>
-      <%#= form.label :state_wontStart, "The car won't start." %></p>     
-  </div>
-
-   <%= form.hidden_field :state, :value => :dented %>
-
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
-  </div>
-
-
-  <%= form.hidden_field :car_id, :value => current_user.rentals.last.car_id.to_i %>
-  <%= form.hidden_field :user_id, :value => current_user.id.to_i %>
-
-  <div>
-  <p><b><%= form.label "Foto", style: "display: block"%></b>
-        <%= form.file_field :image %></p>
-  </div>
-
-  
-  <div>
-    <%= form.button "Enviar Reporte" , type: "submit", :class=> "btn btn-primary" %>
-  </div>
-
-<% end %>
-
+</div>
 
