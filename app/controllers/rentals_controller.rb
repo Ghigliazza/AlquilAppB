@@ -2,7 +2,6 @@ class RentalsController < ApplicationController
   before_action :set_rental,    only: %i[ show edit update destroy cancel timeOut? turnedOn? ]
   before_action :requirements,  only: :create
   before_action :timeOut?,      only: %i[ update cancel ]
-  before_action :turnedOn?,     only: %i[ update cancel ]
  
 # ================================================================================================================
   # GET /rentals or /rentals.json
@@ -66,7 +65,7 @@ class RentalsController < ApplicationController
 
   # PATCH/PUT /rentals/1 or /rentals/1.json
   def update
-    current_user.update_attribute :balance, current_user.balance - params[:price]
+    current_user.update_attribute :balance, current_user.balance - params[:price] 
 
     respond_to do |format|
       if @rental.update(rental_params)
@@ -162,20 +161,18 @@ class RentalsController < ApplicationController
     end
   end
 
-
   def timeOut?
-    # si el alquiler expiro 0 termino el tiempo de alquiler
-    if @rental.expired? || @time_left <= 0
-      if !@rental.expired?
+    alert = ""
+    # si el alquiler expiro y esta apagado el motor
+    if @time_left <= 0
+      if !@rental.car.engine
         @rental.expired!
+        alert = "El alquiler ha expirado"
+      else
+        alert = "Para terminr el alquiler por favor apague el motor"
       end
-      redirect_to rental_path, alert: "El alquiler ha expirado"
+      redirect_to rental_path, alert: alert
     end
   end
 
-  def turnedOn?
-    if @rental.car.empty? && @rental.car.engine
-      @rental.update_attribute :turned_on, :true;
-    end
-  end
 end
