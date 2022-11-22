@@ -5,13 +5,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
         </p>
       </div>
-<% else %>
 
+<% else %>
   <h1><b><i>Reportes</i></b></h1>
 
   <div id="reports">
     <% @reports.each do |report| %>
       <%= render report %>
+      ||=========================================================================================||
     <% end %>
   </div>
 

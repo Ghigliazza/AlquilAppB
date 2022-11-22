@@ -31,6 +31,7 @@
 
           <% if current_user.supervisor? %>
               <a class="nav-link" href="/documents/index" >Evaluar Documentos</a>
+              <a class="nav-link" href="/reports" >Reportes [WIP]</a>
           <% end %>
 
           <%= link_to "Editar Perfil", edit_user_path(current_user.id) , class:"nav-link"%>  
