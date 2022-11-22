@@ -59,7 +59,7 @@
             <b>Costo Total: </b>
             <%= form.hidden_field :price, :id => "in_price", :value => Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %>
             <%# VALORES INICIALES DE PRECIO %>
-            <output id="out_price"> <%= Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %> </output>
+            $<output id="out_price"> <%= Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %> </output>
           </div>
 
           <%= form.hidden_field :total_hours, :id => "in_hours" %>
