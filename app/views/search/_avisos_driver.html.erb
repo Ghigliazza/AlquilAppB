@@ -42,5 +42,33 @@
       </div>
     <% end %>
 
+
+   <!-- DEBBUGGING -->
+
+    <% if current_user.rentals.any? %>   
+      <div >
+        <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
+            Este usuario tiene un rental en su historial.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </p>
+      </div>
+    <% end %>
+
+    <% if current_user.rentals.any? && !current_user.rentals.last.expired? %>   
+      <div >
+        <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
+            El ultimo rental aun esta ACTIVO.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </p>
+      </div>
+    <% end %>
+
+    <div >
+        <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
+            Saldo actual <%= current_user.balance %>.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </p>
+      </div>
+
 <% end %>
 </div>

@@ -21,12 +21,18 @@ class RentalsController < ApplicationController
     # Si el usuario no esta habilitado para manejar
     if (! current_user.admitted?)
       redirect_to request.referrer, alert: "Tu cuenta debe estar habilitada para alquilar un auto."
+    else
+      # Primero evito dividir por 0
+      if (current_user.balance == 0)
+        redirect_to request.referrer, alert: "No tienes suficeinte saldo para realizar un alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1000)"
+      else
+        # Si el usuario no tiene al menos $1000, no puede iniciar ningun alquiler
+        if ((current_user.balance/Rental.states[:started]) < 1)
+          redirect_to request.referrer, alert: "No tienes suficeinte saldo para realizar un alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $#{Rental.states[:started]})"
+        end
+      end
     end
 
-    # Si el usuario no tiene al menos $1000, no puede iniciar ningun alquiler
-    if ((current_user.balance/Rental.states[:started]) < 1)
-      redirect_to request.referrer, alert: "No tienes suficeinte saldo para realizar un alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1000)"
-    end
   end
 
   # GET /rentals/1/edit
@@ -35,11 +41,16 @@ class RentalsController < ApplicationController
     #Si se alcanza la cantidad de horas maxima
     if @rental.total_hours == 24
       redirect_to request.referrer, alert: "No puedes alquilar un auto por mas de 24 horas."
-    end
-
-    #Si no hay suficiente saldo
-    if (current_user.balance/Rental.states[:extended]) < 1
-      redirect_to request.referrer, alert: "No tienes suficiente saldo para extender el alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1750)"
+    else
+      #Si el saldo es 0 (evitamos dividir por 0)
+      if (current_user.balance == 0)
+        redirect_to request.referrer, alert: "No tienes suficiente saldo para extender el alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1750)"
+      else
+        #Si no hay suficiente saldo
+        if (current_user.balance/Rental.states[:extended]) < 1
+          redirect_to request.referrer, alert: "No tienes suficiente saldo para extender el alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $#{Rental.states[:extended]})"
+        end
+      end
     end
 
   end
