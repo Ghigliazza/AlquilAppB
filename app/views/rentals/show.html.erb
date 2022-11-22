@@ -28,12 +28,15 @@
             <%= link_to "Finalizar Alquiler", cancel_rental_path, class: "btn btn-danger", id: "cancelRentBtn" %>                        
           </td> 
           <td>
-            <%= link_to "Reportar", new_rental_report_path(@rental), class: "btn btn-warning", id: "reporttBtn" %>                        
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal<%=current_user.id%>">
+                   Reportar
+                </button>                                 
           </td>          
         <% else %>
-        
           <td>
-            <%= link_to "Reportar", new_rental_report_path(@rental), class: "btn btn-warning", id: "reporttBtn" %>                        
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal<%=current_user.id%>">
+                   Reportar
+                </button>                        
           </td>
           <td>
             <%= link_to "Volver a la lista de autos", "/search", class: "btn btn-primary", id: "reporttBtn" %>                        
@@ -48,4 +51,28 @@
     <%= button_to "Eliminar Alquiler", @rental, method: :delete, class: "btn btn-danger"  %>
   <% end %>
 </div>
+
+
+
+
+
+                <!-------- MODAL REPORTE -------------------------->
+
+                <div class="modal fade" id="exampleModal<%=current_user.id%>" tabindex="-1" aria-labelledby="exampleModalLabel<%=current_user.id%>" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel<%=current_user.id%>"> <b>Enviar un reporte</b></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+
+                        <%= render 'reports/form' %>
+                        <%#= render partial: 'reports/form' %>  
+                        <%#= render partial: 'search/map' %>  
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
