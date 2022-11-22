@@ -27,10 +27,18 @@
           <td>
             <%= link_to "Finalizar Alquiler", cancel_rental_path, class: "btn btn-danger", id: "cancelRentBtn" %>                        
           </td> 
+          <td>
+            <%= link_to "Reportar", new_rental_report_path(@rental), class: "btn btn-warning", id: "reporttBtn" %>                        
+          </td>          
+        <% else %>
+          <td>
+            <%= link_to "Reportar", new_rental_report_path(@rental), class: "btn btn-warning", id: "reporttBtn" %>                        
+          </td>
+          <td>
+            <%= link_to "Volver a la lista de autos", "/search", class: "btn btn-primary", id: "reporttBtn" %>                        
+          </td>
         <% end %>
-        <td>
-          <%= link_to "Reportar", new_rental_report_path(@rental), class: "btn btn-warning", id: "reporttBtn" %>                        
-        </td>         
+         
       </tr>
    </tbody>
   </table> 
