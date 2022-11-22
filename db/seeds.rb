@@ -234,25 +234,7 @@ User.create!([
 	balance: 20,
 	coords_x: -57.957160476901834,
 	coords_y: -34.919451958400096 
-	},
-	{
-	id: 60,
-	email: "renting@gmail.com",                                                   
-	password: 1234,
-	password_confirmation: 1234,                                 
-	rol: :driver,                                                       
-	name: "Franco",                                                 
-	lastName: "Garcia",                                                
-	document: 40841510,                                           
-	state: :admitted,                                                  
-	license_url: "",  
-	licenseNumber: 99999999,
-	licenseExpiration: Date.today + 6.month,
-	birthdate: Date.today - 26.years,
-	balance: 20,
-	coords_x: -57.957160476901834,
-	coords_y: -34.919451958400096 
-	},
+	}
 ])
 
 # Crea un usuario individual para saltear el 'validates' (licencia expirada)
@@ -357,24 +339,6 @@ Car.create!([{
 	coords_y: -34.90940742232333
 	},
 	{
-	id: 60,
-	model: "Aveo",
-	brand: "Chevrolet",
-	license:"AB444CD",
-	color:"Blanco",
-	img_url:"/autos/AB444CD.jpg",
-	doors: 4,
-	seats: 4,
-	state: :rented,
-	engine: 0,
-	#position_id: ,
-	fuel: 23,
-	transmission: "Manual",
-	description: "",
-	coords_x: -57.96440576970384,
-	coords_y: -34.913947202499656
-	},
-	{
 	model: "Ariya",
 	brand: "Nissan",
 	license:"AB555CD",
@@ -395,6 +359,51 @@ Car.create!([{
 
 p "Seed created #{Car.count} cars";
 
+
+########################################### Autos y Usuarios con rental  ##############################################
+
+User.create!([
+	{
+	id: 60,
+	email: "renting@gmail.com",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: :driver,                                                       
+	name: "Franco",                                                 
+	lastName: "Garcia",                                                
+	document: 40841510,                                           
+	state: :admitted,                                                  
+	license_url: "",  
+	licenseNumber: 99999999,
+	licenseExpiration: Date.today + 6.month,
+	birthdate: Date.today - 26.years,
+	balance: 20,
+	coords_x: -57.957160476901834,
+	coords_y: -34.919451958400096 
+	},
+])
+
+Car.create!([
+	{
+	id: 60,
+	model: "Aveo",
+	brand: "Chevrolet",
+	license:"AB444CD",
+	color:"Blanco",
+	img_url:"/autos/AB444CD.jpg",
+	doors: 4,
+	seats: 4,
+	state: :rented,
+	engine: 0,
+	#position_id: ,
+	fuel: 23,
+	transmission: "Manual",
+	description: "",
+	coords_x: -57.96440576970384,
+	coords_y: -34.913947202499656
+	},
+])
+
 Rental.destroy_all
 Rental.create!([
 	{
@@ -409,4 +418,4 @@ Rental.create!([
 	},
 ])
 
-p "Seed created #{Rental.count} rentals";
+p "Seed created #{Rental.count} rentals (with cars & users)";
