@@ -1,14 +1,18 @@
-<p style="color: green"><%= notice %></p>
+<% if !Report.any? %>
+      <div >
+        <p id="notice" class="alert alert-info alert-dismissible fade show"> 
+          No hay reportes...   
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </p>
+      </div>
+<% else %>
 
-<h1>Reports</h1>
+  <h1><b><i>Reportes</i></b></h1>
 
-<div id="reports">
-  <% @reports.each do |report| %>
-    <%= render report %>
-    <p>
-      <%= link_to "Show this report", report %>
-    </p>
-  <% end %>
-</div>
+  <div id="reports">
+    <% @reports.each do |report| %>
+      <%= render report %>
+    <% end %>
+  </div>
 
-<%= link_to "New report", new_report_path %>
+<% end %>

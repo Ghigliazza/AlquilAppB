@@ -18,14 +18,15 @@
 
   <div>
       <p><b><%= form.label "Estado:", style: "display: block"%></b>
-      <%= form.radio_button :state, "dented" %>
-      <%= form.label :state_dented, "The car has dents." %></p>
-      <%= form.radio_button :state, "scratched" %>
-      <%= form.label :state_scratched, "The car has scratches." %></p>
-      <%= form.radio_button :state, "wontStart" %>
-      <%= form.label :state_wontStart, "The car won't start." %></p>     
+      <%#= form.radio_button :state, :dented %>
+      <%#= form.label :state_dented, "The car has dents." %></p>
+      <%#= form.radio_button :state, :scratched %>
+      <%#= form.label :state_scratched, "The car has scratches." %></p>
+      <%#= form.radio_button :state, :wontStart %>
+      <%#= form.label :state_wontStart, "The car won't start." %></p>     
   </div>
 
+   <%= form.hidden_field :state, :value => :dented %>
 
   <div>
     <%= form.label :description, style: "display: block" %>

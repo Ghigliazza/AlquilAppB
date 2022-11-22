@@ -12,7 +12,7 @@ class ReportsController < ApplicationController
 
   # GET /reports/new
   def new
-    @report = Report.new(user_id: current_user.id)
+    @report = Report.new()
 
     #@report.update()
 
@@ -35,7 +35,7 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       if @report.save
-        format.html { redirect_to report_url(@report), notice: "Report was successfully created." }
+        format.html { redirect_to report_url(@report), notice: "El reporte fue enviado correctamente" }
         format.json { render :show, status: :created, location: @report }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -62,7 +62,7 @@ class ReportsController < ApplicationController
     @report.destroy
 
     respond_to do |format|
-      format.html { redirect_to reports_url, notice: "Report was successfully destroyed." }
+      format.html { redirect_to reports_url, notice: "El reporte fue eliminado correctamente" }
       format.json { head :no_content }
     end
   end
@@ -79,6 +79,13 @@ class ReportsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def report_params
-      params.require(:report).permit(:description, :user_id, :car_id, :image, :state)
+      if request.method() == "POST"
+         params.require(:report).permit(:description, :user_id, :car_id, :image, :state)
+      else
+         params.require(:report).permit(:description, :user_id, :car_id, :image, :state)
+      end      
     end
+
+
+
 end

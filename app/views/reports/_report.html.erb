@@ -8,10 +8,6 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><b> <%= "Descripción:" %></b> </td>
-                        <td><%= "#{report.description}" %></td> 
-                    </tr>
-                    <tr>
                         <td><b> <%= "Conductor:" %></b> </td>
                         <td><%= "#{User.find(report.user_id).name} #{User.find(report.user_id).lastName}" %></td> 
                     </tr>
@@ -22,6 +18,23 @@
                     <tr>
                         <td><b> <%= "Patente:" %></b> </td>
                         <td><%= "#{Car.find(report.car_id).license}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Estado:" %></b> </td>
+                        <% if report.state == 'dented' %>
+                            <td> Auto abollado </td> 
+                        <% end %>
+                        <% if report.state == 'scratched' %>
+                            <td> Auto rayado </td> 
+                        <% end %>
+                        <% if report.state == 'wontStart' %>
+                            <td> Auto no enciende </td> 
+                        <% end %>
+                        <!-- :dented, :scratched, :wontStart -->
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Descripción:" %></b> </td>
+                        <td><%= "#{report.description}" %></td> 
                     </tr>
                 </tbody>
           </table>   
