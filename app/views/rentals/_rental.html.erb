@@ -57,5 +57,11 @@
                 <%= "#{car.description}" %>
               </p>
             <% end %>
+
+            <% if Time.now < rental.created_at + 10.minutes %>
+              <div style="margin-left:15px; margin-top:15px;">
+                 <b><i>* Finalizar el alquiler dentro de los primeros 10 minutos te devuelve el dinero.</i></b>
+              </div>
+            <% end %>
    
 </div>
