@@ -1,0 +1,40 @@
+
+<div style="margin-left:30px; margin-top:15px;">
+	<B>AUTOS EN ALQUILER</B></P>
+
+	||========================================||</p>
+
+	
+
+	<% if @carsList.any? %> 
+
+	    <% @carsList.each do |car| %>
+
+	    <div style="margin-left:30px; margin-top:15px;">
+	        
+	    	<b><%= car.brand %> <%= car.model %> [<%= car.license %>]</b> </p>
+
+				  <% if car.engine? %>
+	                  <%= form_with model: car do |form| %>
+	                      <%= form.hidden_field :engine, :value => false %>
+	                      <%= form.button "Apagar Motor" , type: "submit", :class=> "btn btn-danger" %></p>
+	                  <% end %>
+	              <% end %>
+
+	              <% if !car.engine? %>
+	                  <%= form_with model: car do |form| %>
+	                      <%= form.hidden_field :engine, :value => true %>
+	                      <%= form.button "Encender Motor" , type: "submit", :class=> "btn btn-primary" %></p>
+	                  <% end %>  
+	              <% end %>
+		</div>
+
+	     ||========================================||</p>
+
+	    <% end %>
+	            
+	<% else %>
+	     NO HAY AUTOS EN ALQUILER
+	<% end %>  
+
+</div>

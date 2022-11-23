@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   get '/users/editar_perfil'
  
   get 'rentals/:id/cancel', to: 'rentals#cancel', :as => :cancel_rental
+
+  resources :api, only: :index
  
   resources :rentals
   resources :users
