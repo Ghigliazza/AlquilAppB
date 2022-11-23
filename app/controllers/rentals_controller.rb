@@ -42,7 +42,6 @@ class RentalsController < ApplicationController
         end
       end
     end
-
   end
 
   # GET /rentals/1/edit
@@ -66,7 +65,6 @@ class RentalsController < ApplicationController
         end
       end
     end
-
   end
 
   # POST /rentals or /rentals.json
@@ -91,19 +89,24 @@ class RentalsController < ApplicationController
 
   # PATCH/PUT /rentals/1 or /rentals/1.json
   def update
-    # Actualiza el balance del usuario
-    current_user.update_attribute :balance, current_user.balance - params[:rental][:price].to_i
-    #Actualiza el Valor total de la renta
-    params[:rental][:price] = params[:rental][:price].to_i + @rental.price
-
-    respond_to do |format|
-      if @rental.update(rental_params)
-        format.html { redirect_to rental_url(@rental), notice: "El alquiler ha sido extendido exitosamente." }
-        format.json { render :show, status: :ok, location: @rental }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @rental.errors, status: :unprocessable_entity }
+    if Time.now < @rental.expires && !@rental.expired?
+      # Actualiza el balance del usuario
+      current_user.update_attribute :balance, current_user.balance - params[:rental][:price].to_i
+      #Actualiza el Valor total de la renta
+      params[:rental][:price] = params[:rental][:price].to_i + @rental.price
+  
+      respond_to do |format|
+        if @rental.update(rental_params)
+          format.html { redirect_to rental_url(@rental), notice: "El alquiler ha sido extendido exitosamente." }
+          format.json { render :show, status: :ok, location: @rental }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @rental.errors, status: :unprocessable_entity }
+        end
       end
+      
+    else
+      redirect_to rental_path, alert: "No puede extender el alquiler porque este ya vencio"
     end
   end
 
