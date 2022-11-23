@@ -21,6 +21,7 @@ class RentalsController < ApplicationController
     #    current_user.update(balance: (current_user.balance - multa))
 
     #    @rental.car.ready!
+    #    Car.find(@rental.car_id).update(turn_on:false)
     #    redirect_to "/rentals/#{current_user.rentals.last.id}", alert:"El alquiler ha sido finalizado fuera de tiempo. Precio: $#{@rental.price}. (Además se cobró una multa de $1000 por cada 15 minutos pasados: $#{multa} total de multa.)"
     #end
   end
@@ -112,11 +113,16 @@ class RentalsController < ApplicationController
     # Si el motor está apagado
     if !@rental.car.engine
       Car.find(@rental.car_id).ready!
-
       # Si no pasaron 10 minutos entonces cancela el alquiler (devuelve el precio del mismo)
       if Time.now < @rental.created_at + 10.minutes
-        @rental.user.update_attribute :balance, @rental.user.balance + @rental.price
-        notice = "El alquiler ha sido cancelado, y se le ha devuelto el costo del mismo, con un valor de: $#{@rental.price}"
+
+        if @rental.car.turn_on?
+          notice = "El alquiler ha sido finalizado correctamente. Precio final: $#{@rental.price}. (El motor fue encendido, por lo que no se devolverá el costo del alquiler)"
+        else
+          @rental.user.update_attribute :balance, @rental.user.balance + @rental.price
+          notice = "El alquiler ha sido cancelado, y se le ha devuelto el costo del mismo, con un valor de: $#{@rental.price}"         
+        end
+
 
       elsif (Time.now >= @rental.created_at + 10.minutes)
         # Si expiro
@@ -134,6 +140,7 @@ class RentalsController < ApplicationController
         end
       end   
 
+      Car.find(@rental.car_id).update(turn_on:false)
       @rental.update_attribute :state, :expired
 
     else
