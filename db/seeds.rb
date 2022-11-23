@@ -354,6 +354,23 @@ Car.create!([{
 	description: "",
 	coords_x: -57.95835470642984,
 	coords_y: -34.92598168391016 
+	},
+	{
+	model: "RS 5",
+	brand: "Audi",
+	license:"BB111CC",
+	color:"Verde",
+	img_url:"/autos/BB111CC.jpg",
+	doors: 4,
+	seats: 5,
+	state: :ready,
+	engine: 1,
+	#position_id: ,
+	fuel: 20,
+	transmission: "Manual",
+	description: "",
+	coords_x: -57.95835470642984,
+	coords_y: -34.92598168391016 
 	}
 ])
 

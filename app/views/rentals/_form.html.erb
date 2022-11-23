@@ -25,8 +25,7 @@
 
          <!-- Y luego, se limita segun el saldo del usuario -->
          <% if ((current_user.balance / Rental.states[:extended]) < max) %>
-           <%  max = (current_user.balance / Rental.states[:extended]).to_i %>
-           <% max = max * Rental.states[:extended] + @rental.price > current_user.balance ? max-1 : max %>          
+           <%  max = (current_user.balance / Rental.states[:extended]).to_i %>     
          <% end %>     
       <% end %>
 

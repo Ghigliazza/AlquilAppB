@@ -26,44 +26,31 @@ class RentalsController < ApplicationController
     # Si el usuario no esta habilitado para manejar
     if (! current_user.admitted?)
       redirect_to request.referrer, alert: "Tu cuenta debe estar habilitada para alquilar un auto."
-    else
-      # Primero evito dividir por 0
-      if (current_user.balance == 0)
-        redirect_to request.referrer, alert: "No tienes suficeinte saldo para realizar un alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1000)"
-      else
-        # Si el usuario no tiene al menos $1000, no puede iniciar ningun alquiler
-        if ((current_user.balance/Rental.states[:started]) < 1)
-          redirect_to request.referrer, alert: "No tienes suficeinte saldo para realizar un alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $#{Rental.states[:started]})"
-        else
-          # Si el usuario alquilo el mismo auto hace menos de 3 horas (No solo chequea el ultimo alquiler, sino los anteriores tambien)
-          if (current_user.rentals.any? && (current_user.rentals.where(car_id: params[:car_id].to_i).any?) && (current_user.rentals.where(car_id: params[:car_id].to_i).last.updated_at < Time.now + 3.hours))
-            redirect_to request.referrer, alert: "Debes esperar al menos 3 horas antes de alquilar el mismo auto."
-          end
-        end
-      end
+      
+    # Si el saldo es 0 o Si no hay suficiente saldo
+    elsif ((current_user.balance == 0) || (current_user.balance / Rental.states[:started]) < 1)
+        redirect_to request.referrer, alert: "No tienes suficeinte saldo para realizar un alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $#{Rental.states[:started]})"
+        
+      # Si el usuario alquilo el mismo auto hace menos de 3 horas (No solo chequea el ultimo alquiler, sino los anteriores tambien)
+    elsif (current_user.rentals.any? && (current_user.rentals.where(car_id: params[:car_id].to_i).any?) && (current_user.rentals.where(car_id: params[:car_id].to_i).last.updated_at < Time.now + 3.hours))
+        redirect_to request.referrer, alert: "Debes esperar al menos 3 horas antes de alquilar el mismo auto."
     end
   end
 
   # GET /rentals/1/edit
   def edit
 
-    #Si se alcanza la cantidad de horas maxima
+    # Si se alcanza la cantidad de horas maxima
     if @rental.total_hours == 24
       redirect_to request.referrer, alert: "No puedes alquilar un auto por mas de 24 horas."
-    else
-      #Si el saldo es 0 (evitamos dividir por 0)
-      if (current_user.balance == 0)
-        redirect_to request.referrer, alert: "No tienes suficiente saldo para extender el alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $1750)"
-      else
-        #Si no hay suficiente saldo
-        if (current_user.balance/Rental.states[:extended]) < 1
-          redirect_to request.referrer, alert: "No tienes suficiente saldo para extender el alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $#{Rental.states[:extended]})"
-        else
-          if (Time.now > @rental.expires)
-            redirect_to request.referrer, alert: "No puedes extender el alquiler si ya está vencido."
-          end
-        end
-      end
+      # Si el saldo es 0 o Si no hay suficiente saldo
+
+    elsif ((current_user.balance == 0) || (current_user.balance / Rental.states[:extended]) < 1)
+      redirect_to request.referrer, alert: "No tienes suficiente saldo para extender el alquiler (Saldo actual: $#{current_user.balance}, Minimo necesario: $#{Rental.states[:extended]})"
+      
+      # Si el alquiler caduco
+    elsif (Time.now > @rental.expires)
+      redirect_to request.referrer, alert: "No puedes extender el alquiler si ya está vencido."
     end
   end
 
@@ -106,7 +93,7 @@ class RentalsController < ApplicationController
       end
       
     else
-      redirect_to rental_path, alert: "No puede extender el alquiler porque este ya vencio"
+      redirect_to rental_path, alert: "No puedes extender el alquiler si ya está vencido."
     end
   end
 
