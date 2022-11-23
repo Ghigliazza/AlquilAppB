@@ -447,7 +447,7 @@ Car.create!([
 	doors: 4,
 	seats: 4,
 	state: :rented,
-	engine: 1,
+	engine: 0,
 	#position_id: ,
 	fuel: 3,
 	transmission: "Manual",

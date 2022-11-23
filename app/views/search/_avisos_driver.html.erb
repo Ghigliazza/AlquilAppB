@@ -43,22 +43,22 @@
     <% end %>
 
 
-   <!-- DEBBUGGING -->
+   <!-- DEBBUGGING 
 
-    <% if current_user.driver? && current_user.rentals.any? && !current_user.rentals.last.expired? %>   
+    <%# if current_user.driver? && current_user.rentals.any? && !current_user.rentals.last.expired? %>   
       <div >
         <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
             El alquiler aun esta ACTIVO.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
         </p>
       </div>
-    <% end %>
+    <%# end %>
 
     <div >
         <p id="notice" class="alert alert-info alert-dismissible fade show"> 
-            Saldo actual <%= current_user.balance %>.
+            Saldo actual <%#= current_user.balance %>.
         </p>
-      </div>
+      </div> -->
 
 <% end %>
 </div>

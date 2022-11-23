@@ -11,17 +11,18 @@ class RentalsController < ApplicationController
   # GET /rentals/1 or /rentals/1.json
   def show
 
-    # Si se pasa el tiempo de expiracion, el motor esta apagado y no se finalizo aun, se finaliza automaticamente
-    if ((Time.now > @rental.expires) && (!@rental.expired?) && (!@rental.car.engine?))
-        @rental.expired!
-        # Descontar Multa
-        diferencia_t = ((Time.now - @rental.expires) / 15.minutes).to_i
-        multa = 1000 * diferencia_t
-        current_user.update(balance: (current_user.balance - multa))
+    # DESACTIVADO PARA LA DEMO
+    ## Si se pasa el tiempo de expiracion, el motor esta apagado y no se finalizo aun, se finaliza AUTOMATICAMENTE
+    #if ((Time.now > @rental.expires) && (!@rental.expired?) && (!@rental.car.engine?))
+    #    @rental.expired!
+    #    # Descontar Multa
+    #    diferencia_t = ((Time.now - @rental.expires) / 15.minutes).to_i
+    #    multa = 1000 * diferencia_t
+    #    current_user.update(balance: (current_user.balance - multa))
 
-        @rental.car.ready!
-        redirect_to "/rentals/#{current_user.rentals.last.id}", alert:"El alquiler ha sido finalizado fuera de tiempo. Precio: $#{@rental.price}. (Además se cobró una multa de $1000 por cada 15 minutos pasados: $#{multa} total de multa.)"
-    end
+    #    @rental.car.ready!
+    #    redirect_to "/rentals/#{current_user.rentals.last.id}", alert:"El alquiler ha sido finalizado fuera de tiempo. Precio: $#{@rental.price}. (Además se cobró una multa de $1000 por cada 15 minutos pasados: $#{multa} total de multa.)"
+    #end
   end
 
   # GET /rentals/new
