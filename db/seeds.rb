@@ -474,9 +474,9 @@ Car.create!([{
 	fuel: 20,
 	transmission: "Manual",
 	description: "",
-	coords_x: -57.95835470642984,
-	coords_y: -34.92598168391016 
-	}
+	coords_x: -57.95540514473136,
+	coords_y: -34.89957991096459 
+	}, 
 ])
 
 p "Seed created #{Car.count} cars";
