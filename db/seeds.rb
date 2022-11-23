@@ -521,6 +521,42 @@ User.create!([
 	coords_x: -57.957160476901834,
 	coords_y: -34.919451958400096 
 	},
+	{
+	id: 70,
+	email: "renting2@gmail.com",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: :driver,                                                       
+	name: "Franco",                                                 
+	lastName: "Garcia",                                                
+	document: 408992233,                                           
+	state: :admitted,                                                  
+	license_url: "",  
+	licenseNumber: 99999999,
+	licenseExpiration: Date.today + 6.month,
+	birthdate: Date.today - 26.years,
+	balance: 2000,
+	coords_x: -57.957160476901834,
+	coords_y: -34.919451958400096 
+	},
+	{
+	id: 75,
+	email: "expired2@gmail.com",                                                   
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: :driver,                                                       
+	name: "Franco",                                                 
+	lastName: "Garcia",                                                
+	document: 408772233,                                           
+	state: :admitted,                                                  
+	license_url: "",  
+	licenseNumber: 99999999,
+	licenseExpiration: Date.today + 6.month,
+	birthdate: Date.today - 26.years,
+	balance: 2000,
+	coords_x: -57.957160476901834,
+	coords_y: -34.919451958400096 
+	},
 ])
 
 Car.create!([
@@ -562,21 +598,41 @@ Car.create!([
 	},
 	{
 	id: 70,
-	model: "Forester",
-	brand: "Subaru",
-	license:"AB999CD",
-	color:"Azul",
-	img_url:"/autos/AB999CD.jpg",
+	model: "208",
+	brand: "Peugeot",
+	license:"AB777CD",
+	color:"Celeste",
+	img_url:"/autos/AB777CD.jpg",
 	doors: 4,
 	seats: 5,
 	state: :rented,
-	engine: 0,
+	engine: 1,
+	turn_on: 1,
 	#position_id: ,
-	fuel: 29.8,
+	fuel: 5,
 	transmission: "Manual",
 	description: "",
-	coords_x: -57.96302557666058,
-	coords_y: -34.897135267221365 
+	coords_x: -57.943218828135564,
+	coords_y: -34.9340761736041 
+	},
+	{
+	id: 75,
+	model: "Civic",
+	brand: "Honda",
+	license:"BB222CD",
+	color:"Rojo",
+	img_url:"/autos/BB222CD.jpg",
+	doors: 2,
+	seats: 2,
+	state: :rented,
+	engine: 0,
+	turn_on: 1,
+	#position_id: ,
+	fuel: 21.8,
+	transmission: "Manual",
+	description: "",
+	coords_x: -57.9604648102025,
+	coords_y: -34.923821996733736 
 	},
 ])
 
@@ -593,6 +649,16 @@ Rental.create!([
 	initial_fuel: 30
 	},
 	{
+	price: 6000,
+	expires: Time.now + 4.hours,
+	user_id: 70,
+	car_id: 70,
+	state: :started,
+	created_at: Time.now - 2.hours,
+	total_hours: 6,
+	initial_fuel: 30
+	},
+	{
 	price: 3000,
 	expires: Time.now - 1.hours,
 	user_id: 65,
@@ -600,6 +666,16 @@ Rental.create!([
 	state: :started,
 	created_at: Time.now - 5.hours,
 	total_hours: 3,
+	initial_fuel: 30
+	},
+	{
+	price: 9000,
+	expires: Time.now - 3.hours,
+	user_id: 75,
+	car_id: 75,
+	state: :started,
+	created_at: Time.now - 12.hours,
+	total_hours: 9,
 	initial_fuel: 30
 	},
 ])
