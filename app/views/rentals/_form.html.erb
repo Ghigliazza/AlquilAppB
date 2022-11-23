@@ -50,10 +50,16 @@
       </div>
 
           <div>
-            <b>Costo Total: </b>
+            <b>Costo Alquiler: </b>
             <%= form.hidden_field :price, :id => "in_price", :value => Rental.states["#{@rental.state}"] %>
             <%# VALORES INICIALES DE PRECIO %>
-            $<output id="out_price"> <%= Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %> </output>
+            <output id="out_price"> <%= Rental.states["#{@rental.state}"] %> </output>
+          </div>
+
+          <div>
+            <b>Costo Total: </b>
+            <%# VALORES INICIALES DE PRECIO TOTAL %>
+            <output id="tot_price"> <%= Rental.states["#{@rental.state}"] + (@rental.price != nil ? @rental.price : 0) %> </output>
           </div>
 
           <%= form.hidden_field :total_hours, :id => "in_hours" %>
@@ -133,11 +139,12 @@
   calcule_rent()
 
   function calcule_rent() {
-    const in_price = $('#in_price')
-    const out_price = $('#out_price')
-    const in_expire = $('#in_expire')
+    const in_price    = $('#in_price')
+    const out_price   = $('#out_price')
+    const tot_price   = $('#tot_price')
+    const in_expire   = $('#in_expire')
     const out_expired = $('#out_expired')
-    const hs = $('#hsRange').val()
+    const hs          = $('#hsRange').val()
 
     const in_hours = $('#in_hours')
 
@@ -164,7 +171,8 @@
     }
     date = new Date(date)
 
-    out_price.val(<%= @rental.price.to_i %> + parseInt(in_price.val()))
+    out_price.val("$" + in_price.val())
+    tot_price.val("$" + (<%= @rental.price.to_i %> + parseInt(in_price.val())))
 
     in_expire.val(date_format(date))
     out_expired.val(in_expire.val())

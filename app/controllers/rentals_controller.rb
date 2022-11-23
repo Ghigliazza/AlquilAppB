@@ -113,24 +113,23 @@ class RentalsController < ApplicationController
       Car.find(@rental.car_id).ready!
 
       # Si no pasaron 10 minutos entonces cancela el alquiler (devuelve el precio del mismo)
-      if Time.now < @rental.created_at + 10.minutes #|| @rental.turnedOn?
+      if Time.now < @rental.created_at + 10.minutes
         @rental.user.update_attribute :balance, @rental.user.balance + @rental.price
         notice = "El alquiler ha sido cancelado, y se le ha devuelto el costo del mismo, con un valor de: $#{@rental.price}"
-      else
+
+      elsif (Time.now >= @rental.created_at + 10.minutes)
+        # Si expiro
+        if (Time.now > @rental.expires)
+          # Calcular y descontar multa
+          time_dif = ((Time.now - @rental.expires) / 15.minutes).to_i
+          penalty = 1000 * time_dif
+          current_user.update(balance: (current_user.balance - penalty))
+  
+          alert = "El alquiler ha sido finalizado fuera de tiempo. Precio: $#{@rental.price}. (Además se cobró una multa de $1000 por cada 15 minutos pasados: $#{penalty} total de multa.)"
         
-        if (Time.now >= @rental.created_at + 10.minutes)
-          # Si expiro
-          if (Time.now > @rental.expires)
-            # Calcular y descontar multa
-            diferencia_t = ((Time.now - @rental.expires) / 15.minutes).to_i
-            multa = 1000 * diferencia_t
-            current_user.update(balance: (current_user.balance - multa))
-   
-            alert = "El alquiler ha sido finalizado fuera de tiempo. Precio: $#{@rental.price}. (Además se cobró una multa de $1000 por cada 15 minutos pasados: $#{multa} total de multa.)"
-          else
-            # Si pasaron 10 minutos entonces simplemente se finaliza, sin devolver el dinero
-            notice = "El alquiler ha sido finalizado correctamente. Precio final: $#{@rental.price}"
-          end 
+        else
+          # Si pasaron 10 minutos entonces simplemente se finaliza, sin devolver el dinero
+          notice = "El alquiler ha sido finalizado correctamente. Precio final: $#{@rental.price}"
         end
       end   
 
