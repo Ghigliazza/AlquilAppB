@@ -12,7 +12,7 @@
 
 	    <div style="margin-left:30px; margin-top:15px;">
 	        
-	    	<b><%= car.brand %> <%= car.model %> [<%= car.license %>] <%= car.turn_on? %></b> </p>
+	    	<b><%= car.brand %> <%= car.model %> [<%= car.license %>] Used:<%= car.turn_on? %></b> </p>
 
 				  <% if car.engine? %>
 	                  <%= form_with model: car do |form| %>
