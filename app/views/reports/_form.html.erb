@@ -5,12 +5,12 @@
   <%= form_with(model: @report) do |form| %>
     <div>
         <p><b><%= form.label "Problema:", style: "display: block"%></b>
-        <%= form.radio_button :state, :dented %>
-        <%= form.label :state_dented, "El auto está abollado." %></p>
-        <%= form.radio_button :state, :scratched %>
-        <%= form.label :state_scratched, "El auto está rayado." %></p>
+        <%= form.radio_button :state, :visual %>
+        <%= form.label :state_visual, "Daños menores/visuales. (rayaduras, manchas, abolladuras, etc)" %></p>
+        <%= form.radio_button :state, :illegal %>
+        <%= form.label :state_illegal, "El auto no está en condiciones para circular. (espejos/luces rotas, sin patente, etc)" %></p>
         <%= form.radio_button :state, :wontStart %>
-        <%= form.label :state_wontStart, "El auto no enciende." %></p>  
+        <%= form.label :state_wontStart, "El auto no enciende / no funciona." %></p>  
         <%= form.radio_button :state, :other %>
         <%= form.label :state_other, "Otro problema." %></p>     
     </div>
