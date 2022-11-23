@@ -21,14 +21,17 @@
                     </tr>
                     <tr>
                         <td><b> <%= "Estado:" %></b> </td>
-                        <% if report.state == 'dented' %>
-                            <td> Abollado </td> 
+                        <% if report.state == 'visual' %>
+                            <td> Daños menores </td> 
                         <% end %>
-                        <% if report.state == 'scratched' %>
-                            <td> Rayado </td> 
+                        <% if report.state == 'illegal' %>
+                            <td> No puede circular </td> 
                         <% end %>
                         <% if report.state == 'wontStart' %>
                             <td> No enciende </td> 
+                        <% end %>
+                        <% if report.state == 'other' %>
+                            <td> Otro problema </td> 
                         <% end %>
                         <!-- :dented, :scratched, :wontStart -->
                     </tr>

@@ -14,8 +14,13 @@ class RentalsController < ApplicationController
     # Si se pasa el tiempo de expiracion, el motor esta apagado y no se finalizo aun, se finaliza automaticamente
     if ((Time.now > @rental.expires) && (!@rental.expired?) && (!@rental.car.engine?))
         @rental.expired!
+        # Descontar Multa
+        diferencia_t = ((Time.now - @rental.expires) / 15.minutes).to_i
+        multa = 1000 * diferencia_t
+        current_user.update(balance: (current_user.balance - multa))
+
         @rental.car.ready!
-        redirect_to "/rentals/#{current_user.rentals.last.id}", alert:"El alquiler ha sido finalizado automaticamente. Precio final: $#{@rental.price}"
+        redirect_to "/rentals/#{current_user.rentals.last.id}", alert:"El alquiler ha sido finalizado fuera de tiempo. Precio: $#{@rental.price}. (Además se cobró una multa de $1000 por cada 15 minutos pasados: $#{multa} total de multa.)"
     end
   end
 
@@ -112,9 +117,20 @@ class RentalsController < ApplicationController
         @rental.user.update_attribute :balance, @rental.user.balance + @rental.price
         notice = "El alquiler ha sido cancelado, y se le ha devuelto el costo del mismo, con un valor de: $#{@rental.price}"
       else
-        # Si pasaron 10 minutos entonces simplemente se finaliza, sin devolver el dinero
+        
         if (Time.now >= @rental.created_at + 10.minutes)
-          notice = "El alquiler ha sido finalizado correctamente. Precio final: $#{@rental.price}"
+          # Si expiro
+          if (Time.now > @rental.expires)
+            # Calcular y descontar multa
+            diferencia_t = ((Time.now - @rental.expires) / 15.minutes).to_i
+            multa = 1000 * diferencia_t
+            current_user.update(balance: (current_user.balance - multa))
+   
+            alert = "El alquiler ha sido finalizado fuera de tiempo. Precio: $#{@rental.price}. (Además se cobró una multa de $1000 por cada 15 minutos pasados: $#{multa} total de multa.)"
+          else
+            # Si pasaron 10 minutos entonces simplemente se finaliza, sin devolver el dinero
+            notice = "El alquiler ha sido finalizado correctamente. Precio final: $#{@rental.price}"
+          end 
         end
       end   
 
