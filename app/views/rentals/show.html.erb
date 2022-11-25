@@ -5,51 +5,61 @@
   <% time = @time_left %>
 <% end %>
 
-<div style="min-height:50px">
-  <h2><b><span> <%= render partial: 'rentals/timer', locals: { tiempo: time } %> </span></b></h2>
-</div>
 
-<%= render @rental %>
+<div calss="row">
+  <div calss="col">
+    <div style="min-height:50px">
+      <h2><b><span> <%= render partial: 'rentals/timer', locals: { tiempo: time } %> </span></b></h2>
+    </div>
 
-  <!--------------------------------------BOTONES---------------------------->
-<div>
-  <table class="table table-borderless" style="max-width:300px;">
-   <tbody>
-      <tr>
-        <% if !@rental.expired? %>
-          <td>
-            <% if (@rent_time < 24 && current_user.balance >= Rental.states[:extended]) && !(Time.now > @rental.expires) %>  
-                <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-primary", id: "extendRentBtn" %>   
-            <% else %> 
-                <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-info", id: "extendRentBtn"  %>
-            <% end %>         
-          </td>
-          <td>
-            <%= link_to "Finalizar Alquiler", cancel_rental_path, class: "btn btn-danger", id: "cancelRentBtn" %>                        
-          </td> 
-          <td>
-                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal<%=current_user.id%>">
-                   Reportar
-                </button>                                 
-          </td>          
-        <% else %>
-          <td>
-                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal<%=current_user.id%>">
-                   Reportar
-                </button>                        
-          </td>
-          <td>
-            <%= link_to "Volver a la lista de autos", "/search", class: "btn btn-primary", id: "reporttBtn" %>                        
-          </td>
-        <% end %>
-         
-      </tr>
-   </tbody>
-  </table> 
+    <%= render @rental %>
 
-  <% if current_user.admin? %>
-    <%= button_to "Eliminar Alquiler", @rental, method: :delete, class: "btn btn-danger"  %>
-  <% end %>
+      <!--------------------------------------BOTONES---------------------------->
+    <div>
+      <table class="table table-borderless" style="max-width:300px;">
+      <tbody>
+          <tr>
+            <% if !@rental.expired? %>
+              <td>
+                <% if (@rent_time < 24 && current_user.balance >= Rental.states[:extended]) && !(Time.now > @rental.expires) %>  
+                    <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-primary", id: "extendRentBtn" %>   
+                <% else %> 
+                    <%= link_to "Extender Alquiler", edit_car_rental_path(@rental.car), class: "btn btn-info", id: "extendRentBtn"  %>
+                <% end %>         
+              </td>
+              <td>
+                <%= link_to "Finalizar Alquiler", cancel_rental_path, class: "btn btn-danger", id: "cancelRentBtn" %>                        
+              </td> 
+              <td>
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal<%=current_user.id%>">
+                      Reportar
+                    </button>                                 
+              </td>          
+            <% else %>
+              <td>
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal<%=current_user.id%>">
+                      Reportar
+                    </button>                        
+              </td>
+              <td>
+                <%= link_to "Volver a la lista de autos", "/search", class: "btn btn-primary", id: "reporttBtn" %>                        
+              </td>
+            <% end %>
+            
+          </tr>
+      </tbody>
+      </table> 
+
+      <% if current_user.admin? %>
+        <%= button_to "Eliminar Alquiler", @rental, method: :delete, class: "btn btn-danger"  %>
+      <% end %>
+    </div>
+  </div>
+  <div calss="col">
+    <% if @rental.expired? %>
+      <%= sanitize @rental.summary %>
+    <% end %>
+  </div>
 </div>
 
 
@@ -75,4 +85,3 @@
     </div>
   </div>
 </div>
-

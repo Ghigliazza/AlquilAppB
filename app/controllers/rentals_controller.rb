@@ -1,6 +1,7 @@
 class RentalsController < ApplicationController
-  before_action :set_rental,    only: %i[ show edit update destroy cancel timeOut? turnedOn? ]
+  before_action :set_rental,    only: %i[ show edit update destroy cancel ]
   #before_action :requirements,  only: :create
+  before_action :summary,       only: %i[ new update cancel]
  
 # ================================================================================================================
   # GET /rentals or /rentals.json
@@ -209,4 +210,45 @@ class RentalsController < ApplicationController
 #  end
 
 
+  def summary()
+    # Si 'summary' esta vacio le instancia la cabecera (solo para antes del metodo 'create')
+    summary = @rental.summary != nil ? @rental.summary :
+      "<div class=\"card card-body\">
+        <ol class=\"list-group list-group-numbered\">"
+
+    #Se agregan los valores del pago actual
+    summary +=
+          "<li class=\"list-group-item d-flex justify-content-between align-items-start\">
+            <div class=\"ms-2 me-auto\">
+              <div class=\"fw-bold\"> Pago #{@rental.updated_at.strftime('%Y-%m-%e A las %k:%M:%S')} </div>
+                <p>
+                  <a class=\"btn btn-success\" data-bs-toggle=\"collapse\" href=\"#collapsePay_#{@rental.updated_at.to_i}\" role=\"button\" aria-expanded=\"false\" aria-controls=\"collapsePay_#{@rental.updated_at.to_i}\">
+                    Detalle de pago
+                  </a>
+                </p>
+                
+                <div class=\"collapse\" id=\"collapsePay_#{@rental.updated_at.to_i}\">
+                <ul>
+                  <li><p class=\"fw-light fst-italic\"> Precio:    #{@rental.price}                                          </p></li>
+                  <li><p class=\"fw-light fst-italic\"> Alquilado: #{@rental.updated_at.strftime('%Y-%m-%e A las %k:%M:%S')} </p></li>
+                  <li><p class=\"fw-light fst-italic\"> Expirado:  #{@rental.expires.strftime('%Y-%m-%e A las %k:%M:%S')}    </p></li>
+                </ul>
+              </div>
+            </div>
+          </li>"
+    
+    # Se agrega el footer cuando termina el alquiler
+    if params[:action] == "cancel"
+      summary +=
+          "<strong> Resumen </strong>
+          <ul>
+            <li><p class=\"fw-light fst-italic\"> Precio Total:  #{@rental.totalPrice ? @rental.totalPrice : @rental.price}  </p></li>
+            <li><p class=\"fw-light fst-italic\"> Horas Totales: #{@rental.total_hours} </p></li>
+          </ul>
+        </ol>
+      </div>"
+    end
+    
+    @rental.update(summary: summary)
+  end
 end
