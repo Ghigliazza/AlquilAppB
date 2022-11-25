@@ -66,7 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_23_112549) do
     t.float "coords_y"
     t.float "distance"
     t.boolean "turn_on", default: false
-    t.boolean "used", default: false
+    t.boolean "used"
   end
 
   create_table "positions", force: :cascade do |t|
