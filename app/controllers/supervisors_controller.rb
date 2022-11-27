@@ -5,23 +5,49 @@ class SupervisorsController < ApplicationController
   	 if !current_user.admin?
   	 	redirect_to "/search", alert: "No tienes permiso para ver esta pagina!"
   	 end
-
   	 @new_dni = new_document
   	 @new_number = supervisor_number
      
      @supervisorList = User.where(:rol => :supervisor) + User.where(:rol => :new_supervisor)
- 
+
   end
 
   def new_password
 
   	@user = current_user
-
   	if !current_user.new_supervisor?
   		redirect_to "/search/"
   	end
 
   end
+
+  def search
+
+     if !current_user.admin?
+      redirect_to "/search", alert: "No tienes permiso para ver esta pagina!"
+     end
+     @new_dni = new_document
+     @new_number = supervisor_number
+     
+     #@supervisorList = User.where(:rol => :supervisor) + User.where(:rol => :new_supervisor)
+
+     @supervisorList = User.where("name LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
+     @supervisorList = @supervisorList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
+     @supervisorList = @supervisorList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
+
+     @supervisorList = @supervisorList + User.where("name LIKE ?", "%" + params[:q] + "%").where(:rol => :new_supervisor)
+     @supervisorList = @supervisorList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :new_supervisor)
+     @supervisorList = @supervisorList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :new_supervisor)
+     
+     @supervisorList = @supervisorList.uniq
+
+     #@supervisorList = User.where("name LIKE ?", "%" + "Jose" + "%")
+
+  end
+
+
+
+
    	
   # Devuelve un numero de documento que no existe en el sistema
   def new_document
