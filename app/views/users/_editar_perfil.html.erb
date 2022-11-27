@@ -9,6 +9,17 @@
    			 <%= form.text_field :email, :required => true, placeholder: "ejemplo@gmail.com" %></p>
   		</div>
 
+  		<%if current_user.supervisor? || current_user.admin?%>
+	  		<div>
+	   			 <p><b><%= form.label "Nombre", style: "display: block"%></b>
+	   			 <%= form.text_field :name, :required => true, placeholder: "Nombre" %></p>
+	  		</div>
+	  		<div>
+	   			 <p><b><%= form.label "Apellido", style: "display: block"%></b>
+	   			 <%= form.text_field :lastName, :required => true, placeholder: "Apellido" %></p>
+	  		</div>
+  		<%end%>
+
 		  <div class="field">
 		    <p><b><%= form.label "Contraseña" %><br /></b>
 		    <%= form.password_field :password, :required => true%></p>
