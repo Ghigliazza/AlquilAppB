@@ -25,12 +25,13 @@ class User < ApplicationRecord
   validate :validate_age_old
 
   validate :validate_expiration
+  validate :validate_suspension_date
 
 
   
 
   #ENUMERATIVES
-  enum rol: [:admin, :supervisor, :driver, :new_supervisor]
+  enum rol: [:admin, :supervisor, :driver, :new_supervisor, :suspended_driver]
   enum state: [:empty, :submitted, :admitted, :rejected, :blocked, :expired]
   
   # empty: cuenta recien creada/ no hay datos subidos
@@ -67,6 +68,11 @@ class User < ApplicationRecord
   def validate_expiration
       if licenseExpiration.present? && licenseExpiration < Date.today
           errors.add(:birthdate, 'La licencia está expirada')
+      end
+  end
+  def validate_suspension_date
+      if suspended_until.present? && suspended_until < Date.today
+          errors.add(:suspension_date, 'La fecha de suspensión ya pasó')
       end
   end
 

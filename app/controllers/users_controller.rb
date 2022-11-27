@@ -20,6 +20,12 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def suspended
+    if !current_user.suspended_driver?
+      redirect_to "/search"
+    end
+  end
+
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
@@ -112,6 +118,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :rol, :name, :lastName, :document, :state, :license_url, :position_id, :coords_y, :coords_x, :licenseNumber, :licenseExpiration, :license_photo, :birthdate, :rejectedMessage)
+      params.require(:user).permit(:email, :password, :password_confirmation, :rol, :name, :lastName, :document, :state, :license_url, :position_id, :coords_y, :coords_x, :licenseNumber, :licenseExpiration, :license_photo, :birthdate, :rejectedMessage, :suspended_for, :suspended_until)
     end
 end

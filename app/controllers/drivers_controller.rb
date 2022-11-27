@@ -6,7 +6,7 @@ class DriversController < ApplicationController
   	 	redirect_to "/search", alert: "No tienes permiso para ver esta pagina!"
   	 end
      
-     @driverList = User.where(:rol => :driver)
+     @driverList = User.where(:rol => :driver) + User.where(:rol => :suspended_driver)
 
   end
 
@@ -20,6 +20,11 @@ class DriversController < ApplicationController
      @driverList = @driverList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :driver)
      @driverList = @driverList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :driver)
      @driverList = @driverList + User.where("document LIKE ?", "%" + params[:q].to_s + "%").where(:rol => :driver)
+
+     @driverList = @driverList + User.where("name LIKE ?", "%" + params[:q] + "%").where(:rol => :suspended_driver)
+     @driverList = @driverList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :suspended_driver)
+     @driverList = @driverList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :suspended_driver)
+     @driverList = @driverList + User.where("document LIKE ?", "%" + params[:q].to_s + "%").where(:rol => :suspended_driver)
      
      @driverList = @driverList.uniq
 

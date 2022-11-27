@@ -3,7 +3,15 @@
     <h2 class="accordion-header" id="flush-ID1<%=driver.id%>">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-ID2<%=driver.id%>" aria-expanded="false" aria-controls="flush-ID2<%=driver.id%>">
         <span style="font-weight:bolder"> 
-          <%= driver.name %> <%= driver.lastName %>
+          <% if driver.suspended_driver? %>
+         	<div style="color:red"><%= driver.name %> <%= driver.lastName %></div>
+          <% else %>
+          	<% if driver.driver? && driver.rentals.any? && !driver.rentals.last.expired? %>
+          		<div style="color:green"><%= driver.name %> <%= driver.lastName %></div>
+          	<% else %>
+          		<%= driver.name %> <%= driver.lastName %>
+          	<% end %>
+          <% end %>
         </span> 
       </button>
     </h2>
@@ -40,26 +48,105 @@
                     <tr>
                         <td><b> <%= "Vencimiento de licencia:" %></b> </td>
                         <td><%= "#{driver.licenseExpiration}" %></td> 
-                    </tr>    
-                    <tr>
-                        <td><b> <%= "Estado" %></b> </td>
-                        <% case driver.state %>
-                        	<% when 'empty' %>                           
-                              <td><%= "Datos no enviados" %></td> 
-                            <% when 'admitted' %> 
-                              <td><%= "Habilitado" %></td> 
-                            <% when 'submitted' %>                         
-                              <td><%= "Verificación pendiente" %></td> 
-                            <% when 'rejected' %>                           
-                              <td><%= "Datos rechazados" %></td> 
-                            <% else %>
-                              <td><%= driver.state %></td> 
-                            <% end %>                     
-                    </tr>                    
+                    </tr>                   
+                    <% if driver.driver? %>
+                    	<tr>
+	                        <td><b> <%= "Estado:" %></b> </td>
+	                        <% case driver.state %>
+	                        	<% when 'empty' %>                           
+	                              <td><%= "Datos no enviados" %></td> 
+	                            <% when 'admitted' %> 
+	                              <td><%= "Habilitado" %></td> 
+	                            <% when 'submitted' %>                         
+	                              <td><%= "Verificación pendiente" %></td> 
+	                            <% when 'rejected' %>                           
+	                              <td><%= "Datos rechazados" %></td> 
+	                            <% when 'expired' %>                           
+	                              <td><%= "Licencia expirada" %></td> 
+	                            <% else %>
+	                              <td><%= driver.state %></td> 
+	                            <% end %>  
+	                    </tr>
+	                <% else %>
+	                	<tr>
+		                    <td><b> <%= "Estado:" %></b> </td>
+	                        <td><%= "Suspendido" %></td> 
+	                    </tr>
+	                    <tr>
+	                        <td><b> <%= "Motivo:" %></b> </td>
+	                        <td><%= driver.suspended_for %></td> 
+	                    </tr>
+	                    <tr>
+	                        <td><b> <%= "Suspendido hasta:" %></b> </td>
+	                        <td><%= driver.suspended_until %></td> 
+	                    </tr>
+	                <% end %>                                     
+                    
+                    <% if driver.driver? && driver.rentals.any? && !driver.rentals.last.expired? %>
+                   		<tr>
+	                        <td><b> <%= "Alquiler activo hasta: " %></b> </td>
+	                        <td><%= driver.rentals.last.expires.strftime('%Y-%m-%e, a las %k:%M:%S') %></td> 
+	                    </tr> 
+                    <% end %>
+                                       
 
                 </tbody>
-          </table>            
+          </table>   
+
+          	<!-- SI NO ESTA SUSPENDIDO, Y NO TIENE NIGUN AUTO EN ALQUILER -->
+          	<% if (driver.driver?) && ((!driver.rentals.any?) || (driver.rentals.last.expired?)) %>
+               <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%=driver.id%>">
+                                Suspender Usuario
+               </button>  
+            <% else %>
+            	<% if driver.suspended_driver? %>
+	            	<%= form_with model: driver do |form| %>
+	            		<%= form.hidden_field :rol, :value => :driver %>
+	            		<%= form.hidden_field :suspended_until, :value => nil %>
+	            		<%= form.button "Cancelar suspensión" , type: "submit", :class=> "btn btn-info" %>
+	            	<% end %> 
+            	<% end %> 
+            <% end %>      
         </div>   
 
       </div>
   </div>
+
+
+                <!-- Modal SUSPENDED MOTIVE -->
+                <%= form_with model: driver do |form| %>
+                <div class="modal fade" id="exampleModal<%=driver.id%>" tabindex="-1" aria-labelledby="exampleModalLabel<%=driver.id%>" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel<%=driver.id%>">Suspender usuario</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      
+                      <div class="modal-body">
+
+                            <%= form.hidden_field :rol, :value => :suspended_driver %>
+                            <%#= form.text_field :rejectedMessage, :required => true %>
+
+                            <p><b><%= form.label "Suspender hasta:", style: "display: block"%></b>
+   							<%= form.date_field :suspended_until, :required => true %></p>
+
+   							<% if driver.licenseExpiration.present? && driver.licenseExpiration < Date.today %>
+   								<%= form.hidden_field :state, :value => :expired %>
+   								<%= form.hidden_field :licenseExpiration, :value => nil %>
+   							<% end %>
+
+                            <div class="mb-3">
+                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required="required" type="text" name="user[suspended_for]" id="user_suspended_for"></textarea>
+                            </div>
+
+                                      
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <%= form.button "Suspender Usuario" , type: "submit", :class=> "btn btn-danger" %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% end %> 

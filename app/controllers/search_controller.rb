@@ -2,17 +2,23 @@ class SearchController < ApplicationController
 
   def index
 
+     #Verifica el estado de expiracion de la licencia y suspension
+     verificar_licencia
+     verificar_suspension
+
      #Redirecciona al usuario si tiene un alquiler activo
      if (current_user.driver? && current_user.rentals.any? && !current_user.rentals.last.expired?)
         redirect_to "/rentals/#{current_user.rentals.last.id}", notice: "Alquiler activo..."
      else
         if current_user.new_supervisor?
           redirect_to "/supervisors/new_password", notice: "Debes cambiar tu contraseña para continuar..."
+        else
+          if current_user.suspended_driver?
+            redirect_to "/users/suspended"
+          end
         end
      end
-
-     #Verifica el estado de expiracion de la licencia del conductor
-     verificar_licencia
+    
   
      # Guarda todos los autos en estado 1(disponible) y los ordena por combustible (luego sera por distancia)
      @carsDisponibles = Car.where(:state => 0).order(fuel: :desc)
@@ -69,12 +75,20 @@ class SearchController < ApplicationController
 
   # Verifica el estado de la licencia de conducir, y bloquea al usuario si está vencida
   def verificar_licencia
-    if current_user.driver? && current_user.admitted?
+    if (current_user.driver? || current_user.suspended_driver?) && current_user.admitted?
       if current_user.licenseExpiration.present? && current_user.licenseExpiration < Date.today
 
         #Pasar al usuario al estado :expired (pone la licencia en nil para que no impida hacer un update el 'validates')
         current_user.update(state: 'expired', licenseExpiration: nil);
 
+      end
+    end
+  end
+
+  def verificar_suspension
+    if current_user.suspended_driver?
+      if current_user.suspended_until.present? && current_user.suspended_until < Date.today
+        current_user.update(rol: 'driver', suspended_until: nil);
       end
     end
   end

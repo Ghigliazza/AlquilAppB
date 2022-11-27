@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   get 'drivers/index'
   get 'drivers/search'
 
+  get 'users/suspended'
+
 
   resources :api, only: :index
  
