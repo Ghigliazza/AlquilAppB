@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get 'rentals/:id/cancel', to: 'rentals#cancel', :as => :cancel_rental
 
   get 'supervisors/index'
+  get 'supervisors/new_password'
 
   resources :api, only: :index
  

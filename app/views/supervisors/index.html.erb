@@ -1,15 +1,52 @@
-<h1><b><i>Lista de Supervisores</i></b></h1>
 
-       <p>
+
         <%#> https://getbootstrap.com/docs/5.0/components/accordion/ <%>
         <div class="accordion accordion-flush" id="accordionLista" >
           <% if @supervisorList.any? %> 
+			<div style="margin-left:30px; margin-top:15px;">
+				<h1><b><i>Lista de Supervisores</i></b></h1>
+			</div>
             <% @supervisorList.each do |sup| %>
                 <%= render partial: 'supervisors/super_card', locals:{sup: sup} %>  
             <% end %>
             
           <% else %>
-                  <!-- Alerta de NO SUPERVISORS -->
+          		<div class="text-center">
+			        <div >
+				        <div id="notice" class="alert alert-info alert-dismissible fade show"> 
+				        	No hay supervisores en el sistema... 	
+				        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+				        </div>
+				    </div>
+				</div>
+                <!-- Alerta de NO SUPERVISORS -->
           <% end %>  
         </div>
       </p>
+
+      <div style="margin-left:30px; margin-top:15px;">
+	      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal<%=current_user.id%>">
+	                      Crear Supervisor
+	      </button>   
+ 	  </div>
+
+
+<!-------- MODAL CREAR SUPERVISOR -------------------------->
+
+<div class="modal fade" id="exampleModal<%=current_user.id%>" tabindex="-1" aria-labelledby="exampleModalLabel<%=current_user.id%>" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel<%=current_user.id%>"> <b>Crear un supervisor</b></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <%= render 'supervisors/super_form' %>
+        <%#= render partial: 'reports/form' %>  
+        <%#= render partial: 'search/map' %>  
+
+      </div>
+    </div>
+  </div>
+</div>

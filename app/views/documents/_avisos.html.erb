@@ -3,54 +3,54 @@
 
 	<% if current_user.empty? %>	  
 	  <div >
-        <p id="notice" class="alert alert-info alert-dismissible fade show"> 
+        <div id="notice" class="alert alert-info alert-dismissible fade show"> 
         	Aún no has enviado los datos necesarios para manejar! 	
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-        </p>
+        </div>
       </div>
     <% end %>
     <% if current_user.submitted? %>	  
 	  <div >
-        <p id="notice" class="alert alert-warning alert-dismissible fade show"> 
+        <div id="notice" class="alert alert-warning alert-dismissible fade show"> 
         	Tus datos estan siendo verificados por un supervisor... 	
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-        </p>
+        </div>
       </div>
     <% end %>
     <% if current_user.admitted? %>	  
 	  <div >
-        <p id="notice" class="alert alert-success alert-dismissible fade show"> 
+        <div id="notice" class="alert alert-success alert-dismissible fade show"> 
         	Tu cuenta está habilitada para manejar. No hay cambios necesarios. 	
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-        </p>
+        </div>
       </div>
     <% end %>
     <% if current_user.blocked? %>	  
 	  <div >
-        <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
+        <div id="notice" class="alert alert-danger alert-dismissible fade show"> 
         	Tu cuenta ha sido bloqueada por un supervisor.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-        </p>
+        </div>
       </div>
     <% end %>
     <% if current_user.rejected? %>   
       <div >
-        <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
+        <div id="notice" class="alert alert-danger alert-dismissible fade show"> 
             Tus datos han sido rechazados por un supervisor.            
             Revisalos y envialos nuevamente. 
             <% if current_user.rejectedMessage? %>
                 <b>(Nota: <%= current_user.rejectedMessage %>). </b>     
             <% end %>  
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-        </p>
+        </div>
       </div>
     <% end %>
     <% if current_user.expired? %>   
       <div >
-        <p id="notice" class="alert alert-danger alert-dismissible fade show"> 
+        <div id="notice" class="alert alert-danger alert-dismissible fade show"> 
             Tu licencia de conducir ha expirado. Actualiza tus datos.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-        </p>
+        </div>
       </div>
     <% end %>
 

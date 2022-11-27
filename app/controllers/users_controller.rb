@@ -26,9 +26,32 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to '/login', notice: "Cuenta creada correctamente." }
-        format.json { render :show, status: :created, location: @user }
+        if current_user
+          format.html { redirect_to request.referrer, notice: "Cuenta creada correctamente." }
+          format.json { render :show, status: :created, location: @user }
+        else
+          format.html { redirect_to '/login', notice: "Cuenta creada correctamente." }
+          format.json { render :show, status: :created, location: @user }
+        end
       else
+
+        if @user.errors.any?
+          @user.errors.each do |error|
+            if error.full_message == "Password confirmation doesn't match Password"
+              format.html { redirect_to request.referrer, alert: "Las contraseñas no coinciden" }
+            end
+            if error.full_message == "Email has already been taken"
+              format.html { redirect_to request.referrer, alert: "E-mail ya existe en el sistema" }
+            end
+            if error.full_message == "Password is too short (minimum is 3 characters)"
+              format.html { redirect_to request.referrer, alert: "La contraseña es muy corta (menor a 3 caracteres)" }
+            end      
+            if error.full_message == "Document has already been taken"  
+              format.html { redirect_to request.referrer, alert: "El DNI ya existe en el sistema" }
+            end  
+            format.html { redirect_to request.referrer, alert: error.message }
+          end
+        end 
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end

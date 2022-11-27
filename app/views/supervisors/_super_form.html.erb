@@ -1,0 +1,37 @@
+<div style="margin-left:30px; margin-top:15px;">
+
+  <% @super = User.new() %>
+
+  <%= form_with(model: @super) do |form| %>
+
+  <div>
+    <p><b><%= form.label "E-mail", style: "display: block"%></b>
+    <%= form.text_field :email, :required => true, placeholder: "ejemplo@gmail.com" %></p>
+  </div>
+
+  <div class="field">
+    <p><b><%= form.label "Contraseña" %><br /></b>
+    <%= form.password_field :password, :required => true%></p>
+  </div>
+ 
+  <div class="field">
+    <p><b><%= form.label "Confirmar contraseña" %><br /></b>
+    <%= form.password_field :password_confirmation, :required => true%></p>
+  </div>
+
+  	<%= form.hidden_field :rol, :value => 'new_supervisor' %>
+  	<%= form.hidden_field :name, :value => 'Nuevo Supervisor' %>
+  	<%= form.hidden_field :lastName, :value => "##{@new_number}" %>
+  	<%= form.hidden_field :document, :value => @new_dni %>
+  	<%= form.hidden_field :birthdate, :value => Date.today - 20.years %>
+
+    <!-------- MODAL PIE -------------------------->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+      <%= form.button "Crear Supervisor" , type: "submit", :class=> "btn btn-primary" %>
+    </div>    
+
+  <% end %>
+
+</div>
+

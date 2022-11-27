@@ -30,7 +30,7 @@ class User < ApplicationRecord
   
 
   #ENUMERATIVES
-  enum rol: [:admin, :supervisor, :driver]
+  enum rol: [:admin, :supervisor, :driver, :new_supervisor]
   enum state: [:empty, :submitted, :admitted, :rejected, :blocked, :expired]
   
   # empty: cuenta recien creada/ no hay datos subidos

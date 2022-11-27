@@ -2,8 +2,12 @@
 		
 <%= render partial: "avisos" %>
 
-
 	<% if current_user.driver? %>
+
+		<div style="margin-left:30px; margin-top:15px;">
+			<h1><b><i>Documentos</i></b></h1>
+		</div>
+
 		<div style="margin-left:25px; margin-top:15px;">
 			<%= render partial: "formulario" , locals:{user: @usuario}%>
 		</div>
@@ -11,10 +15,12 @@
 
 
 	<% if current_user.supervisor? %>
-		<p>
 		<div class="accordion accordion-flush" id="accordionListaDocs" >
 
 			<% if @listaUsuarios.any? %> 
+				  <div style="margin-left:30px; margin-top:15px;">
+					<h1><b><i>Evaluar Documentos</i></b></h1>
+				  </div>
 			 
 				  <% @listaUsuarios.each do |usr| %>
 				      <%= render partial: 'documents/document_card', locals:{usr: usr} %>  
@@ -29,10 +35,12 @@
 				        </p>
 				    </div>
 				</div>
+				<div style="margin-left:30px; margin-top:15px;">
+					<h1><b><i>Evaluar Documentos</i></b></h1>
+				</div>
 			<% end %>
 
 		</div>  
-		</p>
 
 	<% end %> 
 	

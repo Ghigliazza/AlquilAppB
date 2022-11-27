@@ -5,6 +5,10 @@ class SearchController < ApplicationController
      #Redirecciona al usuario si tiene un alquiler activo
      if (current_user.driver? && current_user.rentals.any? && !current_user.rentals.last.expired?)
         redirect_to "/rentals/#{current_user.rentals.last.id}", notice: "Alquiler activo..."
+     else
+        if current_user.new_supervisor?
+          redirect_to "/supervisors/new_password", notice: "Debes cambiar tu contraseña para continuar..."
+        end
      end
 
      #Verifica el estado de expiracion de la licencia del conductor
