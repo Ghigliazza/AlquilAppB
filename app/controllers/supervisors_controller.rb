@@ -28,8 +28,6 @@ class SupervisorsController < ApplicationController
      end
      @new_dni = new_document
      @new_number = supervisor_number
-     
-     #@supervisorList = User.where(:rol => :supervisor) + User.where(:rol => :new_supervisor)
 
      @supervisorList = User.where("name LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
      @supervisorList = @supervisorList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
@@ -40,8 +38,6 @@ class SupervisorsController < ApplicationController
      @supervisorList = @supervisorList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :new_supervisor)
      
      @supervisorList = @supervisorList.uniq
-
-     #@supervisorList = User.where("name LIKE ?", "%" + "Jose" + "%")
 
   end
 

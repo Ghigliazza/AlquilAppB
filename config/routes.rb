@@ -29,6 +29,10 @@ Rails.application.routes.draw do
   get 'supervisors/new_password'
   get 'supervisors/search'
 
+  get 'drivers/index'
+  get 'drivers/search'
+
+
   resources :api, only: :index
  
   resources :rentals

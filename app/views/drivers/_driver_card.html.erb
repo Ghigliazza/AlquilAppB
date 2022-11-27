@@ -1,0 +1,37 @@
+  <div class="accordion-item">
+
+    <h2 class="accordion-header" id="flush-ID1<%=driver.id%>">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-ID2<%=driver.id%>" aria-expanded="false" aria-controls="flush-ID2<%=driver.id%>">
+        <span style="font-weight:bolder"> 
+          <%= driver.name %> <%= driver.lastName %>
+        </span> 
+      </button>
+    </h2>
+
+
+    <div id="flush-ID2<%=driver.id%>" class="accordion-collapse collapse" aria-labelledby="flush-ID1<%=driver.id%>" data-bs-parent="#accordionLista">
+      <div class="accordion-body">
+          <table class="table table-striped" style="max-width:600px;">
+                <tbody>
+                    <tr>
+                        <td><b> <%= "Nombre" %></b> </td>
+                        <td><%= "#{driver.name}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Apellido" %></b> </td>
+                        <td><%= "#{driver.lastName}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Documento" %></b> </td>
+                        <td><%= "#{driver.document}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Email" %></b> </td>
+                        <td><%= "#{driver.email}" %></td> 
+                    </tr>
+                </tbody>
+          </table>            
+        </div>   
+
+      </div>
+  </div>

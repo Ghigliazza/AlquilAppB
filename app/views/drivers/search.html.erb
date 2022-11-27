@@ -1,0 +1,46 @@
+
+        <%#> https://getbootstrap.com/docs/5.0/components/accordion/ <%>
+        <div class="accordion accordion-flush" id="accordionLista" >
+          <% if @driverList.any? %> 
+
+			<div style="margin-left:30px; margin-top:15px;">
+				<h1><i><b>Resultados de búsqueda:</b> <%= params[:q] %> </i></h1>
+			</div>
+
+			<div style="margin-left:30px; margin-top:15px; margin-bottom:15px;">
+				<form class="form-inline my-2 my-lg-0" action="/drivers/search">
+					<input class="form-control mr-sm-2" name="q" type="text" placeholder="Email, nombre o apellido", aria-label="Buscar">
+					<button class="btn btn-info" type="submit"> Buscar </button>
+				</form>
+			</div>	
+
+            <% @driverList.each do |driver| %>
+                <%= render partial: 'drivers/driver_card', locals:{driver: driver} %>  
+            <% end %>
+            
+          <% else %>
+          		<div class="text-center">
+			        <div >
+				        <div id="notice" class="alert alert-info alert-dismissible fade show"> 
+				        	No se encontraron conductores con esos datos
+				        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+				        </div>
+				    </div>
+				</div>
+
+				<div style="margin-left:30px; margin-top:15px;">
+					<h1><i><b>Resultados de búsqueda:</b> <%= params[:q] %> </i></h1>
+				</div>
+
+				<div style="margin-left:30px; margin-top:15px; margin-bottom:15px;">
+					<form class="form-inline my-2 my-lg-0" action="/drivers/search">
+					    <input class="form-control mr-sm-2" name="q" type="text" placeholder="Email, nombre o apellido", aria-label="Buscar">
+					    <button class="btn btn-info" type="submit"> Buscar </button>				   		 
+					</form>
+				</div>	
+
+          <% end %>  
+        </div>
+      </p>
+
+      
