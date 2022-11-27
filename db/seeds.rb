@@ -381,7 +381,7 @@ u = User.new(
 u.save(validate:false)
 
 u = User.new(
-	email: "free@gmail.com", 
+	email: "suspended@gmail.com", 
 	crypted_password: "$2a$10$S8iA.kmjBnrO8VefLuDqbeNztExIc.HHmDISnYYHrF19m043BLUhS",  
 	salt: "cLFho39dqLpgoSbTNxoT",                                                
 	password: 1234,
@@ -395,7 +395,7 @@ u = User.new(
 	licenseNumber: 99999999,
 	licenseExpiration: Date.today + 6.month,
 	birthdate: Date.today - 26.years,
-	suspended_until: Date.today - 6.month,
+	suspended_until: Date.today + 6.month,
 	suspended_for: "Romper las reglas",
 	balance: 5000,
 	coords_x: -57.957160476901834,
