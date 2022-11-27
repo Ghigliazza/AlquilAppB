@@ -13,18 +13,16 @@ class SearchController < ApplicationController
      # Guarda todos los autos en estado 1(disponible) y los ordena por combustible (luego sera por distancia)
      @carsDisponibles = Car.where(:state => 0).order(fuel: :desc)
 
-     #Actualiza la distancia respecto al usuario actual
+     
      #No es eficiente (arreglar)
-     actualizarDistancias
+     actualizarDistancias #Actualiza la distancia respecto al usuario actual
      
      if current_user.driver?
       @carsList = Car.where(:state => :ready).order(:distance)
      else
       @carsList = Car.all.order(:distance).order(fuel: :asc)
      end
-
-     
-     
+    
   end
 
   def actualizarDistancias

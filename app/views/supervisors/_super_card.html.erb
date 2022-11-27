@@ -1,0 +1,70 @@
+  <div class="accordion-item">
+
+    <h2 class="accordion-header" id="flush-ID1<%=sup.id%>">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-ID2<%=sup.id%>" aria-expanded="false" aria-controls="flush-ID2<%=sup.id%>">
+        <span style="font-weight:bolder"> 
+          <%= sup.name %>
+        </span> 
+      </button>
+    </h2>
+
+
+    <div id="flush-ID2<%=sup.id%>" class="accordion-collapse collapse" aria-labelledby="flush-ID1<%=sup.id%>" data-bs-parent="#accordionLista">
+      <div class="accordion-body">
+          <table class="table table-striped" style="max-width:600px;">
+                <tbody>
+                    <tr>
+                        <td><b> <%= "Nombre" %></b> </td>
+                        <td><%= "#{sup.name}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Apellido" %></b> </td>
+                        <td><%= "#{sup.lastName}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Email" %></b> </td>
+                        <td><%= "#{sup.email}" %></td> 
+                    </tr>
+                </tbody>
+          </table>       
+          <p>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%=sup.id%>">
+                                Eliminar Supervisor
+            </button>
+
+          </p>  
+
+                    
+        </div>   
+
+      </div>
+  </div>
+
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal<%=sup.id%>" tabindex="-1" aria-labelledby="exampleModalLabel<%=sup.id%>" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel<%=sup.id%>">Advertencia</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      
+                      <div class="modal-body">
+
+                          Eliminar supervisor permanentemente?
+                                     
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+
+                        <%= button_to "Eliminar Supervisor", sup, method: :delete, :class=> "btn btn-danger" %>
+
+                        <%#= form.button "Eliminar Supervisor" , type: "submit", :class=> "btn btn-danger" %>
+                      </div>
+                    </div>
+                  </div>
+                </div>

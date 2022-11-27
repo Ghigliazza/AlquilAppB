@@ -26,7 +26,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to '/login', notice: "Registro completo correctamente." }
+        format.html { redirect_to '/login', notice: "Cuenta creada correctamente." }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -75,7 +75,7 @@ class UsersController < ApplicationController
     @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to users_url, notice: "Usuario eliminado correctamente." }
+      format.html { redirect_to request.referrer, notice: "Eliminado correctamente." }
       format.json { head :no_content }
     end
   end

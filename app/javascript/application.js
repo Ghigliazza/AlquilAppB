@@ -21,4 +21,3 @@ var pikwik = function() {
 };
 $(document).on("page:load ready", pikwik);
 
-

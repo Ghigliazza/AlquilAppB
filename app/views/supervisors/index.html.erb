@@ -1,0 +1,15 @@
+<h1><b><i>Lista de Supervisores</i></b></h1>
+
+       <p>
+        <%#> https://getbootstrap.com/docs/5.0/components/accordion/ <%>
+        <div class="accordion accordion-flush" id="accordionLista" >
+          <% if @supervisorList.any? %> 
+            <% @supervisorList.each do |sup| %>
+                <%= render partial: 'supervisors/super_card', locals:{sup: sup} %>  
+            <% end %>
+            
+          <% else %>
+                  <!-- Alerta de NO SUPERVISORS -->
+          <% end %>  
+        </div>
+      </p>
