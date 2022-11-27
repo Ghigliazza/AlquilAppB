@@ -29,6 +29,34 @@
                         <td><b> <%= "Email" %></b> </td>
                         <td><%= "#{driver.email}" %></td> 
                     </tr>
+                    <tr>
+                        <td><b> <%= "Fecha de nacimiento:" %></b> </td>
+                        <td><%= "#{driver.birthdate}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Nº Licencia:" %></b> </td>
+                        <td><%= "#{driver.licenseNumber}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Vencimiento de licencia:" %></b> </td>
+                        <td><%= "#{driver.licenseExpiration}" %></td> 
+                    </tr>    
+                    <tr>
+                        <td><b> <%= "Estado" %></b> </td>
+                        <% case driver.state %>
+                        	<% when 'empty' %>                           
+                              <td><%= "Datos no enviados" %></td> 
+                            <% when 'admitted' %> 
+                              <td><%= "Habilitado" %></td> 
+                            <% when 'submitted' %>                         
+                              <td><%= "Verificación pendiente" %></td> 
+                            <% when 'rejected' %>                           
+                              <td><%= "Datos rechazados" %></td> 
+                            <% else %>
+                              <td><%= driver.state %></td> 
+                            <% end %>                     
+                    </tr>                    
+
                 </tbody>
           </table>            
         </div>   
