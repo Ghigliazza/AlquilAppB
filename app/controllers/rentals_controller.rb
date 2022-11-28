@@ -1,8 +1,10 @@
 class RentalsController < ApplicationController
   before_action :set_rental, only: %i[ show edit update destroy cancel ]
-  after_action  :summary,    only: %i[ create show update cancel ]
+  
+  before_action :summary,    only: %i[ update ]
+  after_action  :summary,    only: %i[ create show cancel ]
  
-# ================================================================================================================
+# ========================================================================================================================================
   # GET /rentals or /rentals.json
   def index
     @rentals = Rental.all
@@ -224,17 +226,17 @@ class RentalsController < ApplicationController
                 
               <div class=\"collapse\" id=\"collapsePay_#{ id }\">
                 <ul>
-                  <li class=\"row\"><div class=\"col-auto fw-semibold\"> Precio:     </div> <div class=\"col fw-light fst-italic text-end\"> #{ params[:rental][:price].to_f }                             </div></li>
-                  <li class=\"row\"><div class=\"col-auto fw-semibold\"> Alquilado:  </div> <div class=\"col fw-light fst-italic text-end\"> #{ ((@rental.expires - @rental.created_at)/1.hours).round }hs </div></li>
-                  <li class=\"row\"><div class=\"col-auto fw-semibold\"> Inicio:     </div> <div class=\"col fw-light fst-italic text-end\"> #{ @rental.updated_at.strftime('%Y-%m-%e A las %k:%M:%S') }   </div></li>
-                  <li class=\"row\"><div class=\"col-auto fw-semibold\"> Expiracion: </div> <div class=\"col fw-light fst-italic text-end\"> #{ @rental.expires.strftime('%Y-%m-%e A las %k:%M:%S') }      </div></li>
+                  <li class=\"row\"><div class=\"col-auto fw-semibold\"> Precio:     </div> <div class=\"col fw-light fst-italic text-end\"> #{ params[:rental][:price].to_f }                                                                                                 </div></li>
+                  <li class=\"row\"><div class=\"col-auto fw-semibold\"> Alquilado:  </div> <div class=\"col fw-light fst-italic text-end\"> #{ ((params[:rental][:expires].to_time - (params[:action] == 'create' ? @rental.created_at : @rental.expires))/1.hours).round }hs </div></li>
+                  <li class=\"row\"><div class=\"col-auto fw-semibold\"> Inicio:     </div> <div class=\"col fw-light fst-italic text-end\"> #{ @rental.updated_at.strftime('%Y-%m-%e A las %k:%M:%S') }                                                                       </div></li>
+                  <li class=\"row\"><div class=\"col-auto fw-semibold\"> Expiracion: </div> <div class=\"col fw-light fst-italic text-end\"> #{ params[:rental][:expires].to_time.strftime('%Y-%m-%e A las %k:%M:%S') }                                                        </div></li>
                 </ul>
               </div>
             </div>
           </li>"
 
-    # Se agrega el footer cuando expira el alquiler (el ultimo argumento es para que no se agregue el footer cada vez que se quiera ver el alquiler)
-    elsif @rental.expired? && @rental.updated_at + 1.second > Time.now 
+    # Se agrega el footer cuando expira el alquiler si este no fue ya agregado
+    elsif @rental.expired? && @rental.summary.at("</ol>").blank?
       summary +=
         "</ol>
       </div>
