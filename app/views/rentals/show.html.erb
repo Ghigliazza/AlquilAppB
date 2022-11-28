@@ -7,7 +7,7 @@
 
 
 <div calss="row">
-  <div calss="col">
+  <div calss="col-4">
     <div style="min-height:50px">
       <h2><b><span> <%= render partial: 'rentals/timer', locals: { tiempo: time } %> </span></b></h2>
     </div>
@@ -55,9 +55,12 @@
       <% end %>
     </div>
   </div>
-  <div calss="col">
+
+
+  
+  <div calss="col-2">
     <% if @rental.expired? %>
-      <%= sanitize @rental.summary %>
+      <%== @rental.summary %>
     <% end %>
   </div>
 </div>
