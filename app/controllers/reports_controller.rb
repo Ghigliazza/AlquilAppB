@@ -13,9 +13,41 @@ class ReportsController < ApplicationController
   # GET /reports/new
   def new
     @report = Report.new()
+    if (!current_user.rentals.any?)
+      flash[:notice] = "No poder reportar un auto porque no tenes ningun alquiler."
+      redirect_to root_path
+      return 1
+    end
+    # Busca el último auto que usó el usuario, el que está rentado.
+    car = current_user.rentals.last.car
+    @report.car.id = car.id
 
-    #@report.update()
-
+    if (!car.status.rented?)
+      # El auto, por alguna extraña razón, no está alquilado.
+      flash[:notice] = "No podes reportar un auto que no alquilaste."
+      redirect_to root_path
+      return 1
+    end
+    
+    if (((Time.new - current_user.rentals.last.created_at) <= 600) && (!car.turn_on?)) 
+      if (!car.rentals.second.exists?(2))
+       # No podemos saber quién es el responsable en este caso, asi
+       # que dejamos vacio el id del usuario. 
+        reporte_exitoso
+        return 0
+      end 
+      # Busqueda de la anteultima renta que tuvo el auto
+      # Es decir, a la renta anterior al usuario actual.
+      rental = Rental.find(car.rentals.last(2).first)
+      # id del usuario responsable (el anteultimo)
+      @report.user.id = rental.user.id
+      reporte_exitoso
+      return 0
+    else
+      @report.user.id = current_user.id
+      reporte_exitoso
+      return 0
+     end
     # if current_user.rentals.any? #Esta es la logica para que no te deje entrar
     #     sin rentas
     # @report.car_id = current_user.rentals.last.car_id
@@ -23,6 +55,7 @@ class ReportsController < ApplicationController
     #    flash[:notice] = "You don't have any rentals"
     #       redirect_to "/reports"
     #     end
+
   end
 
   # GET /reports/1/edit
@@ -84,6 +117,12 @@ class ReportsController < ApplicationController
       else
          params.require(:report).permit(:description, :user_id, :car_id, :image, :state)
       end      
+    end
+
+    private
+    def reporte_exitoso
+      flash[:notice] = "El reporte se envío correctamente."
+      redirect_to root_path
     end
 
 
