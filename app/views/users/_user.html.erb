@@ -1,60 +1,67 @@
 <div id="<%= dom_id user %>">
 
 
-  <% if @user.id == current_user.id || current_user.admin? || current_user.supervisor? %>
   
-        <p>
-        <strong>Email:</strong>
-        <%= user.email %>
-        </p>
+  <p>
+  <strong>Email:</strong>
+  <%= user.email %>
+  </p>
 
-        <!-- 
-        <p>
-          <strong>Crypted password:</strong>
-          <%= user.crypted_password %>
-        </p> 
+  <!-- 
+  <p>
+    <strong>Crypted password:</strong>
+    <%= user.crypted_password %>
+  </p> 
 
-        <p>
-          <strong>Salt:</strong>
-          <%= user.salt %>
-        </p>
-        
-        <p>
-          <strong>Nombre:</strong>
-          <%= user.name %>
-        </p>
+  <p>
+    <strong>Salt:</strong>
+    <%= user.salt %>
+  </p>
+  -->
+  <p>
+    <strong>Nombre:</strong>
+    <%= user.name %>
+  </p>
 
-        <p>
-          <strong>Apellido:</strong>
-          <%= user.lastName %>
-        </p>
+  <p>
+    <strong>Apellido:</strong>
+    <%= user.lastName %>
+  </p>
 
-        <p>
-          <strong>Documento:</strong>
-          <%= user.document %>
-        </p>
+  <p>
+    <strong>Documento:</strong>
+    <%= user.document %>
+  </p>
 
-        <p>
-          <strong>State:</strong>
-          <%= user.state %>
-        </p>
-
-        <p>
-          <strong>License:</strong>
-          <%= user.license_url %>
-        </p>-->
-
-
-
-  <% else %>
-    <div >
-        <p id="notice" class="alert alert-danger alert-dismissible fade show"> No tienes permiso para visualizar este usuario!</p>
-     </div>
-  <% end %>
-  
   <p>
     <strong>License:</strong>
     <%= user.license_url %>
+  </p>
+
+  <p>
+    <strong>State:</strong>
+    <%= user.state %>
+  </p>
+
+  <p>
+    <strong>License:</strong>
+    <%= user.license_url %>
+  </p>
+
+  <p>
+    <strong>Tarjetas:</strong><br>
+    <% user.cards.each do |card| %>
+      <a href= <%= card_path(card) %>>
+        <% if File.exists?("#{Rails.root}/app/assets/images/tarjetas/#{card.bankName}.png") %>
+          <% src ="/assets/tarjetas/#{card.bankName}.png" %>
+        
+        <% else %>
+          <% src ="/assets/tarjetas/notfound.png" %>
+        <% end %>
+
+        <img src= <%= src %> alt="Card" style="width:100px; height:75px; border-radius:10px; border: black>
+      </a>
+    <% end %>
   </p>
 
 </div>

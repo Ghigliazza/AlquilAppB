@@ -684,3 +684,5 @@ Rental.create!([
 p "Seed created #{Rental.count} rentals (with cars & users)";
 
 Report.destroy_all
+
+Card.destroy_all
