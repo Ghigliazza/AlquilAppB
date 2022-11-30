@@ -37,15 +37,9 @@
               </td>          
             <% else %>
               <td>
-                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal<%=current_user.id%>">
-                      Reportar
-                    </button>                        
-              </td>
-              <td>
                 <%= link_to "Volver a la lista de autos", "/search", class: "btn btn-primary", id: "reporttBtn" %>                        
               </td>
             <% end %>
-            
           </tr>
       </tbody>
       </table> 

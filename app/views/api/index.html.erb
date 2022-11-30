@@ -12,22 +12,34 @@
 
 	    <div style="margin-left:30px; margin-top:15px;">
 	        
-	    	<b><%= car.brand %> <%= car.model %> [<%= car.license %>] Used:<%= car.turn_on? %></b> </p>
+	    	<b><%= car.brand %> <%= car.model %> [<%= car.license %>] </b> </p>
+	    	<b> Motor Encendido: <%= car.turn_on? %> </b>  </p>
 
-				  <% if car.engine? %>
-	                  <%= form_with model: car do |form| %>
-	                      <%= form.hidden_field :engine, :value => false %>
-	                      <%= form.button "Apagar Motor" , type: "submit", :class=> "btn btn-danger" %></p>
-	                  <% end %>
-	              <% end %>
+	        <%= form_with model: car do |form| %>
+	    		<b>Combustible: </b>
+	    		<%= form.number_field :fuel %></p>
 
-	              <% if !car.engine? %>
-	                  <%= form_with model: car do |form| %>
-	                      <%= form.hidden_field :engine, :value => true %>
-	                      <%= form.hidden_field :turn_on, :value => true %>
-	                      <%= form.button "Encender Motor" , type: "submit", :class=> "btn btn-primary" %></p>
-	                  <% end %>  
-	              <% end %>
+              <table>
+                <tbody> <tr> <td>               
+		    		<%= form.button "Actualizar Combustible" , type: "submit", :class=> "btn btn-info" %></p> 
+		    		<% end %>
+                  </td> <td>                
+					  <% if car.engine? %>
+		                  <%= form_with model: car do |form| %>
+		                      <%= form.hidden_field :engine, :value => false %> &nbsp;   
+		                      <%= form.button "Apagar Motor" , type: "submit", :class=> "btn btn-danger" %></p>
+		                  <% end %>
+		              <% end %>
+
+		              <% if !car.engine? %>
+		                  <%= form_with model: car do |form| %>
+		                      <%= form.hidden_field :engine, :value => true %>
+		                      <%= form.hidden_field :turn_on, :value => true %> &nbsp;   
+		                      <%= form.button "Encender Motor" , type: "submit", :class=> "btn btn-primary" %></p>
+		                  <% end %>  
+		              <% end %>	    
+                </td> </tr> </tbody>                               
+              </table>
 		</div>
 
 	     ||========================================||</p>
