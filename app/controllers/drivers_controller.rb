@@ -24,15 +24,22 @@ class DriversController < ApplicationController
   	 	redirect_to "/search", alert: "No tienes permiso para ver esta pagina!"
   	 end
 
-     @driverList = User.where("name LIKE ?", "%" + params[:q] + "%").where(:rol => :driver)
-     @driverList = @driverList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :driver)
-     @driverList = @driverList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :driver)
-     @driverList = @driverList + User.where("document LIKE ?", "%" + params[:q].to_s + "%").where(:rol => :driver)
+     @string = params[:q].split(' ')
 
-     @driverList = @driverList + User.where("name LIKE ?", "%" + params[:q] + "%").where(:rol => :suspended_driver)
-     @driverList = @driverList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :suspended_driver)
-     @driverList = @driverList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :suspended_driver)
-     @driverList = @driverList + User.where("document LIKE ?", "%" + params[:q].to_s + "%").where(:rol => :suspended_driver)
+     if @string[1] == nil
+        @driverList = User.where("name LIKE ?", "%" + params[:q] + "%").where(:rol => :driver)
+        @driverList = @driverList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :driver)
+        @driverList = @driverList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :driver)
+        @driverList = @driverList + User.where("document LIKE ?", "%" + params[:q].to_s + "%").where(:rol => :driver)
+
+        @driverList = @driverList + User.where("name LIKE ?", "%" + params[:q] + "%").where(:rol => :suspended_driver)
+        @driverList = @driverList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :suspended_driver)
+        @driverList = @driverList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :suspended_driver)
+        @driverList = @driverList + User.where("document LIKE ?", "%" + params[:q].to_s + "%").where(:rol => :suspended_driver)
+     else
+        @driverList = User.where("name LIKE ?", "%" + @string[0] + "%").where("lastName LIKE ?", "%" + @string[1] + "%").where(:rol => :driver)
+        @driverList = @driverList + User.where("name LIKE ?", "%" + @string[0] + "%").where("lastName LIKE ?", "%" + @string[1] + "%").where(:rol => :suspended_driver)
+     end
      
      @driverList = @driverList.uniq
 

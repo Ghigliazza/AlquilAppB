@@ -8,7 +8,7 @@ class SupervisorsController < ApplicationController
   	 @new_dni = new_document
   	 @new_number = supervisor_number
      
-     @supervisorList = User.where(:rol => :supervisor) + User.where(:rol => :new_supervisor)
+    @supervisorList = User.where(:rol => :supervisor) + User.where(:rol => :new_supervisor)
 
   end
 
@@ -29,13 +29,20 @@ class SupervisorsController < ApplicationController
      @new_dni = new_document
      @new_number = supervisor_number
 
-     @supervisorList = User.where("name LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
-     @supervisorList = @supervisorList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
-     @supervisorList = @supervisorList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
+     @string = params[:q].split(' ')
 
-     @supervisorList = @supervisorList + User.where("name LIKE ?", "%" + params[:q] + "%").where(:rol => :new_supervisor)
-     @supervisorList = @supervisorList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :new_supervisor)
-     @supervisorList = @supervisorList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :new_supervisor)
+     if @string[1] == nil
+        @supervisorList = User.where("name LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
+        @supervisorList = @supervisorList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
+        @supervisorList = @supervisorList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
+
+        @supervisorList = @supervisorList + User.where("name LIKE ?", "%" + params[:q] + "%").where(:rol => :new_supervisor)
+        @supervisorList = @supervisorList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :new_supervisor)
+        @supervisorList = @supervisorList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :new_supervisor)
+      else
+        @supervisorList = User.where("name LIKE ?", "%" + @string[0] + "%").where("lastName LIKE ?", "%" + @string[1] + "%").where(:rol => :supervisor)
+        @supervisorList = @supervisorList + User.where("name LIKE ?", "%" + @string[0] + "%").where("lastName LIKE ?", "%" + @string[1] + "%").where(:rol => :new_supervisor)
+      end
      
      @supervisorList = @supervisorList.uniq
 
