@@ -4,14 +4,24 @@
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-ID2<%=driver.id%>" aria-expanded="false" aria-controls="flush-ID2<%=driver.id%>">
         <span style="font-weight:bolder"> 
 
-          <% if driver.suspended_driver? %>
-         	<b style="color:red"> [Suspendido] </b>
+          <% if current_user.supervisor? %>
+            <% if driver.suspended_driver? %>
+           	<b style="color:red"> [Suspendido] </b>
+            <% end %>
+
+            <% if driver.driver? && driver.rentals.any? && !driver.rentals.last.expired? %>
+            	<b style="color:green">[Alquiler Activo]</b> 
+            <% end %>
           <% end %>
 
-          <% if driver.driver? && driver.rentals.any? && !driver.rentals.last.expired? %>
-          	<b style="color:green">[Alquiler Activo]</b> 
+          <% if current_user.admin? %>
+            <% if driver.balance < 0 %>
+              <b style="color:red">[$<%= driver.balance %>]</b> 
+            <% end %>
+            <% if driver.balance >= 0 %>
+              <b style="color:green">[$<%= driver.balance %>]</b> 
+            <% end %>
           <% end %>
-
           <%= driver.name %> <%= driver.lastName %>
 
         </span> 
@@ -82,7 +92,12 @@
 	                        <td><b> <%= "Suspendido hasta:" %></b> </td>
 	                        <td><%= driver.suspended_until %></td> 
 	                    </tr>
-	                <% end %>                                     
+	                <% end %>      
+
+                    <tr>
+                        <td><b> <%= "Balance" %></b> </td>
+                        <td>$<%= "#{driver.balance}" %></td> 
+                    </tr>                               
                     
                     <% if driver.driver? && driver.rentals.any? && !driver.rentals.last.expired? %>
                    		<tr>

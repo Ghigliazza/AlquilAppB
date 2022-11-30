@@ -25,7 +25,7 @@ class SearchController < ApplicationController
 
      
      #No es eficiente (arreglar)
-     actualizarDistancias #Actualiza la distancia respecto al usuario actual
+     #actualizarDistancias #Actualiza la distancia respecto al usuario actual
      
      if current_user.driver?
       @carsList = Car.where(:state => :ready).order(:distance)

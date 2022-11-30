@@ -8,6 +8,14 @@ class DriversController < ApplicationController
      
      @driverList = User.where(:rol => :driver) + User.where(:rol => :suspended_driver)
 
+     if current_user.admin?
+         if params[:sort_param] == "descendente"
+            @driverList.sort! { |a,b| -a.balance <=> -b.balance }
+         else
+            @driverList.sort! { |a,b| a.balance <=> b.balance }
+         end
+     end
+
   end
 
   def search
@@ -27,6 +35,14 @@ class DriversController < ApplicationController
      @driverList = @driverList + User.where("document LIKE ?", "%" + params[:q].to_s + "%").where(:rol => :suspended_driver)
      
      @driverList = @driverList.uniq
+
+     if current_user.admin?
+         if params[:sort_param] == "descendente"
+            @driverList.sort! { |a,b| -a.balance <=> -b.balance }
+         else
+            @driverList.sort! { |a,b| a.balance <=> b.balance }
+         end
+     end
 
   end
 
