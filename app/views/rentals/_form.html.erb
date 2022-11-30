@@ -174,8 +174,8 @@
     out_price.val("$" + in_price.val())
     tot_price.val("$" + (<%= @rental.price.to_i %> + parseInt(in_price.val())))
 
-    in_expire.val(date_format(date))
-    out_expired.val(in_expire.val())
+    in_expire.val(date)
+    out_expired.val(date_format(in_expire.val()))
   }
 
   function date_format(date) {

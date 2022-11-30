@@ -4,7 +4,12 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = User.all
+    if !current_user.driver?
+      @users = User.all
+      
+    else
+      redirect_to user_path(current_user), alert: "No tienes permisos para ver otros usuarios!"
+    end
   end
 
   # GET /users/1 or /users/1.json

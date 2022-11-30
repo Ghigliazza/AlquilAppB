@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_27_210345) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_28_225831) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,11 +40,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_210345) do
   end
 
   create_table "cards", force: :cascade do |t|
-    t.integer "cardNumber"
+    t.integer "number"
     t.date "expires"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "bankName", default: "notfound.jpg"
   end
 
   create_table "cars", force: :cascade do |t|
@@ -65,8 +66,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_210345) do
     t.float "coords_x"
     t.float "coords_y"
     t.float "distance"
-    t.boolean "turn_on", default: false
     t.boolean "used"
+    t.boolean "turn_on", default: false
   end
 
   create_table "positions", force: :cascade do |t|

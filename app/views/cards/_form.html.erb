@@ -12,8 +12,8 @@
   <% end %>
 
   <div>
-    <%= form.label :cardNumber, style: "display: block" %>
-    <%= form.number_field :cardNumber %>
+    <%= form.label :number, style: "display: block" %>
+    <%= form.number_field :number, maxlength: "12", size: "12" %>
   </div>
 
   <div>
@@ -22,8 +22,7 @@
   </div>
 
   <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.number_field :user_id %>
+    <%= form.select(:bankName, options_for_select(['Frances', 'Galicia', 'Naranja', 'Provincia', 'Visa'], selected: nil), { include_blank: "Banco" }, { class: 'form-control select2', style: 'width: 100%;'}) %>
   </div>
 
   <div>

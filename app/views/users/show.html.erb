@@ -1,8 +1,15 @@
 <%= render @user %>
 
 <div>
-  <%#= link_to "Edit this user", edit_user_path(@user) %> 
-  <%#= link_to "Back to users", users_path %>
+  <%= link_to "Editar" + (@user.id == current_user.id ? "Perfil" : "Usuario"), edit_user_path(@user) %>
 
-  <%#= button_to "Destroy this user", @user, method: :delete %>
+  <%= link_to "" %>
+
+  <% if !current_user.driver? %>
+    <%= link_to "Ver Usuarios", users_path %>
+  <% end %>
+
+<% if @user.id != current_user.id && current_user.admin? %>
+  <%= button_to "Eliminar Usuario", @user, method: :delete %>
+<% end %>
 </div>

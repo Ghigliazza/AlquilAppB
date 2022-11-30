@@ -35,7 +35,7 @@
                                 <a class="nav-link" href="/documents/index" data-turbolinks="false">Documentos</a>
                             </li>  
                             <li class="nav-item"> 
-                                <%= link_to "Editar Perfil", edit_user_path(current_user.id) , class:"nav-link"%>  
+                                <%= link_to "Ver Perfil", user_path(current_user) , class:"nav-link"%>  
                             </li>  
                             <li class="nav-item"> 
                                 <%= link_to "Cerrar Sesión", :logout, data: { turbo_method: :post } , class:"nav-link"%> 
@@ -57,7 +57,7 @@
                             <a class="nav-link" href="/reports" >Reportes [WIP]</a>
                         </li>
                         <li class="nav-item">
-                            <%= link_to "Editar Perfil", edit_user_path(current_user.id) , class:"nav-link"%>  
+                            <%= link_to "Ver Perfil", user_path(current_user) , class:"nav-link"%>  
                         </li>
                         <li class="nav-item">
                             <%= link_to "Cerrar Sesión", :logout, data: { turbo_method: :post } , class:"nav-link"%>   
@@ -87,7 +87,7 @@
                             <a class="nav-link" href="/supervisors/index" data-turbolinks="false">Supervisores</a>
                         </li>
                         <li class="nav-item">
-                            <%= link_to "Editar Perfil", edit_user_path(current_user.id) , class:"nav-link"%>  
+                            <%= link_to "Ver Perfil", user_path(current_user) , class:"nav-link"%>  
                         </li>
                         <li class="nav-item">
                             <%= link_to "Cerrar Sesión", :logout, data: { turbo_method: :post } , class:"nav-link"%>   

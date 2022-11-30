@@ -7,7 +7,7 @@ class ChangeEngineToCars < ActiveRecord::Migration[7.0]
   
   def self.down
     change_table :cars do |t|
-      t.change :engine, :booleant
+      t.change :engine, :boolean
     end
   end
 
