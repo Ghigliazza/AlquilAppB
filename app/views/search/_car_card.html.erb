@@ -117,8 +117,11 @@
               <%= link_to "Alquilar Auto", new_car_rental_path(car), class:"btn btn-primary" %>
             <% end %>
 
-            <% if current_user.supervisor? || current_user.admin? %>
+            <% if current_user.suspended_driver? %>
+              <button type="button" class="btn btn-primary" disabled>Alquilar Auto</button> <i style="color:red">Tu cuenta está suspendida.</i>
+            <% end %>
 
+            <% if current_user.supervisor? || current_user.admin? %>
               <% if car.ready? %>
                   <%= form_with model: car do |form| %>
                       <%= form.hidden_field :state, :value => :blocked %>

@@ -54,5 +54,15 @@
       </div>
     <% end %>
 
+<% else %>   
+
+    <% if current_user.suspended_driver? %>
+        <div >
+            <div id="notice" class="alert alert-danger alert-dismissible fade show"> 
+                Tu cuenta ha sido suspendida hasta la fecha: <%= current_user.suspended_until %>. (Motivo: "<%= current_user.suspended_for %>")
+            </div>
+        </div>
+    <% end %>
+    
 <% end %>
 </div>

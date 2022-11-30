@@ -5,11 +5,4 @@
 
   <%= link_to "" %>
 
-  <% if !current_user.driver? %>
-    <%= link_to "Ver Usuarios", users_path %>
-  <% end %>
-
-<% if @user.id != current_user.id && current_user.admin? %>
-  <%= button_to "Eliminar Usuario", @user, method: :delete %>
-<% end %>
 </div>

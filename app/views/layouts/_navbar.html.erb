@@ -24,7 +24,7 @@
 
                 <% if current_user %> 
 
-                    <% if current_user.driver? %>
+                    <% if current_user.driver? || current_user.suspended_driver? %>
                         <% if current_user.rentals.any? && !current_user.rentals.last.expired? %>             
                              <!-- OCULTA LA NAVBAR SI HAY UN ALQUILER EN CURSO -->
                         <% else %>       
@@ -65,12 +65,6 @@
                     <% end %>
 
                     <% if current_user.new_supervisor? %>
-                        <li class="nav-item">
-                            <%= link_to "Cerrar Sesión", :logout, data: { turbo_method: :post } , class:"nav-link"%>   
-                        </li>
-                    <% end %>
-
-                    <% if current_user.suspended_driver? %>
                         <li class="nav-item">
                             <%= link_to "Cerrar Sesión", :logout, data: { turbo_method: :post } , class:"nav-link"%>   
                         </li>

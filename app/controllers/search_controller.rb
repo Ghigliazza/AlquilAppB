@@ -14,7 +14,7 @@ class SearchController < ApplicationController
           redirect_to "/supervisors/new_password", notice: "Debes cambiar tu contraseña para continuar..."
         else
           if current_user.suspended_driver?
-            redirect_to "/users/suspended"
+            #redirect_to "/users/suspended"
           end
         end
      end

@@ -34,21 +34,6 @@
   </p>
 
   <p>
-    <strong>License:</strong>
-    <%= user.license_url %>
-  </p>
-
-  <p>
-    <strong>State:</strong>
-    <%= user.state %>
-  </p>
-
-  <p>
-    <strong>License:</strong>
-    <%= user.license_url %>
-  </p>
-
-  <p>
     <strong>Tarjetas:</strong><br>
     <% user.cards.each do |card| %>
       <a href= <%= card_path(card) %>>

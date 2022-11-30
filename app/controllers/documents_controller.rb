@@ -3,13 +3,12 @@ class DocumentsController < ApplicationController
 	
 
 	def index
-
 		# Si el usuario esta admitted, verifica su licencia
 		verificar_licencia
 
 		# Guarda el usuario actual para actualizar sus datos
 		@usuario = current_user
-		@listaUsuarios = User.where(rol: "driver", state: 'submitted')
+		@listaUsuarios = User.where(rol: "driver", state: 'submitted') + User.where(rol: "suspended_driver", state: 'submitted')
 	end
 
 	def verificar_licencia
