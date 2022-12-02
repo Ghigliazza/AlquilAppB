@@ -14,7 +14,8 @@ class CardsTest < ApplicationSystemTestCase
     visit cards_url
     click_on "New card"
 
-    fill_in "Cardnumber", with: @card.cardNumber
+    fill_in "number", with: @card.number
+    fill_in "bankName",	with: @card.bankName 
     fill_in "Expires", with: @card.expires
     fill_in "User", with: @card.user_id
     click_on "Create Card"
@@ -27,7 +28,8 @@ class CardsTest < ApplicationSystemTestCase
     visit card_url(@card)
     click_on "Edit this card", match: :first
 
-    fill_in "Cardnumber", with: @card.cardNumber
+    fill_in "number", with: @card.number
+    fill_in "bankName",	with: @card.bankName 
     fill_in "Expires", with: @card.expires
     fill_in "User", with: @card.user_id
     click_on "Update Card"

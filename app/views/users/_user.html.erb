@@ -34,19 +34,43 @@
   </p>
 
   <p>
-    <strong>Tarjetas:</strong><br>
-    <% user.cards.each do |card| %>
-      <a href= <%= card_path(card) %>>
-        <% if File.exists?("#{Rails.root}/app/assets/images/tarjetas/#{card.bankName}.png") %>
-          <% src ="/assets/tarjetas/#{card.bankName}.png" %>
-        
-        <% else %>
-          <% src ="/assets/tarjetas/notfound.png" %>
-        <% end %>
+    <strong>Tarjeta:</strong><br>
 
-        <img src= <%= src %> alt="Card" style="width:100px; height:75px; border-radius:10px; border: black>
-      </a>
+    <% card = user.cards.first %>
+    <% if card %>
+      <% if File.exists?("#{Rails.root}/app/assets/images/tarjetas/#{card.bankName}.png") %>
+        <% src ="/assets/tarjetas/#{card.bankName}.png" %>
+      
+      <% else %>
+        <% src ="/assets/tarjetas/notfound.png" %>
+      <% end %>
+      
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCard"></button>
+      
+    <% else %>
+      <%= link_to "Agregar", new_card_path, class: "btn btn-outline-success", type: "button" %>
     <% end %>
   </p>
+</div>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalCard" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalCardLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modalCardLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
 </div>

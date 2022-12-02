@@ -45,7 +45,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_225831) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "bankName", default: "notfound.jpg"
+    t.integer "bankName", default: 5
+    t.integer "balance", default: 0
   end
 
   create_table "cars", force: :cascade do |t|

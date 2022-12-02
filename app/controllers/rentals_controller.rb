@@ -19,7 +19,11 @@ class RentalsController < ApplicationController
       # Actualiza el estado del alquiler
       @rental.expired!
 
-      time_out()
+      # time_out()
+
+      time_dif = ((Time.now - @rental.expires) / 15.minutes).to_i
+      penalty = 1000 * time_dif
+      current_user.update(balance: (current_user.balance - penalty))
 
       # Cobra el gasto de combustible y actualiza el combustible inicial
       if @rental.car.fuel < @rental.initial_fuel
@@ -31,7 +35,7 @@ class RentalsController < ApplicationController
       @rental.car.ready!
       @rental.car.update(turn_on: false)
       
-      redirect_to "/rentals/#{@rental.id}", alert:"El alquiler ha sido finalizado fuera de tiempo. Precio: $#{@rental.price}. (Además se cobró una multa de $1000 por cada 15 minutos pasados: $#{multa} total de multa.)"
+      redirect_to "/rentals/#{@rental.id}", alert:"El alquiler ha sido finalizado fuera de tiempo. Precio: $#{@rental.price}. (Además se cobró una multa de $1000 por cada 15 minutos pasados: $#{penalty} total de multa.)"
     end
   end
 
@@ -139,7 +143,10 @@ class RentalsController < ApplicationController
       elsif (Time.now >= @rental.created_at + 10.minutes)
         # Si expiro
         if (Time.now > @rental.expires)
-          time_out()
+          # time_out()
+          time_dif = ((Time.now - @rental.expires) / 15.minutes).to_i
+          penalty = 1000 * time_dif
+          current_user.update(balance: (current_user.balance - penalty))
           alert = "El alquiler ha sido finalizado fuera de tiempo. Precio: $#{@rental.price}. (Además se cobró una multa de $1000 por cada 15 minutos pasados: $#{penalty} total de multa.)"
         
         else
@@ -197,11 +204,11 @@ class RentalsController < ApplicationController
 
 # ----------------------------------------------------------------------------------------------------------------------------------------
   # Calcular y descontar multa
-  def time_out()
-    time_dif = ((Time.now - @rental.expires) / 15.minutes).to_i
-    penalty = 1000 * time_dif
-    current_user.update(balance: (current_user.balance - penalty))
-  end
+  # def time_out()
+  #   time_dif = ((Time.now - @rental.expires) / 15.minutes).to_i
+  #   penalty = 1000 * time_dif
+  #   current_user.update(balance: (current_user.balance - penalty))
+  # end
   
 # ----------------------------------------------------------------------------------------------------------------------------------------
   def summary()

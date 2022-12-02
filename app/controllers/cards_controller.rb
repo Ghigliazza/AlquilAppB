@@ -23,14 +23,36 @@ class CardsController < ApplicationController
   def create
     @card = Card.new(card_params)
 
-    respond_to do |format|
-      if @card.save
-        format.html { redirect_to card_url(@card), notice: "Card was successfully created." }
-        format.json { render :show, status: :created, location: @card }
+    alert = ""
+    if !@card.number.nil? && !@card.expires.nil?
+      if @card.number.to_s.length == 12 && @card.expires > Time.now
+        respond_to do |format|
+          if @card.update(card_params)
+            format.html { redirect_to card_url(@card), notice: "Card was successfully updated." }
+            format.json { render :show, status: :ok, location: @card }
+          else
+            format.html { render :new, status: :unprocessable_entity }
+            format.json { render json: @card.errors, status: :unprocessable_entity }
+          end
+        end
+
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @card.errors, status: :unprocessable_entity }
+        if @card.number.to_s.length != 12
+          alert += "El numero de tarjeta debe tener 12 digitos"
+        end
+        
+        if @card.expires <= Time.now
+          alert += !alert.empty? ? " y " : ""
+          alert += "La fecha de expiracion ya ha pasado"
+        end
       end
+    
+    else
+      alert = "Faltan datos"
+    end
+      
+    if !alert.empty?
+      redirect_to user_path(current_user), alert: alert
     end
   end
 
@@ -65,6 +87,6 @@ class CardsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def card_params
-      params.require(:card).permit(:cardNumber, :expires, :user_id)
+      params.require(:card).permit(:number, :expires, :bankName, :user_id)
     end
 end
