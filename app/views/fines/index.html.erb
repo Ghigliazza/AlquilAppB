@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Fines</h1>
+
+<div id="fines">
+  <% @fines.each do |fine| %>
+    <%= render fine %>
+    <p>
+      <%= link_to "Show this fine", fine %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New fine", new_fine_path %>

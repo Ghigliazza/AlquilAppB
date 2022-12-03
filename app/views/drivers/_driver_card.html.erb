@@ -117,15 +117,26 @@
                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%=driver.id%>">
                                 Suspender Usuario
                </button>  
+               <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal<%=driver.id%><%=driver.id%>">
+                                Multar
+               </button>
             <% else %>
             	<% if driver.suspended_driver? %>
 	            	<%= form_with model: driver do |form| %>
 	            		<%= form.hidden_field :rol, :value => :driver %>
 	            		<%= form.hidden_field :suspended_until, :value => nil %>
 	            		<%= form.button "Cancelar suspensión" , type: "submit", :class=> "btn btn-info" %>
+
+                  <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal<%=driver.id%><%=driver.id%>">
+                                Multar
+                  </button>
 	            	<% end %> 
             	<% end %> 
             <% end %> 
+
+
+
+
           <% end %>      
         </div>   
 
@@ -139,7 +150,7 @@
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel<%=driver.id%>">Suspender usuario</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel<%=driver.id%>"><b>Suspender usuario</b></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       
@@ -149,12 +160,12 @@
                             <%#= form.text_field :rejectedMessage, :required => true %>
 
                             <p><b><%= form.label "Suspender hasta:", style: "display: block"%></b>
-   							<%= form.date_field :suspended_until, :required => true %></p>
+                            <%= form.date_field :suspended_until, :required => true %></p>
 
-   							<% if driver.licenseExpiration.present? && driver.licenseExpiration < Date.today %>
-   								<%= form.hidden_field :state, :value => :expired %>
-   								<%= form.hidden_field :licenseExpiration, :value => nil %>
-   							<% end %>
+                            <% if driver.licenseExpiration.present? && driver.licenseExpiration < Date.today %>
+                              <%= form.hidden_field :state, :value => :expired %>
+                              <%= form.hidden_field :licenseExpiration, :value => nil %>
+                            <% end %>
 
                             <div class="mb-3">
                               <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required="required" type="text" name="user[suspended_for]" id="user_suspended_for"></textarea>
@@ -165,6 +176,43 @@
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <%= form.button "Suspender Usuario" , type: "submit", :class=> "btn btn-danger" %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% end %> 
+
+
+                <% fine = Fine.new %>
+                <!-- Modal MULTA -->
+                <%= form_with(model: fine) do |form| %>
+                <div class="modal fade" id="exampleModal<%=driver.id%><%=driver.id%>" tabindex="-1" aria-labelledby="exampleModalLabel<%=driver.id%><%=driver.id%>" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel<%=driver.id%><%=driver.id%>"><b>Multar usuario</b></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      
+                      <div class="modal-body">
+
+                            <%= form.hidden_field :user_id, :value => driver.id %>
+
+                            <p><b><%= form.label "Monto:", style: "display: block"%></b>
+                            <%= form.number_field :amount, step: :any, :required => true %></p>
+
+
+
+                            <b>Motivo:</b>
+                            <div class="mb-3">
+                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required="required" type="text" name="fine[motive]" id="fine_motive"></textarea>
+                            </div>
+
+                                      
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <%= form.button "Confirmar Multa" , type: "submit", :class=> "btn btn-warning" %>
                       </div>
                     </div>
                   </div>

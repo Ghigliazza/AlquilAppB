@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @fine %>
+
+<div>
+  <%= link_to "Edit this fine", edit_fine_path(@fine) %> |
+  <%= link_to "Back to fines", fines_path %>
+
+  <%= button_to "Destroy this fine", @fine, method: :delete %>
+</div>

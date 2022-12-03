@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :cards
   has_many :rentals
   has_many :reports
+  has_many :fines
   has_many :cars, :through => :rental
 
   has_one_attached :license_photo

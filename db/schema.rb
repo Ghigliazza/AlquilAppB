@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_28_225831) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_03_223731) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -68,6 +68,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_225831) do
     t.float "distance"
     t.boolean "turn_on", default: false
     t.boolean "used"
+  end
+
+  create_table "fines", force: :cascade do |t|
+    t.float "amount"
+    t.text "motive"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "positions", force: :cascade do |t|
