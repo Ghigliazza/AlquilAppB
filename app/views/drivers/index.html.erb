@@ -1,4 +1,6 @@
 
+
+
         <%#> https://getbootstrap.com/docs/5.0/components/accordion/ <%>
         <div class="accordion accordion-flush" id="accordionLista" >
           <% if @driverList.any? %> 
@@ -29,6 +31,8 @@
                 </td> </tr> </tbody>                               
               </table>
             </div>
+
+            <%= render partial: "/drivers/total_balance"%>
 
             <p></p>
 

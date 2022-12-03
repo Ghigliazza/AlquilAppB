@@ -1,0 +1,18 @@
+<% if current_user.admin? %>  
+<h2><b>
+	<div style="margin-left:30px; margin-top:15px;">
+		<table>
+		  <tr>
+		    <th>Saldo total positivo</th>
+		    <th> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  </th>
+		    <th>Saldo total negativo</th>
+		  </tr>
+		  <tr>
+		    <td><b style="color:green">$<%= @total_positive %></b></td>
+		    <td>  </td>
+		    <td><b style="color:red">$<%= @total_negative %></b></td>
+		  </tr>
+		</table>
+	</div>
+</b></h2>
+<% end %> 
