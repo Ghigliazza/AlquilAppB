@@ -18,6 +18,10 @@
 	   			 <p><b><%= form.label "Apellido", style: "display: block"%></b>
 	   			 <%= form.text_field :lastName, :required => true, placeholder: "Apellido" %></p>
 	  		</div>
+	  		<div>
+	   			 <p><b><%= form.label "Documento", style: "display: block"%></b>
+	   			 <%= form.number_field :document, :required => true, placeholder: "12345678" %></p>
+	  		</div>
   		<%end%>
 
 		  <div class="field">

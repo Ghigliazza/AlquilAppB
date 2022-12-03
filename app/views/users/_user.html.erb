@@ -31,52 +31,54 @@
     <%= user.document %>
   </p>
 
-  <p>
-    <strong>Tarjeta:</strong>
 
-    <% card = user.cards.first %>
-    <% if !card.nil? %>
-      <% if File.exists?("#{Rails.root}/app/assets/images/tarjetas/#{card.bankName}.png") %>
-        <% src ="/assets/tarjetas/#{card.bankName}.png" %>
-      
-      <% else %>
-        <% src ="/assets/tarjetas/notfound.png" %>
-      <% end %>
-      
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-ligth" id="btnCardModal" data-bs-toggle="modal" data-bs-target="#modalCard" style="background-image: url(<%= src %>)"></button>
-      <!-- Modal -->
-      <div class="modal fade" id="modalCard" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalCardLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content" id="cardModalContent" style="background-image: url(<%= src %>)">
-            <div class="modal-body">
-              <%= render partial: "cards/card", locals: { card: card } %>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <%= button_to "Eliminar", card, method: :delete, class: "btn btn-danger" %>
+  <% if current_user.driver? || current_user.suspended_driver?%>
+    <p>
+      <strong>Tarjeta:</strong>
+
+      <% card = user.cards.first %>
+      <% if !card.nil? %>
+        <% if File.exists?("#{Rails.root}/app/assets/images/tarjetas/#{card.bankName}.png") %>
+          <% src ="/assets/tarjetas/#{card.bankName}.png" %>
+        
+        <% else %>
+          <% src ="/assets/tarjetas/notfound.png" %>
+        <% end %>
+        
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-ligth" id="btnCardModal" data-bs-toggle="modal" data-bs-target="#modalCard" style="background-image: url(<%= src %>)"></button>
+        <!-- Modal -->
+        <div class="modal fade" id="modalCard" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalCardLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content" id="cardModalContent" style="background-image: url(<%= src %>)">
+              <div class="modal-body">
+                <%= render partial: "cards/card", locals: { card: card } %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <%= button_to "Eliminar", card, method: :delete, class: "btn btn-danger" %>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-    <% else %>
-      <%= link_to "Agregar", new_card_path, class: "btn btn-success", type: "button" %>
-    <% end %>
-  </p>
-
-
-  <p>
-    <strong>Saldo Disponible:</strong>
-    <label style="color:<%= user.balance ? "Green" : "Red" %>"> <%= user.balance >= 0 ? "+" : "-" %>$<%= user.balance %> </label>
-  </p>
-
-  <% if !card.nil? %>
-    <p>
-      <%= form_with(model: card, url: balance_card_path(card)) do |form| %>
-        <%= form.number_field :balance, value: 0, min: 0 %>
-        <%= form.submit "Agregar Saldo", class: "btn btn-success dissable" %>
+      <% else %>
+        <%= link_to "Agregar", new_card_path, class: "btn btn-success", type: "button" %>
       <% end %>
     </p>
+
+    <p>
+      <strong>Saldo Disponible:</strong>
+      <label style="color:<%= user.balance ? "Green" : "Red" %>"> <%= user.balance >= 0 ? "+" : "-" %>$<%= user.balance %> </label>
+    </p>
+
+    <% if !card.nil? %>
+      <p>
+        <%= form_with(model: card, url: balance_card_path(card)) do |form| %>
+          <%= form.number_field :balance, value: 0, min: 0 %>
+          <%= form.submit "Agregar Saldo", class: "btn btn-success dissable" %>
+        <% end %>
+      </p>
+    <% end %>
   <% end %>
 </div>

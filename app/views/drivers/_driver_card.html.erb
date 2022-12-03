@@ -110,6 +110,8 @@
                 </tbody>
           </table>   
 
+          <!-- Solo los supervisores pueden suspender usuarios -->
+          <% if current_user.supervisor? %>
           	<!-- SI NO ESTA SUSPENDIDO, Y NO TIENE NIGUN AUTO EN ALQUILER -->
           	<% if (driver.driver?) && ((!driver.rentals.any?) || (driver.rentals.last.expired?)) %>
                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%=driver.id%>">
@@ -123,7 +125,8 @@
 	            		<%= form.button "Cancelar suspensión" , type: "submit", :class=> "btn btn-info" %>
 	            	<% end %> 
             	<% end %> 
-            <% end %>      
+            <% end %> 
+          <% end %>      
         </div>   
 
       </div>

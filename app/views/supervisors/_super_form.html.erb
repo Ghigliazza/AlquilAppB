@@ -9,6 +9,21 @@
     <%= form.text_field :email, :required => true, placeholder: "ejemplo@gmail.com" %></p>
   </div>
 
+  <div>
+    <p><b><%= form.label "Nombre", style: "display: block"%></b>
+    <%= form.text_field :name, :required => true, placeholder: "Nombre" %></p>
+  </div>
+
+  <div>
+    <p><b><%= form.label "Apellido", style: "display: block"%></b>
+    <%= form.text_field :lastName, :required => true, placeholder: "Apellido" %></p>
+  </div>
+
+  <div>
+    <p><b><%= form.label "Documento", style: "display: block"%></b>
+    <%= form.number_field :document, :required => true, placeholder: "12345678" %></p>
+  </div>
+
   <div class="field">
     <p><b><%= form.label "Contraseña" %><br /></b>
     <%= form.password_field :password, :required => true%></p>
@@ -20,9 +35,9 @@
   </div>
 
   	<%= form.hidden_field :rol, :value => 'new_supervisor' %>
-  	<%= form.hidden_field :name, :value => 'Nuevo Supervisor' %>
-  	<%= form.hidden_field :lastName, :value => "##{@new_number}" %>
-  	<%= form.hidden_field :document, :value => @new_dni %>
+  	<%#= form.hidden_field :name, :value => 'Nuevo Supervisor' %>
+  	<%#= form.hidden_field :lastName, :value => "##{@new_number}" %>
+  	<%#= form.hidden_field :document, :value => @new_dni %>
   	<%= form.hidden_field :birthdate, :value => Date.today - 20.years %>
 
     <!-------- MODAL PIE -------------------------->
