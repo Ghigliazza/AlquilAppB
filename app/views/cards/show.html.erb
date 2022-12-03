@@ -3,7 +3,5 @@
 <%= render @card %>
 
 <div>
-  <%= link_to "Mis Tarjetas", cards_path %>
-
-  <%= button_to "Eliminar esta tarjeta", @card, method: :delete %>
+  <%= button_to "Eliminar", @card, method: :delete %>
 </div>

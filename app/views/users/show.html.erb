@@ -1,8 +1,13 @@
-<%= render @user %>
-
-<div>
-  <%= link_to "Editar" + (@user.id == current_user.id ? "Perfil" : "Usuario"), edit_user_path(@user) %>
-
-  <%= link_to "" %>
-
+<div class="d-flex justify-content-center text-center">
+  <div class="card" style="width:500px">
+    <div class="card-header">
+      <h1> Agregar Tarjeta </h1>
+    </div>
+    <div class="card-body">
+      <%= render @user %>
+    </div>
+    <div class="card-footer text-muted">
+      <%= link_to "Editar" + (@user.id == current_user.id ? "Perfil" : "Usuario"), edit_user_path(@user) %>
+    </div>
+  </div>
 </div>
