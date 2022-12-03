@@ -14,22 +14,22 @@
   <div>
     <%= form.label :number, style: "display: block" %>
     <%= form.number_field :number, length: {minimum:12, maximum:12} %>
-  </div>
+  </div><br>
 
   <div>
     <%= form.label :expires, style: "display: block" %>
     <%= form.date_field :expires, value: Time.now %>
-  </div>
+  </div><br>
 
   <div>
-    <%= form.select(:bankName, options_for_select(Card.bankNames.keys, selected: Card.bankNames.keys.last), { include_blank: "Banco" }, { class: 'form-control select2', style: 'width: 100%;'}) %>
-  </div>
+    <%= form.select(:bankName, options_for_select(Card.bankNames.keys), { include_blank: "Banco" }, { class: 'form-control select2', style: 'width: 100%;'}) %>
+  </div><br>
 
   <div>
     <%= form.hidden_field :user_id, value: current_user.id %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>

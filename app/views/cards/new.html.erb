@@ -1,9 +1,13 @@
-<h1> Agregar Tarjeta </h1>
-
-<%= render "form", card: @card %>
-
-<br>
-
-<div>
-  <%= link_to "Cancelar", user_path(current_user) %>
+<div class="d-flex justify-content-center text-center">
+  <div class="card" style="width:500px">
+    <div class="card-header">
+      <h1> Agregar Tarjeta </h1>
+    </div>
+    <div class="card-body">
+      <%= render "form", card: @card %>
+    </div>
+    <div class="card-footer text-muted">
+      <%= link_to "Cancelar", user_path(current_user), class: "btn btn-danger" %>
+    </div>
+  </div>
 </div>

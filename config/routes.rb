@@ -34,6 +34,8 @@ Rails.application.routes.draw do
 
   get 'users/suspended'
 
+  patch 'cards/:id/balance', to: 'cards#balance', :as => :balance_card
+
 
   resources :api, only: :index
  
