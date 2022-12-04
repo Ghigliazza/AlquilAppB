@@ -8,12 +8,39 @@
 
 <% else %>
   <h1><b><i>Reportes</i></b></h1>
+  
+  <h2><b> El auto no enciende<b></h2> 
 
-  <div id="reports">
+  <div id="reports_wontStart">
     <% @reports.each do |report| %>
+      <% if report.state == 'wontStart' %>
       <%= render report %>
-      ||=========================================================================================||
+      <% end %>
     <% end %>
   </div>
+
+  <h3><b> El auto no puede circular<b></h3> 
+  <div id="reports_illegal">
+    <% @reports.each do |report| %>
+      <% if report.state == 'illegal' %>
+      <%= render report %>
+      <% end %>
+    <% end %>
+  <h4><b> El auto tiene daños menores<b></h4> 
+
+    <div id="reports_visual">
+    <% @reports.each do |report| %>
+      <% if report.state == 'visual' %>
+      <%= render report %>
+      <% end %>
+    <% end %>
+  <h5><b> El auto tiene otros problemas<b></h5> 
+
+  <div id="reports_other">
+    <% @reports.each do |report| %>
+      <% if report.state == 'other' %>
+      <%= render report %>
+      <% end %>
+    <% end %>
 
 <% end %>
