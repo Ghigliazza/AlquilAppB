@@ -1,17 +1,25 @@
 <div id="<%= dom_id fine %>">
-  <p>
-    <strong>Amount:</strong>
-    <%= fine.amount %>
-  </p>
 
-  <p>
-    <strong>Motive:</strong>
-    <%= fine.motive %>
-  </p>
-
-  <p>
-    <strong>User:</strong>
-    <%= fine.user_id %>
-  </p>
+          <table class="table table-striped" style="max-width:600px;">
+                <thead>
+                    <tr>
+                        <%# th colspan="2">Detalles</th> <%>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b> <%= "Monto:" %></b> </td>
+                        <td><%= "#{fine.amount}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Motivo" %></b> </td>
+                        <td><%= "#{fine.motive}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Fecha" %></b> </td>
+                        <td><%= "#{fine.created_at}" %></td> 
+                    </tr>
+                </tbody>
+          </table>  
 
 </div>

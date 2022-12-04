@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :fines
 
   root :to => 'search#index'
 
@@ -36,6 +35,11 @@ Rails.application.routes.draw do
   get 'users/suspended'
 
   patch 'cards/:id/balance', to: 'cards#balance', :as => :balance_card
+
+  get 'fines/index'
+  resources :fines do
+    resources :fines, only: :new
+  end
 
 
   resources :api, only: :index

@@ -1,14 +1,20 @@
-<p style="color: green"><%= notice %></p>
 
-<h1>Fines</h1>
 
-<div id="fines">
-  <% @fines.each do |fine| %>
-    <%= render fine %>
-    <p>
-      <%= link_to "Show this fine", fine %>
-    </p>
-  <% end %>
+<div style="margin-left:30px; margin-top:15px; margin-bottom:15px;">
+    <h1><b><i>Multas</i></b></h1>
 </div>
 
-<%= link_to "New fine", new_fine_path %>
+<% if @fines.any? %>
+
+       <p>
+        <div class="accordion accordion-flush" id="accordionLista" >
+            <% @fines.each do |fine| %>
+                <%= render partial: 'fines/fine_card', locals:{fine: fine} %>  
+            <% end %>        
+        </div>
+       </p>
+
+<% end %> 
+
+
+

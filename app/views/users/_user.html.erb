@@ -69,8 +69,16 @@
 
     <p>
       <strong>Saldo Disponible:</strong>
-      <label style="color:<%= user.balance ? "Green" : "Red" %>"> <%= user.balance >= 0 ? "+" : "-" %>$<%= user.balance %> </label>
+      <% if user.balance < 0 %>
+        <label style="color:Red"> -$<%= user.balance * -1 %> </label>
+      <% else %>
+        <label style="color:Green"> $<%= user.balance %> </label>
+      <% end %>
     </p>
+
+    <% if Fine.where(user_id: current_user.id).any? %>
+      <%= link_to "Ver Multas", "/fines/index/" %>
+    <% end %>
 
     <% if !card.nil? %>
       <p>

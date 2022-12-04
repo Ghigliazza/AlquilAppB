@@ -3,7 +3,11 @@ class FinesController < ApplicationController
 
   # GET /fines or /fines.json
   def index
-    @fines = Fine.all
+    if current_user.driver? || current_user.suspended_driver?
+      @fines = Fine.where(user_id: current_user.id)
+    else
+      @fines = Fine.all
+    end
   end
 
   # GET /fines/1 or /fines/1.json

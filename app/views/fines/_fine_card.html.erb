@@ -1,0 +1,39 @@
+  <div class="accordion-item">
+
+    <h2 class="accordion-header" id="flush-ID1<%=fine.id%>">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-ID2<%=fine.id%>" aria-expanded="false" aria-controls="flush-ID2<%=fine.id%>">
+        <span style="font-weight:bolder"> 
+        	[<%= fine.created_at.strftime('%Y-%m-%e') %>]  &nbsp;
+        </span> 
+        <span style="color:red"> $<%= fine.amount %></span> 
+      </button>
+    </h2>
+
+
+    <div id="flush-ID2<%=fine.id%>" class="accordion-collapse collapse" aria-labelledby="flush-ID1<%=fine.id%>" data-bs-parent="#accordionLista">
+      <div class="accordion-body">
+
+          <table class="table table-striped" style="max-width:600px;">
+                <thead>
+                    <tr>
+                        <%# th colspan="2">Detalles</th> <%>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b> <%= "Monto:" %></b> </td>
+                        <td><%= "$#{fine.amount}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Motivo:" %></b> </td>
+                        <td><%= "#{fine.motive}" %></td> 
+                    </tr>
+                    <tr>
+                        <td><b> <%= "Fecha:" %></b> </td>
+                        <td><%= "#{fine.created_at.strftime('%Y-%m-%e, a las %k:%M:%S')}" %></td> 
+                    </tr>
+                </tbody>
+          </table>  
+    </div>
+  </div>
+</div>

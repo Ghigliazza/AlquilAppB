@@ -185,7 +185,7 @@
 
                 <% fine = Fine.new %>
                 <!-- Modal MULTA -->
-                <%= form_with(model: fine) do |form| %>
+                <%= form_with model: fine do |form| %>
                 <div class="modal fade" id="exampleModal<%=driver.id%><%=driver.id%>" tabindex="-1" aria-labelledby="exampleModalLabel<%=driver.id%><%=driver.id%>" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
