@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :payments
 
   root :to => 'search#index'
 
@@ -41,6 +42,9 @@ Rails.application.routes.draw do
     resources :fines, only: :new
   end
 
+  resources :rentals do
+    resources :payments, only: :index
+  end
 
   resources :api, only: :index
  

@@ -679,7 +679,6 @@ Rental.create!([
 	car_id: 60,
 	state: :started,
 	created_at: Time.now - 2.hours,
-	summary: "",
 	total_hours: 5,
 	initial_fuel: 30
 	},
@@ -690,7 +689,6 @@ Rental.create!([
 	car_id: 70,
 	state: :started,
 	created_at: Time.now - 2.hours,
-	summary: "",
 	total_hours: 6,
 	initial_fuel: 30
 	},
@@ -701,7 +699,6 @@ Rental.create!([
 	car_id: 65,
 	state: :started,
 	created_at: Time.now - 5.hours,
-	summary: "",
 	total_hours: 3,
 	initial_fuel: 30
 	},
@@ -712,7 +709,6 @@ Rental.create!([
 	car_id: 75,
 	state: :started,
 	created_at: Time.now - 12.hours,
-	summary: "",
 	total_hours: 9,
 	initial_fuel: 30
 	},

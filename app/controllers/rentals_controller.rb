@@ -1,8 +1,5 @@
 class RentalsController < ApplicationController
   before_action :set_rental, only: %i[ show edit update destroy cancel ]
-  
-  before_action :summary,    only: %i[ update ]
-  after_action  :summary,    only: %i[ create show cancel ]
  
 # ========================================================================================================================================
   # GET /rentals or /rentals.json
@@ -20,7 +17,6 @@ class RentalsController < ApplicationController
       @rental.expired!
 
       # time_out()
-
       time_dif = ((Time.now - @rental.expires) / 15.minutes).to_i
       penalty = 1000 * time_dif
       current_user.update(balance: (current_user.balance - penalty))
@@ -83,6 +79,8 @@ class RentalsController < ApplicationController
 
     respond_to do |format|
       if @rental.save
+        # Crea el primer pago
+        Payment.create(price:@rental.price, expires:@rental.expires, rent_hs:@rental.total_hours, rental_id: @rental.id)
         # Actualiza el balance del usuario
         current_user.update(balance: current_user.balance - @rental.price)
         # Actializa el estado del auto
@@ -101,6 +99,9 @@ class RentalsController < ApplicationController
   # PATCH/PUT /rentals/1 or /rentals/1.json
   def update
     if Time.now < @rental.expires && !@rental.expired?
+      # Crea el pago de la extension
+      rent_hs = ((params[:rental][:expires].to_time - @rental.expires)/1.hours).round
+      Payment.create(price:params[:rental][:price], expires:params[:rental][:expires], rent_hs:rent_hs, rental_id:@rental.id)
       # Actualiza el balance del usuario
       current_user.update_attribute :balance, current_user.balance - params[:rental][:price].to_i
       #Actualiza el Valor total de la renta
@@ -130,6 +131,8 @@ class RentalsController < ApplicationController
 
     # Si el motor está apagado
     if !@rental.car.engine
+      # Actualiza el ultimo pago de la renta
+      @rental.payments.last.update(cancel: Time.now)
       # Si no pasaron 10 minutos entonces cancela el alquiler (devuelve el precio del mismo)
       if Time.now < @rental.created_at + 10.minutes
 
@@ -211,53 +214,4 @@ class RentalsController < ApplicationController
   # end
   
 # ----------------------------------------------------------------------------------------------------------------------------------------
-  def summary()
-    # Si 'summary' esta vacio le instancia la cabecera (solo para antes del metodo 'create')
-    summary = params[:action] != 'create' ? @rental.summary :
-      "<div class=\"card card-body\">
-        <ol class=\"list-group list-group-numbered\">"
-
-    #Se agregan los valores del pago actual
-    if params[:action] == 'create' || params[:action] == 'update'
-      # Genera un id unico para cada collapse a partir de la fecha de actualizacion
-      id = rand(@rental.updated_at.to_i)
-      summary +=
-          "<li class=\"list-group-item d-flex justify-content-between align-items-start\">
-            <div class=\"ms-4 me-auto\">
-              <div class=\"fw-bold\"> Pago del #{ @rental.updated_at.strftime('%Y-%m-%e A las %k:%M:%S') } </div>
-              <p>
-                <a class=\"btn btn-outline-success\" data-bs-toggle=\"collapse\" href=\"#collapsePay_#{ id }\" role=\"button\" aria-expanded=\"false\" aria-controls=\"collapsePay_#{ id }\">
-                  Detalle de pago
-                </a>
-              </p>
-                
-              <div class=\"collapse\" id=\"collapsePay_#{ id }\">
-                <ul>
-                  <li class=\"row\"><div class=\"col-auto fw-semibold\"> Precio:     </div> <div class=\"col fw-light fst-italic text-end\"> #{ params[:rental][:price].to_f }                                                                                                 </div></li>
-                  <li class=\"row\"><div class=\"col-auto fw-semibold\"> Alquilado:  </div> <div class=\"col fw-light fst-italic text-end\"> #{ ((params[:rental][:expires].to_time - (params[:action] == 'create' ? @rental.created_at : @rental.expires))/1.hours).round }hs </div></li>
-                  <li class=\"row\"><div class=\"col-auto fw-semibold\"> Inicio:     </div> <div class=\"col fw-light fst-italic text-end\"> #{ @rental.updated_at.strftime('%Y-%m-%e A las %k:%M:%S') }                                                                       </div></li>
-                  <li class=\"row\"><div class=\"col-auto fw-semibold\"> Expiracion: </div> <div class=\"col fw-light fst-italic text-end\"> #{ params[:rental][:expires].to_time.strftime('%Y-%m-%e A las %k:%M:%S') }                                                        </div></li>
-                </ul>
-              </div>
-            </div>
-          </li>"
-
-    # Se agrega el footer cuando expira el alquiler si este no fue ya agregado
-    elsif @rental.expired? && @rental.summary.at("</ol>").blank?
-      summary +=
-        "</ol>
-      </div>
-      <div class=\"card-footer ms-4 me-auto\">
-        <strong> Resumen de alquiler </strong>
-        <ul>
-          <li class=\"row\"><div class=\"col-auto fw-semibold\"> Horas Totales:  </div> <div class=\"col fw-light fst-italic text-end\"> #{ @rental.total_hours }hs                                                                     </div></li>
-          <li class=\"row\"><div class=\"col-auto fw-semibold\"> Precio Total:   </div> <div class=\"col fw-light fst-italic text-end\"> #{ @rental.totalPrice ? @rental.totalPrice : @rental.price }                                   </div></li>
-          <li class=\"row\"><div class=\"col-auto fw-semibold\"> Cancelado:      </div> <div class=\"col fw-light fst-italic text-end\"> #{ params[:action] == 'cancel' ? Time.now.strftime('%Y-%m-%e A las %k:%M:%S') : "- - - -" }    </div></li>
-          <li class=\"row\"><div class=\"col-auto fw-semibold\"> Saldo Devuelto: </div> <div class=\"col fw-light fst-italic text-end\"> #{ params[:action] == 'cancel' ? @rental.totalPrice ? @rental.totalPrice : @rental.price : 0 } </div></li>
-        </ul>
-      </div>"
-    end
-  
-    @rental.update(summary: summary)
-  end
 end
