@@ -9,11 +9,11 @@
         </a>
       </p>
 
-      <div class="collapse" id="collapsePay_<%= payment.id %>">
+      <div class="collapse multi-collapse" id="collapsePay_<%= payment.id %>">
         <ul>
           <li class="row"><div class="col-auto fw-semibold"> Precio:     </div> <div class="col fw-light fst-italic text-end"> <%= payment.price %>                                          </div></li>
           <li class="row"><div class="col-auto fw-semibold"> Alquilado:  </div> <div class="col fw-light fst-italic text-end"> <%= payment.rent_hs %>hs                                      </div></li>
-          <li class="row"><div class="col-auto fw-semibold"> Inicio:     </div> <div class="col fw-light fst-italic text-end"> <%= payment.created_at.strftime('%Y-%m-%e A las %k:%M:%S') %> </div></li>
+          <li class="row"><div class="col-auto fw-semibold"> Inicio:     </div> <div class="col fw-light fst-italic text-end"> <%= payment.started.strftime('%Y-%m-%e A las %k:%M:%S') %> </div></li>
           <li class="row"><div class="col-auto fw-semibold"> Expiracion: </div> <div class="col fw-light fst-italic text-end"> <%= payment.expires.strftime('%Y-%m-%e A las %k:%M:%S') %>    </div></li>
         </ul>
       </div>

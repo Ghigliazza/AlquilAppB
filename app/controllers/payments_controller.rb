@@ -4,6 +4,12 @@ class PaymentsController < ApplicationController
   # GET /payments or /payments.json
   def index
     @payments = Payment.all
+    @rental = Rental.find(params[:rental_id])
+
+    @targets = ""
+    @rental.payments.each do |pay|
+      @targets += "collapsePay_#{pay.id} "
+    end
   end
 
   # GET /payments/1 or /payments/1.json
@@ -65,6 +71,6 @@ class PaymentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def payment_params
-      params.require(:payment).permit(:price, :expires, :rent_hs, :cancel, :rental_id)
+      params.require(:payment).permit(:price, :expires, :rent_hs, :cancel, :rental_id, :satrted)
     end
 end

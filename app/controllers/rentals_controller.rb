@@ -80,7 +80,7 @@ class RentalsController < ApplicationController
     respond_to do |format|
       if @rental.save
         # Crea el primer pago
-        Payment.create(price:@rental.price, expires:@rental.expires, rent_hs:@rental.total_hours, rental_id: @rental.id)
+        Payment.create(price:@rental.price, started:@rental.created_at, expires:@rental.expires, rent_hs:@rental.total_hours, rental_id: @rental.id)
         # Actualiza el balance del usuario
         current_user.update(balance: current_user.balance - @rental.price)
         # Actializa el estado del auto
@@ -101,7 +101,7 @@ class RentalsController < ApplicationController
     if Time.now < @rental.expires && !@rental.expired?
       # Crea el pago de la extension
       rent_hs = ((params[:rental][:expires].to_time - @rental.expires)/1.hours).round
-      Payment.create(price:params[:rental][:price], expires:params[:rental][:expires], rent_hs:rent_hs, rental_id:@rental.id)
+      Payment.create(price:params[:rental][:price], started:@rental.expires , expires:params[:rental][:expires], rent_hs:rent_hs, rental_id:@rental.id)
       # Actualiza el balance del usuario
       current_user.update_attribute :balance, current_user.balance - params[:rental][:price].to_i
       #Actualiza el Valor total de la renta
