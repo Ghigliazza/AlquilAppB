@@ -35,10 +35,12 @@ class SupervisorsController < ApplicationController
         @supervisorList = User.where("name LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
         @supervisorList = @supervisorList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
         @supervisorList = @supervisorList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
+        @supervisorList = @supervisorList + User.where("document LIKE ?", "%" + params[:q] + "%").where(:rol => :supervisor)
 
         @supervisorList = @supervisorList + User.where("name LIKE ?", "%" + params[:q] + "%").where(:rol => :new_supervisor)
         @supervisorList = @supervisorList + User.where("lastName LIKE ?", "%" + params[:q] + "%").where(:rol => :new_supervisor)
         @supervisorList = @supervisorList + User.where("email LIKE ?", "%" + params[:q] + "%").where(:rol => :new_supervisor)
+        @supervisorList = @supervisorList + User.where("document LIKE ?", "%" + params[:q] + "%").where(:rol => :new_supervisor)
       else
         @supervisorList = User.where("name LIKE ?", "%" + @string[0] + "%").where("lastName LIKE ?", "%" + @string[1] + "%").where(:rol => :supervisor)
         @supervisorList = @supervisorList + User.where("name LIKE ?", "%" + @string[0] + "%").where("lastName LIKE ?", "%" + @string[1] + "%").where(:rol => :new_supervisor)
