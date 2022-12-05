@@ -73,7 +73,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
 
-      if (current_user.document.to_i != user_params[:document].to_i) && current_user.admin?    
+      if (current_user.id.to_i != params[:id].to_i) && current_user.admin?    
         # Verificamos que la password del admin sea la correcta
         if !(current_user.valid_password?(extra_params[:q_pass]))
           format.html { redirect_to request.referrer, alert: "La contraseña del administrador es incorrecta." }
