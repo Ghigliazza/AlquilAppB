@@ -37,7 +37,7 @@
             <tr>
               <td>
                 <!-- Button trigger modal editar-->
-                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal<%=sup.id%><%=sup.id%>">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal<%=sup.id%><%=sup.id%>">
                                     Editar Supervisor
                 </button>
                 &nbsp;         
@@ -91,7 +91,7 @@
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel<%=sup.id%><%=sup.id%>">Advertencia</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel<%=sup.id%><%=sup.id%>"><b>Editar Supervisor</b></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       
@@ -104,11 +104,10 @@
                                   <%= render partial: 'users/errors_user', locals:{user: sup} %> 
 
                                   <div>
-                                       <p><b><%= form.label "E-mail", style: "display: block"%></b>
+                                       <p><b><%= form.label "E-Mail", style: "display: block"%></b>
                                        <%= form.text_field :email, :required => true, placeholder: "ejemplo@gmail.com" %></p>
                                     </div>
 
-                                    <%if current_user.supervisor? || current_user.admin?%>
                                       <div>
                                          <p><b><%= form.label "Nombre", style: "display: block"%></b>
                                          <%= form.text_field :name, :required => true, placeholder: "Nombre" %></p>
@@ -121,9 +120,13 @@
                                          <p><b><%= form.label "Documento", style: "display: block"%></b>
                                          <%= form.number_field :document, :required => true, placeholder: "12345678" %></p>
                                       </div>
-                                    <%end%>
 
                                     <p><p>
+
+                                          <div class="field">
+                                            <p><b><%= form.label "Contraseña Admin" %><br /></b>
+                                            <%= form.password_field :q_pass, :required => true %></p>
+                                          </div>
 
                               </div>
                                      
@@ -132,7 +135,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 
                         <%= form.button "Confirmar Cambios" , type: "submit", :class=> "btn btn-primary" %>
-                        
+
                         <% end %>
                       </div>
                     </div>
