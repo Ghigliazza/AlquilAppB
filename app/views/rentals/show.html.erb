@@ -1,8 +1,17 @@
 
 <% if @rental.expired? %>
   <% time = 0 %>
+
 <% else %>
   <% time = @time_left %>
+
+
+  <div class="text-center">
+    <p id="notice" class="alert alert-danger alert-dismissible fade show">
+      Si ve algun desperfecto en el vehiculo por fovor reportarlo antes de los primeros 10 minutos, sino este se podra tomar como su responsabilidad!!
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+    </p>
+  </div>
 <% end %>
 
 
