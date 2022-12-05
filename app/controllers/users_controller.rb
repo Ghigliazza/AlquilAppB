@@ -73,20 +73,16 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
 
-      if (current_user.document.to_i != user_params[:document].to_i) && current_user.admin?
-
+      if (current_user.document.to_i != user_params[:document].to_i) && current_user.admin?    
         # Verificamos que la password del admin sea la correcta
-        if extra_params[:q_pass].to_s != "1234"
-          format.html { redirect_to request.referrer, alert: "Contraseña incorrecta #{extra_params[:q_pass].to_s}" }
+        if !(current_user.valid_password?(extra_params[:q_pass]))
+          format.html { redirect_to request.referrer, alert: "La contraseña del administrador es incorrecta." }
         else
             # Actualiza el usuario normalmente
             if @user.update(user_params)
-              #format.html { redirect_to user_url(@user), notice: "Datos actualizados correctamente." }
-              #format.html { redirect_to "#{user_url(@user)}/edit", notice: "Datos actualizados correctamente." }
               format.html { redirect_to request.referrer, notice: "Datos procesados correctamente." }
               format.json { render :edit, status: :ok, location: @user }
             else
-
               if @user.errors.any?
                 @user.errors.each do |error|
                   if error.full_message == "Password confirmation doesn't match Password"
