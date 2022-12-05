@@ -23,6 +23,9 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    if @user.id != current_user.id && current_user.driver?
+      redirect_to user_path(current_user), alert: "Acceso denegado: No puedes ver informacion de un perfil que no sea tuyo"
+    end
   end
 
   def suspended
