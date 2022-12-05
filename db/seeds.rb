@@ -679,7 +679,6 @@ Rental.create!([
 	car_id: 60,
 	state: :started,
 	created_at: Time.now - 2.hours,
-	summary: "",
 	total_hours: 5,
 	initial_fuel: 30
 	},
@@ -690,7 +689,6 @@ Rental.create!([
 	car_id: 70,
 	state: :started,
 	created_at: Time.now - 2.hours,
-	summary: "",
 	total_hours: 6,
 	initial_fuel: 30
 	},
@@ -701,7 +699,6 @@ Rental.create!([
 	car_id: 65,
 	state: :started,
 	created_at: Time.now - 5.hours,
-	summary: "",
 	total_hours: 3,
 	initial_fuel: 30
 	},
@@ -712,7 +709,6 @@ Rental.create!([
 	car_id: 75,
 	state: :started,
 	created_at: Time.now - 12.hours,
-	summary: "",
 	total_hours: 9,
 	initial_fuel: 30
 	},
@@ -721,6 +717,75 @@ Rental.create!([
 p "Seed created #{Rental.count} rentals (with cars & users)";
 
 Report.destroy_all
+
+# Reportes para probar reports/show y reports/index.
+Report.create!([
+	{
+	state: :wontStart,
+	user_id: 5,
+	car_id: 60,
+	created_at: Time.now - 2.hours,
+	description: "Reporte numero 1",
+	},
+	{
+	state: :wontStart,
+	user_id: 6,
+	car_id: 65,
+	created_at: Time.now - 3.hours,
+	description: "Reporte numero 2",
+	},
+	{
+	state: :illegal,
+	user_id: 7,
+	car_id: 70,
+	created_at: Time.now - 4.hours,
+	description: "Reporte numero 3",
+	},
+	{
+	state: :visual,
+	user_id: 8,
+	car_id: 75,
+	created_at: Time.now - 12.hours,
+	description: "Reporte numero 4",
+	},
+	{
+	state: :illegal,
+	user_id: 5,
+	car_id: 60,
+	created_at: Time.now - 17.hours,
+	description: "Reporte numero 5",
+	},
+	{
+	state: :visual,
+	user_id: 6,
+	car_id: 65,
+	created_at: Time.now - 5.hours,
+	description: "Reporte numero 6",
+	},
+	{
+	state: :other,
+	user_id: 6,
+	car_id: 65,
+	created_at: Time.now - 5.hours,
+	description: "Reporte numero 7",
+	},
+	{
+	state: :other,
+	user_id: 6,
+	car_id: 65,
+	created_at: Time.now - 5.hours,
+	description: "Reporte numero 8",
+	},
+	{
+	state: :other,
+	user_id: 6,
+	car_id: 65,
+	created_at: Time.now - 5.hours,
+	description: "Reporte numero 9",
+	},
+])
+
+p "Seed created #{Report.count} reports."
 Fine.destroy_all;
 
 Card.destroy_all

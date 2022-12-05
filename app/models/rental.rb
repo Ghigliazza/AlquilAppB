@@ -1,11 +1,12 @@
 class Rental < ApplicationRecord
-  #VALIDATIONS
-  validates :user_id, uniqueness: false
-  validates :car_id, uniqueness: false
-
   #ASSOCIATIONS
   belongs_to :user
   belongs_to :car
+  has_many :payments, dependent: :destroy
+
+  #VALIDATIONS
+  validates :user_id, uniqueness: false
+  validates :car_id, uniqueness: false
 
   #CONSTANTS
   STARTED_PRICE = 1000
