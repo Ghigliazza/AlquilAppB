@@ -1,0 +1,45 @@
+<div class="accordion-item" style="max-width:750px;">
+            <h2 class="accordion-header" id="flush-heading<%=report.id%>">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<%=report.id%>" aria-expanded="false" aria-controls="flush-collapse<%=report.id%>">
+                <b> <%= "[#{Car.find(report.car_id).license}]" %> </b> &nbsp; <%= " #{Car.find(report.car_id).brand} #{Car.find(report.car_id).model}" %>
+              </button>
+            </h2>
+            <div id="flush-collapse<%=report.id%>" class="accordion-collapse collapse" aria-labelledby="flush-heading<%=report.id%>" data-bs-parent="#accordionFlush<%=list_number%>">
+              <div class="accordion-body">
+                  <%= render report %>
+                  <p>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal<%=report.id%><%=report.id%><%=report.id%>">
+                                        Eliminar Reporte
+                    </button>
+                  </p>  
+              </div>
+            </div>
+</div>
+
+
+                <!-- Modal ELIMINAR -->
+                <div class="modal fade" id="exampleModal<%=report.id%><%=report.id%><%=report.id%>" tabindex="-1" aria-labelledby="exampleModalLabel<%=report.id%><%=report.id%><%=report.id%>" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel<%=report.id%><%=report.id%><%=report.id%>"> <b>Advertencia</b></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      
+                      <div class="modal-body">
+
+                          Eliminar reporte permanentemente?
+                                     
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+
+                        <%= button_to "Eliminar Reporte", report, method: :delete, :class=> "btn btn-danger" %>
+
+                        <%#= form.button "Eliminar Supervisor" , type: "submit", :class=> "btn btn-danger" %>
+                      </div>
+                    </div>
+                  </div>
+                </div>

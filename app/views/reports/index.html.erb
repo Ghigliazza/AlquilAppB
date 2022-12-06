@@ -1,4 +1,5 @@
-<% if !Report.any? %>
+<%# if !Report.any? %>
+<% if false %>
       <div >
         <p id="notice" class="alert alert-info alert-dismissible fade show"> 
           No hay reportes...   
@@ -7,40 +8,90 @@
       </div>
 
 <% else %>
-  <h1><b><i>Reportes</i></b></h1>
-  
-  <h2><b> El auto no enciende<b></h2> 
 
+  <div style="margin-left:30px; margin-top:15px; margin-bottom:15px;">
+    <h1><b><i>Reportes</i></b></h1>
+  </div> <hr WIDTH="100%" COLOR="black" SIZE="6" >
+  
+  <div style="margin-left:30px; margin-top:15px;">
+    <h2><b> El auto no enciende<b></h2>
+  </div>
   <div id="reports_wontStart">
-    <% @reports.each do |report| %>
-      <% if report.state == 'wontStart' %>
-      <%= render report %>
-      <% end %>
+    <% if @reports.where(state: 'wontStart').any? %>
+      <div class="accordion" id="accordionFlush1">
+        <% @reports.each do |report| %>
+          <% if report.state == 'wontStart' %>        
+              <%= render partial: 'list_item' , locals:{report: report, list_number: "1"}%>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div style="margin-left:30px; margin-top:15px; max-width:500px;" class="alert alert-info" role="alert">
+        No hay reportes de este tipo
+      </div>     
+    <% end %>
+  </div>
+  
+  <hr WIDTH="100%" COLOR="black" SIZE="6" >
+  <div style="margin-left:30px; margin-top:15px;">
+    <h2><b> El auto no puede circular<b></h2>
+  </div>
+  <div id="reports_illegal">
+    <% if @reports.where(state: 'illegal').any? %>
+      <div class="accordion" id="accordionFlush2">
+        <% @reports.each do |report| %>
+          <% if report.state == 'illegal' %>        
+              <%= render partial: 'list_item' , locals:{report: report, list_number: "2"}%>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div style="margin-left:30px; margin-top:15px; max-width:500px;" class="alert alert-info" role="alert">
+        No hay reportes de este tipo
+      </div>     
     <% end %>
   </div>
 
-  <h3><b> El auto no puede circular<b></h3> 
-  <div id="reports_illegal">
-    <% @reports.each do |report| %>
-      <% if report.state == 'illegal' %>
-      <%= render report %>
-      <% end %>
+  <hr WIDTH="100%" COLOR="black" SIZE="6" >
+  <div style="margin-left:30px; margin-top:15px;">
+    <h2><b> El auto tiene daños menores<b></h2>
+  </div>
+  <div id="reports_visual">
+    <% if @reports.where(state: 'visual').any? %>
+      <div class="accordion" id="accordionFlush3">
+        <% @reports.each do |report| %>
+          <% if report.state == 'visual' %>        
+              <%= render partial: 'list_item' , locals:{report: report, list_number: "3"}%>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div style="margin-left:30px; margin-top:15px; max-width:500px;" class="alert alert-info" role="alert">
+        No hay reportes de este tipo
+      </div>     
     <% end %>
-  <h4><b> El auto tiene daños menores<b></h4> 
+  </div>
 
-    <div id="reports_visual">
-    <% @reports.each do |report| %>
-      <% if report.state == 'visual' %>
-      <%= render report %>
-      <% end %>
-    <% end %>
-  <h5><b> El auto tiene otros problemas<b></h5> 
-
+  <hr WIDTH="100%" COLOR="black" SIZE="6" > 
+  <div style="margin-left:30px; margin-top:15px;">
+    <h2><b> El auto tiene otros problemas<b></h2>
+  </div>
   <div id="reports_other">
-    <% @reports.each do |report| %>
-      <% if report.state == 'other' %>
-      <%= render report %>
-      <% end %>
+    <% if @reports.where(state: 'other').any? %>
+      <div class="accordion" id="accordionFlush4">
+        <% @reports.each do |report| %>
+          <% if report.state == 'other' %>        
+              <%= render partial: 'list_item' , locals:{report: report, list_number: "4"}%>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div style="margin-left:30px; margin-top:15px; max-width:500px;" class="alert alert-info" role="alert">
+        No hay reportes de este tipo
+      </div>     
     <% end %>
+  </div>
 
 <% end %>
+
+

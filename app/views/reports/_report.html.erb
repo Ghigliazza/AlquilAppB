@@ -1,6 +1,6 @@
 <div id="<%= dom_id report %>">
 
-          <table class="table table-striped" style="max-width:600px;">
+          <table class="table table-striped" style="max-width:600px; ">
                 <thead>
                     <tr>
                         <%# th colspan="2">Detalles</th> <%>
@@ -74,7 +74,7 @@
                     </tr>
                     <tr>
                         <td><b> <%= "Descripción:" %></b> </td>
-                        <td><%= "#{report.description}" %></td> 
+                        <td style="max-width:600px; white-space: pre-wrap; word-wrap: break-word;"><%= "#{report.description}" %></td> 
                     </tr>
 
                     <tr>
@@ -89,13 +89,6 @@
                <%= image_tag report.image, width: 295 if report.image.attached? %> 
           </p>
 </div>
-
-
-      ---------------------------------------------------------------------- </P>
-
-
-
-
 
 
 
