@@ -717,6 +717,7 @@ p "Seed created #{Rental.count} rentals (with cars & users)";
 
 Report.destroy_all
 
+=begin
 # Reportes para probar reports/show y reports/index.
 Report.create!([
 	{
@@ -812,6 +813,7 @@ Report.create!([
 ])
 
 p "Seed created #{Report.count} reports."
-Fine.destroy_all;
+=end
 
+Fine.destroy_all;
 Card.destroy_all
