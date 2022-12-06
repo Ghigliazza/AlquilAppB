@@ -24,13 +24,10 @@
     <div class="card-footer">
       <h5><strong> Resumen de alquiler </strong></h5>
       <ul>
-        <% last_pay = @rental.payments.last %>
-        <% cancel = last_pay.cancel.nil? %>
-        <% refund = cancel && (last_pay.created_at - last_pay.cancel <= 10.minutes) %>
         <li class="row"><div class="col-auto fw-semibold"> Horas Totales:  </div> <div class="col fw-light fst-italic text-end"> <%= @rental.total_hours %> </div></li>
         <li class="row"><div class="col-auto fw-semibold"> Precio Total:   </div> <div class="col fw-light fst-italic text-end"> <%= @rental.totalPrice %> </div></li>
-        <li class="row"><div class="col-auto fw-semibold"> Cancelado:      </div> <div class="col fw-light fst-italic text-end"> <%= cancel ? '- - - -' : last_pay.cancel %> </div></li>
-        <li class="row"><div class="col-auto fw-semibold"> Saldo Devuelto: </div> <div class="col fw-light fst-italic text-end"> <%= refund ? @rental.total_price : 0 %> </div></li>
+        <li class="row"><div class="col-auto fw-semibold"> Cancelado:      </div> <div class="col fw-light fst-italic text-end"> <%= @cancel ? "No cumple" : @last_pay.cancel %> </div></li>
+        <li class="row"><div class="col-auto fw-semibold"> Saldo Devuelto: </div> <div class="col fw-light fst-italic text-end"> <%= @refund ? @rental.total_price : 0 %> </div></li>
       </ul>
     </div>
 

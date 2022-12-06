@@ -10,6 +10,15 @@ class PaymentsController < ApplicationController
     @rental.payments.each do |pay|
       @targets += "collapsePay_#{pay.id} "
     end
+
+    @last_pay = @rental.payments.last
+    @cancel = @last_pay.cancel.nil?
+    if !@cancel
+      @refund = @cancel && (@last_pay.created_at - @last_pay.cancel <= 10.minutes)
+  
+    else
+      @refund = false
+    end
   end
 
   # GET /payments/1 or /payments/1.json
