@@ -22,12 +22,14 @@
     <%= form.hidden_field :car_id, :value => current_user.rentals.last.car %>
     <%= form.hidden_field :user_id, :value => current_user %>
 
+
+<%# +++++++++++++++++++++++++++++++++ PASAR TODO AL CREATE +++++++++++++++++++++++++++++++++ %>
     <!--obtengo el alquiler actual-->
     <% rental = current_user.rentals.last %>
     <!--obtengo la anteultima renta del auto que se esta alquilando-->
     <% before_last_rent = rental.car.rentals.last(2).first %>
     <!--si parason 10 minutos y el alquiler actual no es igual al anteultimo alquiler (que sea el primer alquiler que se hace)-->
-    <% if rental.tenMinutesPassed? && before_last_rent != rental %>
+    <% if rental.tenMinutesPassed? && rental.car.turn_on && before_last_rent != rental %>
       <!--obtiene el usuario de la anteultima renta del auto de la renta actual (un quilombo)-->
       <!--es decir el ante-ultimo usuario que alquilo el auto-->
       <% guilty = before_last_rent.user %>

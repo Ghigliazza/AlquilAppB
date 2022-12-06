@@ -334,7 +334,7 @@ User.create!([
 	birthdate: Date.today - 26.years,
 	balance: -1750,
 	coords_x: -57.957160476901834,
-	coords_y: -34.919451958400096 
+	coords_y: -34.919451958400096
 	},
 	{
 	email: "poor2@gmail.com",                                                   

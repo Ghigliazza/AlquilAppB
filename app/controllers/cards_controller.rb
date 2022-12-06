@@ -25,7 +25,7 @@ class CardsController < ApplicationController
 
     alert = ""
     if !@card.number.nil? && !@card.expires.nil?
-      if @card.number.to_s.length == 12 && @card.expires > Time.now && @card.bankName != 'banco'
+      if @card.number.to_s.length == 12 && @card.expires > Time.now && @card.bankName != 'Banco'
         respond_to do |format|
           if @card.update(card_params)
             format.html { redirect_to user_path(current_user), notice: "La tarjeta ha sigo agregada con exito." }
@@ -46,7 +46,7 @@ class CardsController < ApplicationController
           alert += "La fecha de expiracion ya ha pasado"
         end
 
-        if @card.bankName != 'banco'
+        if @card.bankName == 'Banco'
           alert += !alert.empty? ? " y " : ""
           alert += "Debe elegir un banco"
         end

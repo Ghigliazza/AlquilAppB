@@ -138,7 +138,10 @@ class RentalsController < ApplicationController
     # Si el motor está apagado
     if !@rental.car.engine
       # Actualiza el ultimo pago de la renta
-      @rental.payments.last.update(cancel: Time.now)
+      if !@rental.payments.empty?
+        @rental.payments.last.update(cancel: Time.now)
+      end
+      
       # Si no pasaron 10 minutos entonces cancela el alquiler (devuelve el precio del mismo)
       if Time.now < @rental.created_at + 10.minutes
 
