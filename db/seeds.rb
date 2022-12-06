@@ -434,6 +434,28 @@ u = User.new(
 	coords_y: -34.919451958400096)
 u.save(validate:false)
 
+u = User.new(
+	email: "suspended_expired@gmail.com", 
+	crypted_password: "$2a$10$S8iA.kmjBnrO8VefLuDqbeNztExIc.HHmDISnYYHrF19m043BLUhS",  
+	salt: "cLFho39dqLpgoSbTNxoT",                                                
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: :suspended_driver,                                                       
+	name: "German",                                                 
+	lastName: "Gonzales",                                                
+	document: 33522009,                                           
+	state: :admitted,                                                  
+	license_url: "",  
+	licenseNumber: 99999999,
+	licenseExpiration: Date.today + 6.month,
+	birthdate: Date.today - 36.years,
+	suspended_until: Date.today - 1.month,
+	suspended_for: "Romper las reglas",
+	balance: 5000,
+	coords_x: -57.957160476901834,
+	coords_y: -34.919451958400096)
+u.save(validate:false)
+
 
 p "Seed created #{User.count} users"
 
