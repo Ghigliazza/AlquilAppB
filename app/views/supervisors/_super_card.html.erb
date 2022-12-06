@@ -66,19 +66,27 @@
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel<%=sup.id%>">Advertencia</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel<%=sup.id%>"><b>Eliminar Supervisor</b></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       
                       <div class="modal-body">
 
-                          Eliminar supervisor permanentemente?
+                              <div style="margin-left:5px; margin-top:5px;">
+
+                                <p><b> Contraseña Admin </b><br/>
+                                <form class="form-inline my-2 my-lg-0" action="/supervisors/delete">
+                                      <input class="form-control mr-sm-2" name="q_id" type="hidden" placeholder="" value="<%= sup.id %>", aria-label="Eliminar Supervisor">
+                                      <input class="form-control mr-sm-2" name="q_pass" type="password" placeholder="" required='true', aria-label="Eliminar Supervisor 2">
+
+                              </div>
                                      
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
 
-                        <%= button_to "Eliminar Supervisor", sup, method: :delete, :class=> "btn btn-danger" %>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                          <button class="btn btn-danger" type="submit"> Eliminar Supervisor </button> 
+                        </form>
 
                       </div>
                     </div>
@@ -124,7 +132,7 @@
                                     <p><p>
 
                                           <div class="field">
-                                            <p><b><%= form.label "Contraseña Admin" %><br /></b>
+                                            <p><b><%= form.label "Contraseña Admin" %><br/></b>
                                             <%= form.password_field :q_pass, :required => true %></p>
                                           </div>
 

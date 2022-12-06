@@ -50,6 +50,19 @@ class SupervisorsController < ApplicationController
 
   end
 
+  def delete
+
+    aux_id = params[:q_id].to_i
+
+    if !(current_user.valid_password?(params[:q_pass]))
+      redirect_to request.referrer, alert: "La contraseña del administrador es incorrecta."
+    else
+      User.where(id: aux_id).destroy_all
+      redirect_to request.referrer, notice: "Supervisor eliminado correctamente."            
+    end    
+
+  end
+
 
 
 

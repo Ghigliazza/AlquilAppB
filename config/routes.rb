@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   get 'supervisors/index'
   get 'supervisors/new_password'
   get 'supervisors/search'
+  get 'supervisors/delete'
 
   get 'drivers/index'
   get 'drivers/search'
