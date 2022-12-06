@@ -1,4 +1,3 @@
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
 # Examples:
 #
@@ -726,6 +725,9 @@ Report.create!([
 	car_id: 60,
 	created_at: Time.now - 2.hours,
 	description: "Reporte numero 1",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 2.hours - 1.hours,
 	},
 	{
 	state: :wontStart,
@@ -733,6 +735,9 @@ Report.create!([
 	car_id: 65,
 	created_at: Time.now - 3.hours,
 	description: "Reporte numero 2",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 3.hours - 1.hours,
 	},
 	{
 	state: :illegal,
@@ -740,6 +745,9 @@ Report.create!([
 	car_id: 70,
 	created_at: Time.now - 4.hours,
 	description: "Reporte numero 3",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 4.hours - 1.hours,
 	},
 	{
 	state: :visual,
@@ -747,6 +755,9 @@ Report.create!([
 	car_id: 75,
 	created_at: Time.now - 12.hours,
 	description: "Reporte numero 4",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 12.hours - 1.hours,
 	},
 	{
 	state: :illegal,
@@ -754,6 +765,9 @@ Report.create!([
 	car_id: 60,
 	created_at: Time.now - 17.hours,
 	description: "Reporte numero 5",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 17.hours - 1.hours,
 	},
 	{
 	state: :visual,
@@ -761,6 +775,9 @@ Report.create!([
 	car_id: 65,
 	created_at: Time.now - 5.hours,
 	description: "Reporte numero 6",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 5.hours - 1.hours,
 	},
 	{
 	state: :other,
@@ -768,6 +785,9 @@ Report.create!([
 	car_id: 65,
 	created_at: Time.now - 5.hours,
 	description: "Reporte numero 7",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 5.hours - 1.hours,
 	},
 	{
 	state: :other,
@@ -775,6 +795,9 @@ Report.create!([
 	car_id: 65,
 	created_at: Time.now - 5.hours,
 	description: "Reporte numero 8",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 5.hours - 1.hours,
 	},
 	{
 	state: :other,
@@ -782,6 +805,9 @@ Report.create!([
 	car_id: 65,
 	created_at: Time.now - 5.hours,
 	description: "Reporte numero 9",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 5.hours - 1.hours,
 	},
 ])
 
