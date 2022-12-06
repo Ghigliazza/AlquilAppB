@@ -7,8 +7,8 @@
 
 
   <div class="text-center">
-    <p id="notice" class="alert alert-danger alert-dismissible fade show">
-      Si ve algun desperfecto en el vehiculo por fovor reportarlo antes de los primeros 10 minutos, sino este se podra tomar como su responsabilidad!!
+    <p id="notice" class="alert alert-warning alert-dismissible fade show">
+      Si hay un problema con el auto al comienzo del alquiler, asegurate de reportarlo dentro de los primeros 10 minutos y antes de encender el motor.
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
     </p>
   </div>
@@ -48,7 +48,7 @@
           </td>
 
           <td>                        
-            <%= link_to "Resume de pagos", rental_payments_path(@rental), class: "btn btn-success" %>
+            <%= link_to "Resumen de pagos", rental_payments_path(@rental), class: "btn btn-success" %>
           </td>
 
           <td>                        

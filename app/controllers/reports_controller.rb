@@ -32,8 +32,13 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       if @report.save
-        format.html { redirect_to request.referrer, notice: "El reporte fue enviado correctamente." }
-        format.json { render :show, status: :created, location: @report }
+        if @report.created_at < @report.rental_start + 10.minutes && !@report.engine_turned_on?
+          format.html { redirect_to request.referrer, notice: "El reporte fue enviado correctamente. (A tiempo y sin haber encendido el motor)" }
+          format.json { render :show, status: :created, location: @report }
+        else
+          format.html { redirect_to request.referrer, notice: "El reporte fue enviado correctamente." }
+          format.json { render :show, status: :created, location: @report }
+        end
       else
         format.html { redirect_to request.referrer, alert: "El reporte no pudo ser enviado." }
         format.json { render json: @report.errors, status: :unprocessable_entity }
