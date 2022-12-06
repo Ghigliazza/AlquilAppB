@@ -3,7 +3,7 @@
     <h2 class="accordion-header" id="flush-ID1<%=fine.id%>">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-ID2<%=fine.id%>" aria-expanded="false" aria-controls="flush-ID2<%=fine.id%>">
         <span style="font-weight:bolder"> 
-        	[<%= fine.created_at.strftime('%Y-%m-%e') %>]  &nbsp;
+        	[<%= fine.created_at.strftime('%Y-%m-%d') %>]  &nbsp;
         </span> 
         <span style="color:red"> $<%= fine.amount %></span> 
       </button>
@@ -30,7 +30,7 @@
                     </tr>
                     <tr>
                         <td><b> <%= "Fecha:" %></b> </td>
-                        <td><%= "#{fine.created_at.strftime('%Y-%m-%e, a las %k:%M:%S')}" %></td> 
+                        <td><%= "#{fine.created_at.strftime('%Y-%m-%d %M:%S')}" %></td> 
                     </tr>
                 </tbody>
           </table>  

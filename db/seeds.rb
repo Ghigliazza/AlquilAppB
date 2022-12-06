@@ -1,4 +1,3 @@
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
 # Examples:
 #
@@ -435,6 +434,28 @@ u = User.new(
 	coords_y: -34.919451958400096)
 u.save(validate:false)
 
+u = User.new(
+	email: "suspended_expired@gmail.com", 
+	crypted_password: "$2a$10$S8iA.kmjBnrO8VefLuDqbeNztExIc.HHmDISnYYHrF19m043BLUhS",  
+	salt: "cLFho39dqLpgoSbTNxoT",                                                
+	password: 1234,
+	password_confirmation: 1234,                                 
+	rol: :suspended_driver,                                                       
+	name: "German",                                                 
+	lastName: "Gonzales",                                                
+	document: 33522009,                                           
+	state: :admitted,                                                  
+	license_url: "",  
+	licenseNumber: 99999999,
+	licenseExpiration: Date.today + 6.month,
+	birthdate: Date.today - 36.years,
+	suspended_until: Date.today - 1.month,
+	suspended_for: "Romper las reglas",
+	balance: 5000,
+	coords_x: -57.957160476901834,
+	coords_y: -34.919451958400096)
+u.save(validate:false)
+
 
 p "Seed created #{User.count} users"
 
@@ -718,6 +739,7 @@ p "Seed created #{Rental.count} rentals (with cars & users)";
 
 Report.destroy_all
 
+=begin
 # Reportes para probar reports/show y reports/index.
 Report.create!([
 	{
@@ -726,6 +748,9 @@ Report.create!([
 	car_id: 60,
 	created_at: Time.now - 2.hours,
 	description: "Reporte numero 1",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 2.hours - 1.hours,
 	},
 	{
 	state: :wontStart,
@@ -733,6 +758,9 @@ Report.create!([
 	car_id: 65,
 	created_at: Time.now - 3.hours,
 	description: "Reporte numero 2",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 3.hours - 1.hours,
 	},
 	{
 	state: :illegal,
@@ -740,6 +768,9 @@ Report.create!([
 	car_id: 70,
 	created_at: Time.now - 4.hours,
 	description: "Reporte numero 3",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 4.hours - 1.hours,
 	},
 	{
 	state: :visual,
@@ -747,6 +778,9 @@ Report.create!([
 	car_id: 75,
 	created_at: Time.now - 12.hours,
 	description: "Reporte numero 4",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 12.hours - 1.hours,
 	},
 	{
 	state: :illegal,
@@ -754,6 +788,9 @@ Report.create!([
 	car_id: 60,
 	created_at: Time.now - 17.hours,
 	description: "Reporte numero 5",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 17.hours - 1.hours,
 	},
 	{
 	state: :visual,
@@ -761,6 +798,9 @@ Report.create!([
 	car_id: 65,
 	created_at: Time.now - 5.hours,
 	description: "Reporte numero 6",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 5.hours - 1.hours,
 	},
 	{
 	state: :other,
@@ -768,6 +808,9 @@ Report.create!([
 	car_id: 65,
 	created_at: Time.now - 5.hours,
 	description: "Reporte numero 7",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 5.hours - 1.hours,
 	},
 	{
 	state: :other,
@@ -775,6 +818,9 @@ Report.create!([
 	car_id: 65,
 	created_at: Time.now - 5.hours,
 	description: "Reporte numero 8",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 5.hours - 1.hours,
 	},
 	{
 	state: :other,
@@ -782,10 +828,14 @@ Report.create!([
 	car_id: 65,
 	created_at: Time.now - 5.hours,
 	description: "Reporte numero 9",
+	engine_turned_on: false,
+	last_user_id: -1,
+	rental_start: Time.now - 5.hours - 1.hours,
 	},
 ])
 
 p "Seed created #{Report.count} reports."
-Fine.destroy_all;
+=end
 
+Fine.destroy_all;
 Card.destroy_all

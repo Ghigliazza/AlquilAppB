@@ -25,7 +25,7 @@ class CarsController < ApplicationController
 
     respond_to do |format|
       if @car.save
-        format.html { redirect_to car_url(@car), notice: "Car was successfully created." }
+        format.html { redirect_to car_url(@car), notice: "El auto fue creado con éxito." }
         format.json { render :show, status: :created, location: @car }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -52,7 +52,7 @@ class CarsController < ApplicationController
     @car.destroy
 
     respond_to do |format|
-      format.html { redirect_to cars_url, notice: "Car was successfully destroyed." }
+      format.html { redirect_to root_path, notice: "El auto fue borrado exitosamente." }
       format.json { head :no_content }
     end
   end

@@ -14,50 +14,50 @@
   <% end %>
 
   <div>
-    <%= form.label :model, style: "display: block" %>
+    <%= form.label :model, "Modelo", style: "display: block" %>
     <%= form.text_field :model %>
   </div>
 
   <div>
-    <%= form.label :brand, style: "display: block" %>
+    <%= form.label :brand, "Marca", style: "display: block" %>
     <%= form.text_field :brand %>
   </div>
 
   <div>
-    <%= form.label :license, style: "display: block" %>
+    <%= form.label :license, "Licencia", style: "display: block" %>
     <%= form.text_field :license %>
   </div>
 
   <div>
-    <%= form.label :color, style: "display: block" %>
+    <%= form.label :color, "Color", style: "display: block" %>
     <%= form.text_field :color %>
   </div>
 
   <div>
-    <%= form.label :img_url, style: "display: block" %>
-    <%= form.text_field :img_url %>
+    <%= form.label :img_url, "Imagen", style: "display: block" %>
+    <%#= form.text_field :img_url %>
+    <%= form.file_field :image %></p>
+
   </div>
 
   <div>
-    <%= form.label :doors, style: "display: block" %>
+    <%= form.label :doors, "Puertas", style: "display: block" %>
     <%= form.number_field :doors %>
   </div>
 
   <div>
-    <%= form.label :seats, style: "display: block" %>
+    <%= form.label :seats, "Asientos", style: "display: block" %>
     <%= form.number_field :seats %>
   </div>
 
   <div>
-    <p><%= form.label "Estado", style: "display: block" %>
-    <%= form.radio_button :state, :rented %> El auto está rentado. </p>
+    <p><%= form.label :state, "Estado", style: "display: block" %>
     <%= form.radio_button :state, :blocked %> El auto está bloqueado. </p>
     <%= form.radio_button :state, :ready %> El auto está listo para ser alquilado. </p>
   </div>
 
   <div>
-    <%= form.label :engine, style: "display: block" %>
-    <%= form.check_box :engine %>
+    <%= form.hidden_field :engine, :value => false %>
   </div>
 
   <!-------- MODAL PIE -------------------------->

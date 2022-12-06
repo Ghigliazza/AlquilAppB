@@ -1,6 +1,6 @@
 <div id="<%= dom_id report %>">
 
-          <table class="table table-striped" style="max-width:600px;">
+          <table class="table table-striped" style="max-width:600px; ">
                 <thead>
                     <tr>
                         <%# th colspan="2">Detalles</th> <%>
@@ -9,8 +9,45 @@
                 <tbody>
                     <tr>
                         <td><b> <%= "Conductor:" %></b> </td>
-                        <td><%= "#{User.find(report.user_id).name} #{User.find(report.user_id).lastName}" %></td> 
+                        <td> 
+                            <button style="border: none; padding: 0px 0px" type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#exampleModal<%=report.id%><%=report.id%>">
+                                <b><%= User.find(report.user_id).name %> <%= User.find(report.user_id).lastName %> </b>
+                            </button> 
+                        </td> 
                     </tr>
+
+                    <% if report.engine_turned_on != nil && report.last_user_id != nil && report.rental_start != nil %>
+
+                        <% if report.created_at < report.rental_start + 10.minutes && !report.engine_turned_on? %>
+                            <% if report.last_user_id.to_i != -1 && report.last_user_id != nil %>
+                                <tr>
+                                    <td><b> <%= "Conductor Anterior:" %></b> </td>
+
+
+                                    <td> 
+                                        <button style="border: none; padding: 0px 0px" type="button" class="btn btn-link " data-bs-toggle="modal" data-bs-target="#exampleModal<%=report.id%>">
+                                           <b><%= User.find(report.last_user_id.to_i).name %> <%= User.find(report.last_user_id.to_i).lastName %> </b>
+                                        </button> 
+                                    </td> 
+
+                                </tr>
+                            <% else %>
+                                <tr>
+                                    <td><b> <%= "Conductor Anterior:" %></b> </td>
+                                    <td><%= "--" %></td> 
+                                </tr>                 
+                            <% end %>                
+                        <% end %>
+
+                    <% else %>
+                        <tr>
+                            <td><b> <%= "FALTAN DATOS (SEED)" %></b> </td>
+                            <td> ---- </td> 
+                        </tr>                        
+                    <% end %>
+
+
+
                     <tr>
                         <td><b> <%= "Auto:" %></b> </td>
                         <td><%= "#{Car.find(report.car_id).brand} #{Car.find(report.car_id).model}" %></td> 
@@ -37,10 +74,145 @@
                     </tr>
                     <tr>
                         <td><b> <%= "Descripción:" %></b> </td>
-                        <td><%= "#{report.description}" %></td> 
+                        <td style="max-width:600px; white-space: pre-wrap; word-wrap: break-word;"><%= "#{report.description}" %></td> 
                     </tr>
+
+                    <tr>
+                        <td><b> <%= "Fecha:" %></b> </td>
+                        <td><%= "#{report.created_at.strftime('%Y-%m-%d %M:%S')}" %></td> 
+                    </tr>
+
                 </tbody>
           </table>   
 
                <%= image_tag report.image, width: 295 if report.image.attached? %> 
 </div>
+
+
+
+<% if report.engine_turned_on != nil && report.last_user_id != nil && report.rental_start != nil %>
+    <% if report.created_at < report.rental_start + 10.minutes && !report.engine_turned_on? %>
+        <% if report.last_user_id.to_i != -1 && report.last_user_id != nil %>
+            <!-------- MODAL USUARIO ANTERIOR -------------------------->
+
+            <div class="modal fade" id="exampleModal<%=report.id%>" tabindex="-1" aria-labelledby="exampleModalLabel<%=report.id%>" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel<%=report.id%>"> <b> <%= User.find(report.last_user_id.to_i).name %> <%= User.find(report.last_user_id.to_i).lastName %></b></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+
+                    <table class="table table-striped" style="max-width:600px;">
+                        <tbody>
+                            <tr>
+                              <td>
+                                <strong>Email:</strong>
+                              </td>
+                              <td>
+                                <%= User.find(report.last_user_id.to_i).email %>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td>
+                                <strong>Nombre:</strong>
+                              </td>
+                              <td>
+                                <%= User.find(report.last_user_id.to_i).name %>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td>
+                                <strong>Apellido:</strong>
+                              </td>
+                              <td>
+                                <%= User.find(report.last_user_id.to_i).lastName %>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td>
+                                <strong>Documento:</strong>
+                              </td>
+                              <td>
+                                <%= User.find(report.last_user_id.to_i).document %>
+                              </td>
+                            </tr>
+                      </tbody>
+                    </table>
+
+
+                  </div>
+                  <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      </div>
+                </div>
+              </div>
+            </div> 
+        <% end %>
+    <% end %>        
+<% end %>
+
+
+<!-------- MODAL USUARIO ACTUAL-------------------------->
+
+            <div class="modal fade" id="exampleModal<%=report.id%><%=report.id%>" tabindex="-1" aria-labelledby="exampleModalLabel<%=report.id%><%=report.id%>" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel<%=report.id%><%=report.id%>"> <b> <%= User.find(report.user_id.to_i).name %> <%= User.find(report.user_id.to_i).lastName %></b></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+
+                    <table class="table table-striped" style="max-width:600px;">
+                        <tbody>
+                            <tr>
+                              <td>
+                                <strong>Email:</strong>
+                              </td>
+                              <td>
+                                <%= User.find(report.user_id.to_i).email %>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td>
+                                <strong>Nombre:</strong>
+                              </td>
+                              <td>
+                                <%= User.find(report.user_id.to_i).name %>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td>
+                                <strong>Apellido:</strong>
+                              </td>
+                              <td>
+                                <%= User.find(report.user_id.to_i).lastName %>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td>
+                                <strong>Documento:</strong>
+                              </td>
+                              <td>
+                                <%= User.find(report.user_id.to_i).document %>
+                              </td>
+                            </tr>
+                      </tbody>
+                    </table>
+
+
+                  </div>
+                  <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      </div>
+                </div>
+              </div>
+            </div> 

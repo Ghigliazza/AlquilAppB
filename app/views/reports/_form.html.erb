@@ -11,45 +11,27 @@
         <%= form.radio_button :state, :other %> Otro problema.</p>     
     </div>
 
-     <%#= form.hidden_field :state, :value => :dented %>
-
     <div>
       <b> Descripción (Opcional)</b></p>
       <%= form.text_area :description %>
     </div>
 
 
-    <%= form.hidden_field :car_id, :value => current_user.rentals.last.car %>
-    <%= form.hidden_field :user_id, :value => current_user %>
+    <%= form.hidden_field :car_id, :value => current_user.rentals.last.car_id.to_i %>
+    <%= form.hidden_field :user_id, :value => current_user.id.to_i %>
+    <%= form.hidden_field :rental_start, :value => current_user.rentals.last.created_at %>
+    <%= form.hidden_field :engine_turned_on, :value => false %>
 
-
-<%# +++++++++++++++++++++++++++++++++ PASAR TODO AL CREATE +++++++++++++++++++++++++++++++++ %>
-    <!--obtengo el alquiler actual-->
-    <% rental = current_user.rentals.last %>
-    <!--obtengo la anteultima renta del auto que se esta alquilando-->
-    <% before_last_rent = rental.car.rentals.last(2).first %>
-    <!--si parason 10 minutos y el alquiler actual no es igual al anteultimo alquiler (que sea el primer alquiler que se hace)-->
-    <% if rental.tenMinutesPassed? && rental.car.turn_on && before_last_rent != rental %>
-      <!--obtiene el usuario de la anteultima renta del auto de la renta actual (un quilombo)-->
-      <!--es decir el ante-ultimo usuario que alquilo el auto-->
-      <% guilty = before_last_rent.user %>
-
+    <% if Rental.where(car_id: current_user.rentals.last.car_id.to_i).where(state: 'expired').any? %>
+      <%= form.hidden_field :last_user_id, :value => Rental.where(car_id: current_user.rentals.last.car_id.to_i).where(state: 'expired').last.user_id.to_i %>
     <% else %>
-      <% guilty = current_user %>
+      <%= form.hidden_field :last_user_id, :value => -1 %>
     <% end %>
-    
-    <%= form.hidden_field :guilty, :value => guilty %>
 
     <div>
     <p><b><%= form.label "Subir una foto (Opcional)", style: "display: block"%></b>
           <%= form.file_field :image %></p>
     </div>
-
-    
-    <div>
-      <%#= form.button "Enviar Reporte" , type: "submit", :class=> "btn btn-primary" %>
-    </div>
-
 
     <!-------- MODAL PIE -------------------------->
     <div class="modal-footer">

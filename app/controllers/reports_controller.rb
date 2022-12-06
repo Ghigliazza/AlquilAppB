@@ -3,7 +3,7 @@ class ReportsController < ApplicationController
 
   # GET /reports or /reports.json
   def index
-    @reports = Report.all
+    @reports = Report.all.order(:created_at)
   end
 
   # GET /reports/1 or /reports/1.json
@@ -13,29 +13,6 @@ class ReportsController < ApplicationController
   # GET /reports/new
   def new
     @report = Report.new()
-    if (!current_user.rentals.any?)
-      flash[:notice] = "No podes reportar un auto porque no tenes ningun alquiler."
-      redirect_to root_path
-      return 1
-    end
-    # Busca el último auto que usó el usuario, el que está rentado.
-    car = current_user.rentals.last.car
-    @report.car.id = car.id
-
-    if (!car.status.rented?)
-      # El auto, por alguna extraña razón, no está alquilado.
-      flash[:notice] = "No podes reportar un auto que no alquilaste."
-      redirect_to root_path
-      return 1
-    end
-    # if current_user.rentals.any? #Esta es la logica para que no te deje entrar
-    #     sin rentas
-    # @report.car_id = current_user.rentals.last.car_id
-    #    else
-    #    flash[:notice] = "You don't have any rentals"
-    #       redirect_to "/reports"
-    #     end
-
   end
 
   # GET /reports/1/edit
@@ -46,10 +23,22 @@ class ReportsController < ApplicationController
   def create
     @report = Report.new(report_params)
 
+    #Actualizar variable del motor encendido
+    if Car.find(@report.car_id.to_i).turn_on?
+      @report.engine_turned_on = true
+    else
+      @report.engine_turned_on = false
+    end
+
     respond_to do |format|
       if @report.save
-        format.html { redirect_to request.referrer, notice: "El reporte fue enviado correctamente." }
-        format.json { render :show, status: :created, location: @report }
+        if @report.created_at < @report.rental_start + 10.minutes && !@report.engine_turned_on?
+          format.html { redirect_to request.referrer, notice: "El reporte fue enviado correctamente. (A tiempo y sin haber encendido el motor)" }
+          format.json { render :show, status: :created, location: @report }
+        else
+          format.html { redirect_to request.referrer, notice: "El reporte fue enviado correctamente." }
+          format.json { render :show, status: :created, location: @report }
+        end
       else
         format.html { redirect_to request.referrer, alert: "El reporte no pudo ser enviado." }
         format.json { render json: @report.errors, status: :unprocessable_entity }
@@ -93,38 +82,10 @@ class ReportsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def report_params
       if request.method() == "POST"
-         params.require(:report).permit(:description, :user_id, :car_id, :image, :state)
+         params.require(:report).permit(:description, :user_id, :car_id, :image, :state, :rental_start, :last_user_id, :engine_turned_on)
       else
-         params.require(:report).permit(:description, :user_id, :car_id, :image, :state)
+         params.require(:report).permit(:description, :user_id, :car_id, :image, :state, :rental_start, :last_user_id, :engine_turned_on)
       end      
     end
 
-    private
-    def reporte_exitoso
-      flash[:notice] = "El reporte se envío correctamente."
-      redirect_to root_path
-    end
-
-    def save
-      car = current_user.rentals.last.car
-      if (((Time.new - current_user.rentals.last.created_at) <= 600) && (!car.turn_on?)) 
-        if (!car.rentals.second.exists?(2))
-         # No podemos saber quién es el responsable en este caso, asi
-         # que dejamos vacio el id del usuario. 
-          reporte_exitoso
-          return 0
-        end 
-        # Busqueda de la anteultima renta que tuvo el auto
-        # Es decir, a la renta anterior al usuario actual.
-        rental = Rental.find(car.rentals.last(2).first)
-        # id del usuario responsable (el anteultimo)
-        @report.user.id = rental.user.id
-        reporte_exitoso
-        return 0
-      else
-        @report.user.id = current_user.id
-        reporte_exitoso
-        return 0
-      end
-      end
 end
