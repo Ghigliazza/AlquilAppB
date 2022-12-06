@@ -5,6 +5,12 @@ class RentalsController < ApplicationController
   # GET /rentals or /rentals.json
   def index
     @rentals = Rental.all
+    if current_user.driver?
+      @rentals = current_user.rentals
+    end
+    if @rentals.empty?
+      redirect_to user_path(current_user), alert: "No hay Alquileres disponibles"
+    end
   end
 # ----------------------------------------------------------------------------------------------------------------------------------------
   # GET /rentals/1 or /rentals/1.json

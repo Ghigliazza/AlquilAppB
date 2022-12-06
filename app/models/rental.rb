@@ -21,4 +21,9 @@ class Rental < ApplicationRecord
 
   #SCOPES
   # scope :expired, -> { where("expires < ?", Time.now) }
+
+  #METHODS
+  def tenMinutesPassed?
+    return self.created_at + 10.minutes <= Time.now
+  end
 end
