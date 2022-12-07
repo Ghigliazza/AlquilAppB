@@ -54,4 +54,10 @@
     <%# <%= car.position_id %> %>
   <%# </p> %>
 
+  <% if car.car_photo.attached? %>
+          <div>
+            <%= image_tag car.car_photo, width: 295 if car.car_photo.attached? %> 
+          </div>
+  <% end %>
+
 </div>

@@ -21,6 +21,16 @@
   </p>
 
 
+  <p>
+    <strong>Saldo Disponible:</strong>
+    <% if user.balance < 0 %>
+      <label style="color:Red"> -$<%= user.balance * -1 %> </label>
+    <% else %>
+      <label style="color:Green"> $<%= user.balance %> </label>
+    <% end %>
+  </p>
+
+
   <% if current_user.driver? || current_user.suspended_driver?%>
     <p>
       <strong>Tarjeta:</strong>
@@ -53,15 +63,6 @@
 
       <% else %>
         <%= link_to "Agregar", new_card_path, class: "btn btn-success", type: "button" %>
-      <% end %>
-    </p>
-
-    <p>
-      <strong>Saldo Disponible:</strong>
-      <% if user.balance < 0 %>
-        <label style="color:Red"> -$<%= user.balance * -1 %> </label>
-      <% else %>
-        <label style="color:Green"> $<%= user.balance %> </label>
       <% end %>
     </p>
 

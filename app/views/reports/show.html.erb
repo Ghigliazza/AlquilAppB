@@ -3,10 +3,9 @@
 
   <%= render @report %>
   <div>
-    <%= link_to "Volver", reports_path, class: "btn btn-primary" %>
+    <%= button_to "Eliminar Reporte", @report, method: :delete %>
   </div>
 
 <%end%>
-
 
 

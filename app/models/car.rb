@@ -4,6 +4,7 @@ class Car < ApplicationRecord
 	has_many :rentals
 	has_many :reports
 	has_many :users, :through => :rental
+	has_one_attached :car_photo
 
 	#ENUMERATIVES
 	enum state: [:ready, :rented, :blocked]
