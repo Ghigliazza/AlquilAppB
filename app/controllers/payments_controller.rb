@@ -16,14 +16,8 @@ class PaymentsController < ApplicationController
       end
     end
 
-    @last_pay = @rental.payments.last
-    @cancel = @last_pay.cancel.nil?
-    if !@cancel
-      @refund = @cancel && (@last_pay.created_at - @last_pay.cancel <= 10.minutes)
-  
-    else
-      @refund = false
-    end
+    #@last_pay = @rental.payments.last
+
   end
 
   # GET /payments/1 or /payments/1.json
