@@ -15,46 +15,6 @@ class RentalsController < ApplicationController
 # ----------------------------------------------------------------------------------------------------------------------------------------
   # GET /rentals/1 or /rentals/1.json
   def show
-
-    # DESACTIVADO PARA LA DEMO
-    # Si se pasa el tiempo de expiracion, no se finalizo aun y el motor esta apagado, se finaliza AUTOMATICAMENTE
-    if ((Time.now > @rental.expires) && (!@rental.expired?) && (!@rental.car.engine?))
-      # Actualiza el estado del alquiler
-      @rental.expired!
-
-      # time_out()
-      time_dif = ((Time.now - @rental.expires) / 15.minutes).to_i
-      penalty = 1000 * time_dif
-      current_user.update(balance: (current_user.balance - penalty))
-
-      # Cobra el gasto de combustible y actualiza el combustible inicial
-      fuel_tax = (@rental.initial_fuel - @rental.car.fuel) * 150
-      if @rental.car.fuel < @rental.initial_fuel
-        current_user.update(balance: current_user.balance - fuel_tax)
-      end
-      @rental.update(initial_fuel: @rental.car.fuel)
-
-
-      # Genera la multa del tiempo extra
-      if penalty > 0
-        Payment.create(price:penalty, started:Time.now, rent_hs:0, rental_id: @rental.id)
-      end
-      # Genera la multa del gasto de combustible
-      if fuel_tax > 0
-        Payment.create(price:fuel_tax, started:Time.now, rent_hs:0, rental_id: @rental.id)
-      end
-
-      # Actualiza el auto de la renta
-      @rental.car.ready!
-      @rental.car.update(turn_on: false)
-
-      # crea el mensaje
-      alert = "El alquiler ha sido finalizado. Precio: $#{@rental.price}"
-      alert += penalty > 0 ? " (Se le cobró una multa de $1000 por cada 15 minutos de exeso de tiempo: $#{penalty}" : ""
-      alert += fuel_tax > 0 ? " ( Se le cobró el gasto de combustible del auto: $#{fuel_tax}" : ""
-      
-      redirect_to rental_path(@rental), alert: alert
-    end
   end
 
 # ----------------------------------------------------------------------------------------------------------------------------------------
