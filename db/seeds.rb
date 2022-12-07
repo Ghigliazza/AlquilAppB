@@ -333,7 +333,7 @@ User.create!([
 	birthdate: Date.today - 26.years,
 	balance: -1750,
 	coords_x: -57.957160476901834,
-	coords_y: -34.919451958400096 
+	coords_y: -34.919451958400096
 	},
 	{
 	email: "poor2@gmail.com",                                                   
@@ -713,6 +713,8 @@ Rental.create!([
 	total_hours: 6,
 	initial_fuel: 30
 	},
+
+	# ALQUILERES EXPIRADOS
 	{
 	price: 3000,
 	expires: Time.now - 1.hours,
@@ -721,7 +723,7 @@ Rental.create!([
 	state: :started,
 	created_at: Time.now - 5.hours,
 	total_hours: 3,
-	initial_fuel: 30
+	initial_fuel: 30,
 	},
 	{
 	price: 9000,
@@ -731,7 +733,7 @@ Rental.create!([
 	state: :started,
 	created_at: Time.now - 12.hours,
 	total_hours: 9,
-	initial_fuel: 30
+	initial_fuel: 30,
 	},
 ])
 
@@ -836,6 +838,26 @@ Report.create!([
 
 p "Seed created #{Report.count} reports."
 =end
+
+
+Payment.destroy_all;
+
+Payment.create([
+	{
+	price: 3000,
+	expires: Time.now - 1.hours,
+	started: Time.now - 5.hours,
+	rent_hs: 3,
+	rental_id: 3,
+	},
+	{
+	price: 9000,
+	expires: Time.now - 3.hours,
+	started: Time.now - 12.hours,
+	rent_hs: 9,
+	rental_id: 4,
+	}
+])
 
 Fine.destroy_all;
 Card.destroy_all
