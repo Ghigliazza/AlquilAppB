@@ -17,13 +17,13 @@
     </div>
 
 
-    <%= form.hidden_field :car_id, :value => current_user.rentals.last.car %>
-    <%= form.hidden_field :user_id, :value => current_user %>
+    <%= form.hidden_field :car_id, :value => current_user.rentals.last.car_id.to_i %>
+    <%= form.hidden_field :user_id, :value => current_user.id.to_i %>
     <%= form.hidden_field :rental_start, :value => current_user.rentals.last.created_at %>
     <%= form.hidden_field :engine_turned_on, :value => false %>
 
-    <% if Rental.where(car_id: current_user.rentals.last.car).where(state: 'expired').any? %>
-      <%= form.hidden_field :last_user_id, :value => Rental.where(car_id: current_user.rentals.last.car).where(state: 'expired').last.user %>
+    <% if Rental.where(car_id: current_user.rentals.last.car_id.to_i).where(state: 'expired').any? %>
+      <%= form.hidden_field :last_user_id, :value => Rental.where(car_id: current_user.rentals.last.car_id.to_i).where(state: 'expired').last.user_id.to_i %>
     <% else %>
       <%= form.hidden_field :last_user_id, :value => -1 %>
     <% end %>
@@ -42,4 +42,3 @@
   <% end %>
 
 </div>
-
