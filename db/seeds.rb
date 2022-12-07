@@ -724,7 +724,6 @@ Rental.create!([
 	created_at: Time.now - 5.hours,
 	total_hours: 3,
 	initial_fuel: 30,
-	totalPrice: 3000
 	},
 	{
 	price: 9000,
@@ -735,7 +734,6 @@ Rental.create!([
 	created_at: Time.now - 12.hours,
 	total_hours: 9,
 	initial_fuel: 30,
-	totalPrice: 9000
 	},
 ])
 

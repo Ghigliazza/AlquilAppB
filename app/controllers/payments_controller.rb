@@ -7,8 +7,13 @@ class PaymentsController < ApplicationController
     @rental = Rental.find(params[:rental_id])
 
     @targets = ""
+    @multa = 0
     @rental.payments.each do |pay|
       @targets += "collapsePay_#{pay.id} "
+
+      if pay.rent_hs == 0
+        @multa += pay.price
+      end
     end
 
     @last_pay = @rental.payments.last

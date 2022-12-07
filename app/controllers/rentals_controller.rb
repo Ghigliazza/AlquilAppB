@@ -28,16 +28,32 @@ class RentalsController < ApplicationController
       current_user.update(balance: (current_user.balance - penalty))
 
       # Cobra el gasto de combustible y actualiza el combustible inicial
+      fuel_tax = (@rental.initial_fuel - @rental.car.fuel) * 150
       if @rental.car.fuel < @rental.initial_fuel
-        current_user.update(balance: current_user.balance - (@rental.car.fuel - @rental.initial_fuel) * 150)
+        current_user.update(balance: current_user.balance - fuel_tax)
       end
       @rental.update(initial_fuel: @rental.car.fuel)
+
+
+      # Genera la multa del tiempo extra
+      if penalty > 0
+        Payment.create(price:penalty, started:Time.now, rent_hs:0, rental_id: @rental.id)
+      end
+      # Genera la multa del gasto de combustible
+      if fuel_tax > 0
+        Payment.create(price:fuel_tax, started:Time.now, rent_hs:0, rental_id: @rental.id)
+      end
 
       # Actualiza el auto de la renta
       @rental.car.ready!
       @rental.car.update(turn_on: false)
+
+      # crea el mensaje
+      alert = "El alquiler ha sido finalizado. Precio: $#{@rental.price}"
+      alert += penalty > 0 ? " (Se le cobró una multa de $1000 por cada 15 minutos de exeso de tiempo: $#{penalty}" : ""
+      alert += fuel_tax > 0 ? " ( Se le cobró el gasto de combustible del auto: $#{fuel_tax}" : ""
       
-      redirect_to "/rentals/#{@rental.id}", alert:"El alquiler ha sido finalizado fuera de tiempo. Precio: $#{@rental.price}. (Además se cobró una multa de $1000 por cada 15 minutos pasados: $#{penalty} total de multa.)"
+      redirect_to rental_path(@rental), alert: alert
     end
   end
 
@@ -133,7 +149,7 @@ class RentalsController < ApplicationController
   # GET /rental/id
   def cancel
     # Setea un valor inicial del Alert (vacio)
-    alert = ''
+    alert = "El alquiler ha sido finalizado. Precio: $#{@rental.price}"
 
     # Si el motor está apagado
     if !@rental.car.engine
@@ -141,7 +157,22 @@ class RentalsController < ApplicationController
       if !@rental.payments.empty?
         @rental.payments.last.update(cancel: Time.now)
       end
+
+
+      # Cobra el gasto de combustible y actualiza el combustible inicial
+      fuel_tax = (@rental.initial_fuel - @rental.car.fuel) * 150
+      if @rental.car.fuel < @rental.initial_fuel
+        current_user.update(balance: current_user.balance - fuel_tax)
+      end
+      @rental.update(initial_fuel: @rental.car.fuel)
+      # Genera la multa del gasto de combustible
+      if fuel_tax > 0
+        Payment.create(price:fuel_tax, started:Time.now, rent_hs:0, rental_id: @rental.id)
+      end
+      alert += fuel_tax > 0 ? " (Se le cobró el gasto de combustible del auto: $#{fuel_tax})" : ""
       
+
+
       # Si no pasaron 10 minutos entonces cancela el alquiler (devuelve el precio del mismo)
       if Time.now < @rental.created_at + 10.minutes
 
@@ -155,11 +186,17 @@ class RentalsController < ApplicationController
       elsif (Time.now >= @rental.created_at + 10.minutes)
         # Si expiro
         if (Time.now > @rental.expires)
+
           # time_out()
           time_dif = ((Time.now - @rental.expires) / 15.minutes).to_i
           penalty = 1000 * time_dif
           current_user.update(balance: (current_user.balance - penalty))
-          alert = "El alquiler ha sido finalizado fuera de tiempo. Precio: $#{@rental.price}. (Además se cobró una multa de $1000 por cada 15 minutos pasados: $#{penalty} total de multa.)"
+          # Genera la multa del tiempo extra
+          if penalty > 0
+            Payment.create(price:penalty, started:Time.now, rent_hs:0, rental_id: @rental.id)
+          end
+          # crea el mensaje
+          alert += penalty > 0 ? " (Se le cobró una multa de $1000 por cada 15 minutos de exeso de tiempo: $#{penalty})" : ""
         
         else
           # Si pasaron 10 minutos entonces simplemente se finaliza, sin devolver el dinero

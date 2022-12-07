@@ -2,7 +2,7 @@
 
   <li class="list-group-item">
     <div>
-      <h5><strong> Pago: </strong><%= payment.created_at.strftime('%Y-%m-%e A las %k:%M:%S') %> </h5>
+      <h5><strong> <%= payment.rent_hs != 0 ? "Pago" : "Multa" %> </strong> <%= payment.created_at.strftime('%Y-%m-%e A las %k:%M:%S') %> </h5>
       <p>
         <a class="btn btn-outline-success" style="width:100%" data-bs-toggle="collapse" href="#collapsePay_<%= payment.id %>" role="button" aria-expanded="false" aria-controls="collapsePay_<%= payment.id %>">
           Detalle
@@ -11,10 +11,12 @@
 
       <div class="collapse multi-collapse" id="collapsePay_<%= payment.id %>">
         <ul>
-          <li class="row"><div class="col-auto fw-semibold"> Precio:     </div> <div class="col fw-light fst-italic text-end"> <%= payment.price %>                                          </div></li>
-          <li class="row"><div class="col-auto fw-semibold"> Alquilado:  </div> <div class="col fw-light fst-italic text-end"> <%= payment.rent_hs %>hs                                      </div></li>
-          <li class="row"><div class="col-auto fw-semibold"> Inicio:     </div> <div class="col fw-light fst-italic text-end"> <%= payment.started.strftime('%Y-%m-%e A las %k:%M:%S') %> </div></li>
-          <li class="row"><div class="col-auto fw-semibold"> Expiracion: </div> <div class="col fw-light fst-italic text-end"> <%= payment.expires.strftime('%Y-%m-%e A las %k:%M:%S') %>    </div></li>
+          <li class="row"><div class="col-auto fw-semibold"> Precio:                                            </div> <div class="col fw-light fst-italic text-end"> <%= payment.price %>                                       </div></li>
+          <li class="row"><div class="col-auto fw-semibold"> <%= payment.rent_hs != 0 ? "Inicio" : "Cobrado" %> </div> <div class="col fw-light fst-italic text-end"> <%= payment.started.strftime('%Y-%m-%e A las %k:%M:%S') %> </div></li>
+          <% if payment.rent_hs != 0 %>
+            <li class="row"><div class="col-auto fw-semibold"> Expiracion:                                      </div> <div class="col fw-light fst-italic text-end"> <%= payment.expires.strftime('%Y-%m-%e A las %k:%M:%S') %> </div></li>
+            <li class="row"><div class="col-auto fw-semibold"> Alquilado:                                       </div> <div class="col fw-light fst-italic text-end"> <%= payment.rent_hs %>hs                                   </div></li>
+          <% end %>
         </ul>
       </div>
     </div>

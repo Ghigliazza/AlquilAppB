@@ -24,10 +24,12 @@
     <div class="card-footer">
       <h5><strong> Resumen de alquiler </strong></h5>
       <ul>
-        <li class="row"><div class="col-auto fw-semibold"> Horas Totales:  </div> <div class="col fw-light fst-italic text-end"> <%= @rental.total_hours %> </div></li>
-        <li class="row"><div class="col-auto fw-semibold"> Precio Total:   </div> <div class="col fw-light fst-italic text-end"> <%= @rental.totalPrice %> </div></li>
-        <li class="row"><div class="col-auto fw-semibold"> Cancelado:      </div> <div class="col fw-light fst-italic text-end"> <%= @cancel ? "No cumple" : @last_pay.cancel %> </div></li>
-        <li class="row"><div class="col-auto fw-semibold"> Saldo Devuelto: </div> <div class="col fw-light fst-italic text-end"> <%= @refund ? @rental.total_price : 0 %> </div></li>
+        <li class="row"><div class="col-auto fw-semibold"> Horas Totales:      </div> <div class="col fw-light fst-italic text-end">   <%= @rental.total_hours %>                      </div></li>
+        <li class="row"><div class="col-auto fw-semibold"> Precio De Alquiler: </div> <div class="col fw-light fst-italic text-end"> $ <%= @rental.price %>                          </div></li>
+        <li class="row"><div class="col-auto fw-semibold"> Precio De Multas:   </div> <div class="col fw-light fst-italic text-end"> $ <%= @multa %>                                 </div></li>
+        <li class="row"><div class="col-auto fw-semibold"> Precio Total:       </div> <div class="col fw-light fst-italic text-end"> $ <%= @rental.price + @multa %>                 </div></li>
+        <li class="row"><div class="col-auto fw-semibold"> Cancelado:          </div> <div class="col fw-light fst-italic text-end">   <%= @cancel ? "No cumple" : @last_pay.cancel %> </div></li>
+        <li class="row"><div class="col-auto fw-semibold"> Saldo Devuelto:     </div> <div class="col fw-light fst-italic text-end">   <%= @refund ? @rental.price : 0 %>              </div></li>
       </ul>
     </div>
 
