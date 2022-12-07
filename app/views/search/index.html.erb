@@ -21,13 +21,14 @@
 
 <%# ======================================================================================================== %>
 <%# =============================== LISTA DE AUTOS ========================================================= %>
-    
 
     <% if current_user.admin? %>
+      <div style="margin-left:15px; margin-top:15px;">
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCar">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCar">
           Agregar Autos
-      </button>
+        </button>
+      </div>
     <% end %>
 
     <!-- Modal -->
