@@ -140,9 +140,13 @@
                   <% end %>  
               <% end %>
             <% end %>
-          </p>  
-
-                    
+            <% if current_user.admin? && car.blocked? %>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarAutoModal<%=car.id%><%=car.id%><%=car.id%>">
+                                        Eliminar Auto
+                    </button>
+            <% end %>
+          </p>      
         </div>   
 
       </div>
@@ -170,3 +174,28 @@
     </div>
   </div>
 </div>     
+
+
+<!-- Modal ELIMINAR -->
+                <div class="modal fade" id="eliminarAutoModal<%=car.id%><%=car.id%><%=car.id%>" tabindex="-1" aria-labelledby="eliminarAutoLabel<%=car.id%><%=car.id%><%=car.id%>" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="eliminarAutoLabel<%=car.id%><%=car.id%><%=car.id%>"> <b>Advertencia</b></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      
+                      <div class="modal-body">
+
+                          Eliminar auto permanentemente?
+                                     
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+
+                        <%= button_to "Eliminar Auto", car, method: :delete, :class=> "btn btn-danger" %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
