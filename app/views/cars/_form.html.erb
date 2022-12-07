@@ -1,4 +1,4 @@
-<div style="margin:30px">
+<div style="margin:30px, margin-left:25px">
 
   <%= form_with(model: car) do |form| %>
     <% if car.errors.any? %>
@@ -40,24 +40,31 @@
 
   <div>
     <%= form.label :doors, "Puertas", style: "display: block" %>
-    <%= form.number_field :doors, :required => true, min: 0, max: 6 %>
+    <%= form.number_field :doors, :required => true, min:2, max:6, value:2 %>
   </div>
 
   <div>
     <%= form.label :seats, "Asientos", style: "display: block" %>
-    <%= form.number_field :seats, :required => true, min: 0, max: 10 %>
+    <%= form.number_field :seats, :required => true, min:2, max:10, value:2 %>
   </div>
-  
+
   <div>
-    <%= form.hidden_field :state, :value => 'blocked' %>
-    <%= form.hidden_field :engine, :value => false %>
-    <%= form.hidden_field :fuel, :value => 10.0 %>
-    <%= form.hidden_field :turn_on, :value => false %>
-  </div>
+    <p><b><%= form.label "Transmision", style: "display: block"%></b>
+    <%= form.text_field :transmission, :required => true %></p>
+  </div>  
+  
+  <%= form.hidden_field :state, :value => 'blocked' %>
+  <%= form.hidden_field :engine, :value => false %>
+  <%= form.hidden_field :fuel, :value => 10.0 %>
+  <%= form.hidden_field :turn_on, :value => false %>
 
   <div>
     <%= form.hidden_field :coords_x, :value => -57.942948097923505.to_f %>
     <%= form.hidden_field :coords_y, :value => -34.90961858045628.to_f %>
+  </div>
+
+  <div class="text-end">
+    <%= form.submit "Agregar", class:"btn btn-success"%>
   </div>
 
   <% end %>
