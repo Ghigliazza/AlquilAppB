@@ -35,13 +35,12 @@
     <% car = Car.new %>
     <div class="modal fade" id="modalCar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalCarLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content" id="cardModalContent" style="height:fit-content">
+        <div class="modal-content" id="cardModalContent" style="height:fit-content; border-radius:1%">
           <div class="modal-body">
             <%= render partial: "cars/form", locals: { car: car } %>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancelar </button>
-            <%= button_to "Agregar", car, method: :create, class: "btn btn-success" %>
           </div>
         </div>
       </div>
