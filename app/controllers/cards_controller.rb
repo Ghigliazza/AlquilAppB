@@ -31,6 +31,17 @@ class CardsController < ApplicationController
             format.html { redirect_to user_path(current_user), notice: "La tarjeta ha sigo agregada con exito." }
             format.json { render "users/show", status: :ok, location: current_user }
           else
+
+            if @card.errors.any?
+              @card.errors.each do |error|
+                if error.full_message == "Number has already been taken"
+                  format.html { redirect_to '/cards/new', alert: "El numero de la tarjeta ya existe en el sistema" }
+                end
+
+                format.html { redirect_to '/cards/new', alert: error.message }
+              end
+            end 
+            
             format.html { render :new, status: :unprocessable_entity }
             format.json { render json: @card.errors, status: :unprocessable_entity }
           end
