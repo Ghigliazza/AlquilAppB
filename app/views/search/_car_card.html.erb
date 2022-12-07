@@ -125,27 +125,39 @@
               <button type="button" class="btn btn-primary" disabled>Alquilar Auto</button> <i style="color:red">Tu cuenta está suspendida.</i>
             <% end %>
 
-            <% if current_user.supervisor? || current_user.admin? %>
-              <% if car.ready? %>
-                  <%= form_with model: car do |form| %>
-                      <%= form.hidden_field :state, :value => :blocked %>
-                      <%= form.button "Bloquear Auto" , type: "submit", :class=> "btn btn-danger" %>
-                  <% end %>
-              <% end %>
 
-              <% if car.blocked? %>
-                  <%= form_with model: car do |form| %>
-                      <%= form.hidden_field :state, :value => :ready %>
-                      <%= form.button "Desbloquear Auto" , type: "submit", :class=> "btn btn-primary" %>
-                  <% end %>  
-              <% end %>
-            <% end %>
-            <% if current_user.admin? && car.blocked? %>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarAutoModal<%=car.id%><%=car.id%><%=car.id%>">
-                                        Eliminar Auto
-                    </button>
-            <% end %>
+            <table>
+              <tr>
+                <tb>
+                  <% if current_user.supervisor? || current_user.admin? %>
+                    <% if car.ready? %>
+                        <%= form_with model: car do |form| %>
+                            <%= form.hidden_field :state, :value => :blocked %>
+                            <%= form.button "Bloquear Auto" , type: "submit", :class=> "btn btn-danger" %>
+                        <% end %>
+                    <% end %>
+
+                    <% if car.blocked? %>
+                        <%= form_with model: car do |form| %>
+                            <%= form.hidden_field :state, :value => :ready %>
+                            <%= form.button "Desbloquear Auto" , type: "submit", :class=> "btn btn-primary" %>
+                        <% end %>  
+                    <% end %>
+                  <% end %>                 
+                </tb>
+                <% if current_user.admin? && car.blocked? %>
+                  <tb>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarAutoModal<%=car.id%><%=car.id%><%=car.id%>">
+                                            Eliminar Auto
+                        </button>
+                  </tb>
+                <% end %>            
+              </tr>
+            </table>
+
+
+
           </p>      
         </div>   
 
