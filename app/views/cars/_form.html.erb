@@ -24,7 +24,7 @@
   </div>
 
   <div>
-    <%= form.label :license, "Licencia", style: "display: block" %>
+    <%= form.label :license, "Patente", style: "display: block" %>
     <%= form.text_field :license, :required => true %>
   </div>
 
@@ -51,6 +51,8 @@
   <div>
     <%= form.hidden_field :state, :value => 'blocked' %>
     <%= form.hidden_field :engine, :value => false %>
+    <%= form.hidden_field :fuel, :value => 10.0 %>
+    <%= form.hidden_field :turn_on, :value => false %>
   </div>
 
   <div>
