@@ -15,54 +15,47 @@
 
   <div>
     <%= form.label :model, "Modelo", style: "display: block" %>
-    <%= form.text_field :model %>
+    <%= form.text_field :model, :required => true %>
   </div>
 
   <div>
     <%= form.label :brand, "Marca", style: "display: block" %>
-    <%= form.text_field :brand %>
+    <%= form.text_field :brand, :required => true %>
   </div>
 
   <div>
     <%= form.label :license, "Licencia", style: "display: block" %>
-    <%= form.text_field :license %>
+    <%= form.text_field :license, :required => true %>
   </div>
 
   <div>
     <%= form.label :color, "Color", style: "display: block" %>
-    <%= form.text_field :color %>
+    <%= form.text_field :color, :required => true %>
   </div>
 
   <div>
-    <%= form.label :image, "Imagen", style: "display: block" %>
-    <%#= form.text_field :img_url %>
-    <%= form.file_field :image %></p>
-
-  </div>
+    <p><b><%= form.label "Foto", style: "display: block"%></b>
+    <%= form.file_field :car_photo, :required => true %></p>
+  </div>  
 
   <div>
     <%= form.label :doors, "Puertas", style: "display: block" %>
-    <%= form.number_field :doors %>
+    <%= form.number_field :doors, :required => true %>
   </div>
 
   <div>
     <%= form.label :seats, "Asientos", style: "display: block" %>
-    <%= form.number_field :seats %>
+    <%= form.number_field :seats, :required => true %>
   </div>
-
+  
   <div>
-    <p><%= form.label :state, "Estado", style: "display: block" %>
-    <%= form.radio_button :state, :blocked %> El auto está bloqueado. </p>
-    <%= form.radio_button :state, :ready %> El auto está listo para ser alquilado. </p>
-  </div>
-
-  <div>
+    <%= form.hidden_field :state, :value => 'blocked' %>
     <%= form.hidden_field :engine, :value => false %>
   </div>
 
   <div>
-  <%= form.hidden_field :coords_x, :value => -57.942948097923505.to_f %>
-  <%= form.hidden_field :coords_y, :value => -34.90961858045628.to_f %>
+    <%= form.hidden_field :coords_x, :value => -57.942948097923505.to_f %>
+    <%= form.hidden_field :coords_y, :value => -34.90961858045628.to_f %>
   </div>
 
   <!-------- MODAL PIE -------------------------->
