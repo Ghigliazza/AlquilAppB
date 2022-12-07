@@ -26,26 +26,10 @@
       <div style="margin-left:15px; margin-top:15px;">
       <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCar">
-          Agregar Autos
+          Agregar Auto
         </button>
       </div>
     <% end %>
-
-    <!-- Modal -->
-    <% car = Car.new %>
-    <div class="modal fade" id="modalCar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalCarLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content" id="cardModalContent" style="height:fit-content; border-radius:1%">
-          <div class="modal-body">
-            <%= render partial: "cars/form", locals: { car: car } %>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancelar </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
 
        <p>
         <%#> https://getbootstrap.com/docs/5.0/components/accordion/ <%>
@@ -64,3 +48,85 @@
   
   
 </body>	
+
+
+
+
+
+  <!-- ================================================================================= -->
+  <!--                               FORMULARIO CREAR AUTO                               -->
+  <!-- ================================================================================= -->
+
+    <!-- Modal -->
+    <% car = Car.new %>
+    <div class="modal fade" id="modalCar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalCarLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content" id="cardModalContent" style="height:fit-content; border-radius:1%">
+          <div class="modal-body">
+            
+              <%#= render partial: "cars/form", locals: { car: car } %>
+              <div style="margin-left:25px; margin-top:10px;">
+
+                <%= form_with(model: car) do |form| %>
+
+                  <div>
+                    <p><b><%= form.label :model, "Modelo", style: "display: block" %></b>
+                    <%= form.text_field :model, :required => true, placeholder: "Modelo" %></p>
+                  </div>
+
+                  <div>
+                    <p><b><%= form.label :brand, "Marca", style: "display: block" %></b>
+                    <%= form.text_field :brand, :required => true, placeholder: "Marca"%></p>
+                  </div>
+
+                  <div>
+                    <p><b><%= form.label :license, "Patente", style: "display: block" %></b>
+                    <%= form.text_field :license, :required => true, placeholder: "AB123CD" %></p>
+                  </div>
+
+                  <div>
+                    <p><b><%= form.label :color, "Color", style: "display: block" %></b>
+                    <%= form.text_field :color, :required => true, placeholder: "Color" %></p>
+                  </div>
+
+                  <div>
+                    <p><b><%= form.label "Foto", style: "display: block"%></b></b>
+                    <%= form.file_field :car_photo, :required => true %></p>
+                  </div>  
+
+                  <div>
+                    <p><b><%= form.label :doors, "Puertas", style: "display: block" %></b>
+                    <%= form.number_field :doors, :required => true, min:2, max:6, value:1 %></p>
+                  </div>
+
+                  <div>
+                    <p><b><%= form.label :seats, "Asientos", style: "display: block" %></b>
+                    <%= form.number_field :seats, :required => true, min:2, max:10, value:1 %></p>
+                  </div>
+
+                  <div>
+                    <p><b><%= form.label "Transmision", style: "display: block"%></b>
+                    <%= form.text_field :transmission, :required => true, placeholder: "Manual / Automatica" %></p>
+                  </div>  
+                  
+                  <%= form.hidden_field :state, :value => 'blocked' %>
+                  <%= form.hidden_field :engine, :value => false %>
+                  <%= form.hidden_field :fuel, :value => 10.0 %>
+                  <%= form.hidden_field :turn_on, :value => false %>
+
+                  <div>
+                    <%= form.hidden_field :coords_x, :value => -57.942948097923505.to_f %>
+                    <%= form.hidden_field :coords_y, :value => -34.90961858045628.to_f %>
+                  </div>           
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancelar </button>
+            <div class="text-end">
+              <%= form.submit "Agregar", class:"btn btn-success"%>
+            </div>
+            <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
