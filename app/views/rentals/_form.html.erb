@@ -73,7 +73,7 @@
         <b>Expira:</b>
         <%= form.hidden_field :expires, :id => "in_expire", :value => Time.now + 1.hour %>
         <%# VALORES INICIALES DE FECHA %>
-        <output id="out_expired"> <%= ((@rental.expires != nil ? @rental.expires : Time.now)  + 1.hour).strftime('%Y-%m-%e A las %k:%M:%S') %> </output>
+        <output id="out_expired"> <%= ((@rental.expires != nil ? @rental.expires : Time.now)  + 1.hour).strftime('%Y-%m-%d A las %k:%H:%M') %> </output>
       </div>
 
       <div>
