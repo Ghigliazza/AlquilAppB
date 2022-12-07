@@ -14,50 +14,51 @@
     <% end %>
 
     <div>
-      <%= form.label :model, "Modelo", style: "display: block" %>
-      <%= form.text_field :model, :required => true %>
-    </div>
+    <%= form.label :model, "Modelo", style: "display: block" %>
+    <%= form.text_field :model, :required => true %>
+  </div>
 
-    <div>
-      <%= form.label :brand, "Marca", style: "display: block" %>
-      <%= form.text_field :brand, :required => true %>
-    </div>
+  <div>
+    <%= form.label :brand, "Marca", style: "display: block" %>
+    <%= form.text_field :brand, :required => true %>
+  </div>
 
-    <div>
-      <%= form.label :license, "Licencia", style: "display: block" %>
-      <%= form.text_field :license, :required => true %>
-    </div>
+  <div>
+    <%= form.label :license, "Patente", style: "display: block" %>
+    <%= form.text_field :license, :required => true %>
+  </div>
 
-    <div>
-      <%= form.label :color, "Color", style: "display: block" %>
-      <%= form.text_field :color, :required => true %>
-    </div>
+  <div>
+    <%= form.label :color, "Color", style: "display: block" %>
+    <%= form.text_field :color, :required => true %>
+  </div>
 
-    <div>
-      <p><b><%= form.label "Foto", style: "display: block"%></b>
-      <%= form.file_field :car_photo, :required => true %></p>
-    </div>  
+  <div>
+    <p><b><%= form.label "Foto", style: "display: block"%></b>
+    <%= form.file_field :car_photo, :required => true %></p>
+  </div>  
 
-    <div>
-      <%= form.label :doors, "Puertas", style: "display: block" %>
-      <%= form.number_field :doors, :required => true, min: 0, max: 6 %>
-    </div>
+  <div>
+    <%= form.label :doors, "Puertas", style: "display: block" %>
+    <%= form.number_field :doors, :required => true, min: 0, max: 6 %>
+  </div>
 
-    <div>
-      <%= form.label :seats, "Asientos", style: "display: block" %>
-      <%= form.number_field :seats, :required => true, min: 0, max: 10 %>
-    </div>
-    
-    <div>
-      <%= form.hidden_field :state, :value => 'blocked' %>
-      <%= form.hidden_field :engine, :value => false %>
-    </div>
+  <div>
+    <%= form.label :seats, "Asientos", style: "display: block" %>
+    <%= form.number_field :seats, :required => true, min: 0, max: 10 %>
+  </div>
+  
+  <div>
+    <%= form.hidden_field :state, :value => 'blocked' %>
+    <%= form.hidden_field :engine, :value => false %>
+    <%= form.hidden_field :fuel, :value => 10.0 %>
+    <%= form.hidden_field :turn_on, :value => false %>
+  </div>
 
-    <div>
-      <%= form.hidden_field :coords_x, :value => -57.942948097923505.to_f %>
-      <%= form.hidden_field :coords_y, :value => -34.90961858045628.to_f %>
-    </div>
+  <div>
+    <%= form.hidden_field :coords_x, :value => -57.942948097923505.to_f %>
+    <%= form.hidden_field :coords_y, :value => -34.90961858045628.to_f %>
+  </div>
 
   <% end %>
-
 </div>

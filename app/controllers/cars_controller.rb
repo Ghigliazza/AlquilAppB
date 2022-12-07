@@ -28,6 +28,11 @@ class CarsController < ApplicationController
         format.html { redirect_to request.referrer, notice: "El auto fue creado con éxito." }
         format.json { render :show, status: :created, location: @car }
       else
+        if @car.errors.any?
+          @car.errors.each do |error|
+            format.html { redirect_to request.referrer, alert: error.message }
+          end
+        end
         format.html { redirect_to request.referrer, alert: "El auto no pudo ser creado." }
         format.json { render json: @car.errors, status: :unprocessable_entity }
       end
@@ -41,7 +46,7 @@ class CarsController < ApplicationController
         format.html { redirect_to request.referrer, notice: "Auto actualizado." }
         format.json { render :show, status: :ok, location: @car }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_entity}
         format.json { render json: @car.errors, status: :unprocessable_entity }
       end
     end
