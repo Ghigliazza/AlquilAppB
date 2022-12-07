@@ -3,6 +3,10 @@
     <% car = rental.car %>
 
           </p>
+          <% if car.car_photo.attached? %>
+            <%= image_tag car.car_photo, width: 600 %> 
+          <% end %>
+          
           <% if File.exists?("#{Rails.root}/app/assets/images#{car.img_url}") %>
               <img src="/assets<%= car.img_url %>" alt="" style="max-width:600px;" > </p>
           <% else %>             
