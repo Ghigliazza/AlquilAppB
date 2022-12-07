@@ -124,7 +124,7 @@ class RentalsController < ApplicationController
       if @rental.car.fuel < @rental.initial_fuel
         current_user.update(balance: current_user.balance - fuel_tax)
       end
-      @rental.update(initial_fuel: @rental.car.fuel)
+      #@rental.update(initial_fuel: @rental.car.fuel)
       # Genera la multa del gasto de combustible
       if fuel_tax > 0
         Payment.create(price:fuel_tax, started:Time.now, rent_hs:0, rental_id: @rental.id)
