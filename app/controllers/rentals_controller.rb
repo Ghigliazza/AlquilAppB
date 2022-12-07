@@ -109,7 +109,7 @@ class RentalsController < ApplicationController
   # GET /rental/id
   def cancel
     # Setea un valor inicial del Alert (vacio)
-    alert = "El alquiler ha sido finalizado. Precio: $#{@rental.price}"
+    alert = ""
 
     # Si el motor está apagado
     if !@rental.car.engine
