@@ -34,7 +34,7 @@
   </div>
 
   <div>
-    <%= form.label :img_url, "Imagen", style: "display: block" %>
+    <%= form.label :image, "Imagen", style: "display: block" %>
     <%#= form.text_field :img_url %>
     <%= form.file_field :image %></p>
 
@@ -58,6 +58,11 @@
 
   <div>
     <%= form.hidden_field :engine, :value => false %>
+  </div>
+
+  <div>
+  <%= form.hidden_field :coords_x, :value => -57.942948097923505.to_f %>
+  <%= form.hidden_field :coords_y, :value => -34.90961858045628.to_f %>
   </div>
 
   <!-------- MODAL PIE -------------------------->
