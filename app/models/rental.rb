@@ -26,4 +26,8 @@ class Rental < ApplicationRecord
   def tenMinutesPassed?
     return self.created_at + 10.minutes <= Time.now
   end
+
+  def turnedOn?
+    return self.turned_on
+  end
 end

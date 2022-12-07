@@ -164,6 +164,7 @@ class RentalsController < ApplicationController
         end
       end
 
+      @rental.update(turned_on: @rental.car.turn_on)
       @rental.car.ready!
       @rental.car.update(turn_on:false)
       @rental.expired!
@@ -204,9 +205,9 @@ class RentalsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def rental_params
     if request.method() == "POST"
-      params.require(:rental).permit(:price, :expires, :user_id, :car_id, :initial_fuel, :state, :total_hours)
+      params.require(:rental).permit(:price, :expires, :user_id, :car_id, :initial_fuel, :state, :total_hours, :turn_on)
     else
-      params.require(:rental).permit(:price, :expires, :initial_fuel, :state, :total_hours)
+      params.require(:rental).permit(:price, :expires, :initial_fuel, :state, :total_hours, :turn_on)
     end
   end
 

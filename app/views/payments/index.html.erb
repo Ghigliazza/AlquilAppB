@@ -29,10 +29,10 @@
         <li class="row"><div class="col-auto fw-semibold"> Precio De Multas:   </div> <div class="col fw-light fst-italic text-end"> $ <%= @multa %>                                 </div></li>
         <li class="row"><div class="col-auto fw-semibold"> Precio Total:       </div> <div class="col fw-light fst-italic text-end"> $ <%= @rental.price + @multa %>                 </div></li>
 
-        <% if @rental.tenMinutesPassed? %>
-          <li class="row"><div class="col-auto fw-semibold"> Saldo Devuelto:     </div> <div class="col fw-light fst-italic text-end">  $0 </div></li>
+        <% if @rental.tenMinutesPassed? || @rental.turnedOn? %>
+          <!--<li class="row"><div class="col-auto fw-semibold"> Saldo Devuelto:     </div> <div class="col fw-light fst-italic text-end">  $0 </div></li> -->
         <% else %>
-          <li class="row"><div class="col-auto fw-semibold"> Saldo Devuelto:     </div> <div class="col fw-light fst-italic text-end">  $<%= @rental.price %> </div></li>
+          <li class="row"><div class="col-auto fw-semibold"> * Saldo devuelto por alquiler cancelado </div> </li>
         <% end %>
       </ul>
     </div>
